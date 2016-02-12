@@ -1,0 +1,20 @@
+<!-- Created by - Y0075912 -->
+{{extend 'layout.html'}}
+
+<!-- web 2 py inbuilt auth package -->
+<h2>
+{{=T('Sign Up') if request.args(0) == 'register' else T('Log In') if request.args(0) == 'login' else T(request.args(0).replace('_',' ').title())}}
+</h2>
+
+<div class="user_entry">
+        {{
+        if request.args(0)=='login':
+            if not 'register' in auth.settings.actions_disabled:
+                form.add_button(T('Sign Up'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn btn-default')
+            pass
+        pass
+        =form
+        =H3(BEAUTIFY(response.flash))
+        }}
+
+</div>

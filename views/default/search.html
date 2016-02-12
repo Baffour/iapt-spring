@@ -1,0 +1,11 @@
+<!-- Created by - Y0075912 -->
+{{extend "layout.html"}}
+{{pass}}
+{{=H1(response.flash)}}
+<p>
+    {{if not results:}}
+        <H2>No results found</H2>
+    {{pass}}
+    {{include ""}}
+    {{pass}}
+</p>
