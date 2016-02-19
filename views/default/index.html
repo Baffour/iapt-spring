@@ -1,1 +1,16 @@
-Index content
+{{extend 'layout.html'}}
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="home-picture">
+      <div id="home-picture-overlay">
+        <h1>Welcome to {{=APP_NAME}}</h1>
+        <span>
+          <a href="{{=URL('default', 'user/register')}}" class="btn btn-default">Register</a> or
+          <a href="{{=URL('default', 'user/login')}}" class="btn btn-default">Sign in</a>
+          now to start building your collection
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

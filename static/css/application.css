@@ -1,0 +1,38 @@
+/* Disable bootstrap responsiveness */
+.container {
+  width: 940px;
+  max-width: none !important;
+}
+
+body {
+  padding-top: 50px;
+}
+
+#main {
+  margin-top:20px;
+}
+
+#home-picture {
+  width:910px;
+  height:290px;
+  background-image: url(../images/shelves.jpg);
+  position:relative;
+  margin-bottom:20px;
+}
+
+#home-picture-overlay {
+  position:absolute;
+  top:60px;
+  left:170px;
+  right:170px;
+  height:120px;
+    
+  background-color:rgba(0,0,0,0.6);
+  color:white;
+  text-align:center;
+  border-radius:15px;
+}
+
+#home-picture-overlay span {
+  font-size:22px;
+}

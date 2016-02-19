@@ -3,6 +3,8 @@
 from gluon.contrib.appconfig import AppConfig
 import os
 
+APP_NAME = 'UntitledApplication'
+
 myconf = AppConfig(reload=True) # see private/appconfig.ini for settings
 
 # Set up the database
