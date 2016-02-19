@@ -37,3 +37,7 @@ body {
 #home-picture-overlay span {
   font-size:22px;
 }
+
+div.panel div.panel-form {
+    margin:20px;
+}
