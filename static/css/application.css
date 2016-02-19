@@ -15,6 +15,7 @@ body {
 #home-picture {
   width:910px;
   height:290px;
+  /* Image source: https://www.flickr.com/photos/pio1976/3330670980/ */
   background-image: url(../images/shelves.jpg);
   position:relative;
   margin-bottom:20px;
