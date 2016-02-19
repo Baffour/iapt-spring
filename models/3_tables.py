@@ -21,6 +21,11 @@ db.define_table('collection',
     Field('created_at', type='datetime', default=request.now, writable=False, readable=False)
 )
 
+db.define_table('object2collection',
+    Field('object', 'reference object', notnull=True, required=True),
+    Field('collection', 'reference collection', notnull=True, required=True)
+)
+
 PROPOSAL_STATUSES = ['pending', 'sent', 'accepted', 'rejected', 'superseded']
 
 db.define_table('trade_proposal',
@@ -32,7 +37,18 @@ db.define_table('trade_proposal',
     Field('parent', 'reference trade_proposal', notnull=True, required=False)
 )
 
-db.define_table('object2collection',
-    Field('object', 'reference object', notnull=True, required=True),
-    Field('collection', 'reference collection', notnull=True, required=True)
+db.define_table('want_item',
+    Field('name', type='string', length=256, notnull=True, required=True),
+    Field('type', type='string', notnull=True, required=True, requires=IS_IN_SET(OBJECT_TYPES)),
+    Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
+    Field('description', type='text', required=True),
+    Field('source', 'reference object', notnull=True, required=False, writeable=False)
+)
+
+db.define_table('notification',
+    Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
+    Field('message', type='text', notnull=True, required=True),
+    Field('link', type='string', length=256, notnull=True, required=False),
+    Field('created_at', type='datetime', default=request.now, writable=False, readable=False),
+    Field('read', type='boolean', required=True, notnull=True, default=False)
 )
