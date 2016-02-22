@@ -24,27 +24,27 @@
             <a href="/{{=request.application}}/" class="navbar-brand">{{=APP_NAME}}</a>
 
             <ul class="nav navbar-nav">
-              <li {{if rc == 'explore' and rf == 'browse':}}class="active"{{pass}}>
-                <a href="{{=URL('explore', 'browse')}}">Explore</a>
+              <li {{if rc == 'find' and rf == 'explore':}}class="active"{{pass}}>
+                <a href="{{=URL('find', 'explore')}}">Explore</a>
               </li>
-              <li {{if rc == 'explore' and rf == 'search':}}class="active"{{pass}}>
-                <a href="{{=URL('explore', 'search')}}">Search</a>
+              <li {{if rc == 'find' and rf == 'search':}}class="active"{{pass}}>
+                <a href="{{=URL('find', 'search')}}">Search</a>
               </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
               {{if auth.user:}}
-              <li {{if rc == 'collections' and rf == 'list':}}class="active"{{pass}}>
-                <a href="#">My collections</a>
+              <li {{if rc == 'collection':}}class="active"{{pass}}>
+                <a href="{{=URL('collection', 'list')}}">My Collections</a>
+              </li>
+              <li {{if rc == 'object':}}class="active"{{pass}}>
+                <a href="{{=URL('object', 'list')}}">My Objects</a>
+              </li>
+              <li {{if rc == 'trade':}}class="active"{{pass}}>
+                <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
               <li>
-                <a href="{{=URL('object', 'add')}}">Add an object</a>
-              </li>
-              <li>
-                <a href="#">Propose a trade</a>
-              </li>
-              <li>
-                <a href="#">
+                <a href="{{=URL('notification', 'inbox')}}">
                   <span id="notif-label" class="label label-info"><i class="glyphicon glyphicon-bell"></i> 4</span>
                 </a>
               </li>
@@ -55,7 +55,7 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="{{=URL('default', 'user/profile')}}">My profile</a></li>
+                  <li><a href="{{=URL('default', 'user/profile')}}">Edit profile</a></li>
                   <li><a href="{{=URL('default', 'user/change_password')}}">Change password</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href="{{=URL('default', 'user/logout')}}">Sign out</a></li>
