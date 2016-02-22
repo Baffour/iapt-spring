@@ -41,3 +41,14 @@ body {
 div.panel div.panel-form {
     margin:20px;
 }
+
+#notif-label {
+  font-size:100%;
+  font-weight:normal;
+}
+
+#notif-label .glyphicon {
+  margin-right:2px;
+  position:relative;
+  top:2px;
+}
