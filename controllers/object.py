@@ -2,7 +2,7 @@
 
 @auth.requires_login()
 def add():
-    form = SQLFORM(db.obj, submit_button="Create")
+    form = SQLFORM(db.obj, submit_button="Add object")
 
     if form.process().accepted:
         redirect(URL('object', 'view', args=form.vars['id']))

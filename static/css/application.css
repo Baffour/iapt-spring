@@ -52,3 +52,11 @@ div.panel div.panel-form {
   position:relative;
   top:2px;
 }
+
+div.flash:hover {
+    cursor:pointer;
+}
+
+div.flash span#closeflash {
+    float:right;
+}
