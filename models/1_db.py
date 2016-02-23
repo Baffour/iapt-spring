@@ -3,7 +3,7 @@
 from gluon.contrib.appconfig import AppConfig
 import os
 
-APP_NAME = 'UntitledApplication'
+APP_NAME = 'Shortboxes'
 
 myconf = AppConfig(reload=True) # see private/appconfig.ini for settings
 
