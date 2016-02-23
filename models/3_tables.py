@@ -14,16 +14,16 @@ db.define_table('obj',
     Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False)
 )
 
-db.define_table('collection',
+db.define_table('box',
     Field('name', type='string', length=256, notnull=True, required=True),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('private', type='boolean', default=True, notnull=True, label='Private (private collections are invisible to other users)'),
     Field('created_at', type='datetime', default=request.now, writable=False, readable=False)
 )
 
-db.define_table('object2collection',
+db.define_table('obj2box',
     Field('obj', 'reference obj', notnull=True, required=True),
-    Field('collection', 'reference collection', notnull=True, required=True)
+    Field('box', 'reference box', notnull=True, required=True)
 )
 
 PROPOSAL_STATUSES = ['pending', 'sent', 'accepted', 'rejected', 'superseded']

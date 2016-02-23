@@ -34,14 +34,14 @@
 
             <ul class="nav navbar-nav navbar-right">
               {{if auth.user:}}
-              <li {{if rc == 'collection':}}class="active"{{pass}}>
-                <a href="{{=URL('collection', 'list')}}">My Collections</a>
-              </li>
-              <li {{if rc == 'object':}}class="active"{{pass}}>
-                <a href="{{=URL('object', 'list')}}">My Objects</a>
+              <li {{if rc == 'box':}}class="active"{{pass}}>
+                <a href="{{=URL('box', 'list')}}">My Boxes</a>
               </li>
               <li {{if rc == 'trade':}}class="active"{{pass}}>
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
+              </li>
+              <li {{if rc == 'object' and rf == 'add':}}class="active"{{pass}}>
+                <a href="{{=URL('object', 'add')}}">Add Object</a>
               </li>
               <li>
                 <a href="{{=URL('notification', 'inbox')}}">
