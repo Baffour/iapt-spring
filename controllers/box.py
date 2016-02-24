@@ -2,7 +2,8 @@
 
 @auth.requires_login()
 def list():
-    pass
+    boxes = db(db.box.auth_user==auth.user).select(orderby=db.box.name)
+    return dict(boxes=boxes)
 
 def view():
     box = load_box(request.args(0))

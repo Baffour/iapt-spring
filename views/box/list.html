@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>My Boxes</h1>
+    <ul>
+      {{for box in boxes:}}
+      <li><a href="{{=URL('view', args=box.id)}}">{{=box.name}}</a></li>
+      {{pass}}
+    </ul>
+  </div>
+</div>
