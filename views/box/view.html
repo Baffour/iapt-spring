@@ -1,9 +1,33 @@
-{{extend 'dialog.html'}}
+{{extend 'grid.html'}}
 
 {{block title}}
-This is box {{=box.name}}
+{{if box.private:}}
+<span class="glyphicon glyphicon-lock"></span>
+{{else:}}
+<span class="glyphicon glyphicon-inbox"></span>
+{{pass}}
+{{=box.name}}
 {{end}}
 
-{{block form}}
-Box viewing TODO
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('edit', args=box.id)}}">
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit box
+  </a>
+  <a class="btn btn-default" href="{{=URL('delete', args=box.id)}}">
+    <span class="glyphicon glyphicon-trash"></span>
+    Delete box
+  </a>
+</div>
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('object', 'add')}}">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add a new object
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+Box content listing TODO
 {{end}}

@@ -80,6 +80,11 @@ h1.main-title {
     margin-bottom:0;
 }
 
+h1.main-title .glyphicon {
+  font-size:28px;
+  margin-right:2px;
+}
+
 #header-row {
     margin-bottom:20px;
 }
