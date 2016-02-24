@@ -40,9 +40,6 @@
               <li {{if rc == 'trade':}}class="active"{{pass}}>
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
-              <li {{if rc == 'object' and rf == 'add':}}class="active"{{pass}}>
-                <a href="{{=URL('object', 'add')}}">Add Object</a>
-              </li>
               <li>
                 <a href="{{=URL('notification', 'inbox')}}">
                   <span id="notif-label" class="label label-info"><i class="glyphicon glyphicon-bell"></i> 4</span>

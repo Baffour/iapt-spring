@@ -1,0 +1,21 @@
+{{show_toolbox = globals().get('show_toolbox', True)}}
+{{extend 'layout.html'}}
+
+<div class="row" id="header-row">
+  <div class="{{if show_toolbox:}}col-md-6{{else:}}col-md-12{{pass}}">
+    <h1 class="main-title">{{block title}}{{end}}</h1>
+  </div>
+  {{if show_toolbox:}}
+  <div class="col-md-6" id="toolbox">
+    {{block toolbox}}{{end}}
+  </div>
+  {{pass}}
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="lb-grid-list" class="row">
+      {{block grid}}{{end}}
+    </div>
+  </div>
+</div>

@@ -60,3 +60,91 @@ div.flash:hover {
 div.flash span#closeflash {
     float:right;
 }
+
+#toolbox {
+    text-align:right;
+    margin-top:4px;
+}
+
+#toolbox .btn {
+    font-size:13px;
+}
+
+#toolbox .btn-group {
+    margin-left:5px;
+}
+
+h1.main-title {
+    font-size:32px;
+    margin-top:4px;
+    margin-bottom:0;
+}
+
+#header-row {
+    margin-bottom:20px;
+}
+
+#lb-grid-list {
+    list-style:none;
+    padding:0;
+}
+
+#lb-grid-list .thumbnail {
+    text-align:center;
+    position:relative;
+}
+
+#lb-grid-list .thumbnail .preview-image {
+    display:block;
+    max-height:260px;
+    overflow:hidden;
+    margin-bottom:5px;
+}
+
+#lb-grid-list .thumbnail .preview-name, #lb-grid-list .thumbnail .preview-detail {
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+#lb-grid-list .thumbnail .preview-name {
+    font-size:16px;
+    color:#333;
+    margin-bottom:5px;
+}
+
+#lb-grid-list .thumbnail .preview-detail {
+    margin-bottom:2px;
+}
+
+#lb-grid-list .thumbnail .preview-secondary-link {
+    display:block;
+    margin-bottom:5px;
+}
+
+#lb-grid-list .thumbnail a .preview-icon {
+    font-size:48px;
+    display:block;
+    margin-top:10px;
+    margin-bottom:10px;
+    color:#777;
+}
+
+#lb-grid-list .thumbnail a:hover .preview-icon {
+    color:#333;
+}
+
+#lb-grid-list .thumbnail.box-preview a:hover {
+    text-decoration:none;
+}
+
+#lb-grid-list .thumbnail.box-preview a:hover div {
+    text-decoration:underline;
+}
+
+.box-preview .private-indicator {
+    position:absolute;
+    left:5px;
+    top:5px;
+}

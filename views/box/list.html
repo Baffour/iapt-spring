@@ -1,12 +1,34 @@
-{{extend 'layout.html'}}
+{{extend 'grid.html'}}
 
-<div class="row">
-  <div class="col-md-12">
-    <h1>My Boxes</h1>
-    <ul>
-      {{for box in boxes:}}
-      <li><a href="{{=URL('view', args=box.id)}}">{{=box.name}}</a></li>
+{{block title}}
+My Boxes
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('box', 'new')}}">
+    <span class="glyphicon glyphicon-plus"></span>
+    Create a new box
+  </a>
+  <a class="btn btn-default" href="{{=URL('object', 'add')}}">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add a new object
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+{{for box in boxes:}}
+<div class="col-md-3">
+  <div class="thumbnail box-preview">
+    <a class="preview-name" href="{{=URL('box', 'view/' + str(box.id))}}">
+      {{if box.private: }}
+        <span class="private-indicator label label-primary"><span class="glyphicon glyphicon-lock"></span> Private</span>
       {{pass}}
-    </ul>
+      <span class="preview-icon glyphicon glyphicon-inbox"></span>
+      <div>{{=box.name}}</div>
+    </a>
   </div>
 </div>
+{{pass}}
+{{end}}
