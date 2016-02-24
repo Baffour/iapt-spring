@@ -4,6 +4,16 @@
   background-color: #00607d;
 }
 
+.label-primary
+{
+  background-color: #145b98;
+}
+
+.help-block
+{
+  color: #595959;
+}
+
 /* Disable bootstrap responsiveness */
 .container {
   width: 940px;
