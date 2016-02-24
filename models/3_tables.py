@@ -17,7 +17,7 @@ db.define_table('obj',
 db.define_table('box',
     Field('name', type='string', length=256, notnull=True, required=True),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
-    Field('private', type='boolean', default=True, notnull=True, label='Private (private collections are invisible to other users)'),
+    Field('private', type='boolean', default=True, notnull=True, label='Private (private boxes are invisible to other users)'),
     Field('created_at', type='datetime', default=request.now, writable=False, readable=False)
 )
 
