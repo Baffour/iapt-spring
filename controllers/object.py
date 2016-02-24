@@ -7,6 +7,7 @@ def list():
 @auth.requires_login()
 def add():
     form = SQLFORM(db.obj, submit_button="Add object")
+    form.custom.widget.name['_autofocus'] = True
 
     if form.process().accepted:
         redirect(URL('object', 'view', args=form.vars['id']))
