@@ -65,8 +65,8 @@ def delete():
 
         unfiled = load_unfiled_box()
         for item in items:
-            if db(db.itm2box.itm==itm.id).isempty():
-                db.itm2box.insert(itm=itm.id, box=unfiled.id)
+            if db(db.itm2box.itm==item.id).isempty():
+                db.itm2box.insert(itm=item.id, box=unfiled.id)
 
         session.flash = 'Box "' + box_name + '" successfully deleted.'
         session.flash_type = 'success'
