@@ -18,7 +18,8 @@ db.define_table('box',
     Field('name', type='string', length=256, notnull=True, required=True),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('private', type='boolean', default=True, notnull=True, label='Private (private boxes are invisible to other users)'),
-    Field('created_at', type='datetime', default=request.now, writable=False, readable=False)
+    Field('created_at', type='datetime', default=request.now, writable=False, readable=False),
+    Field('unfiled', type='boolean', default=False, notnull=True, writable=False, readable=False)
 )
 
 db.define_table('itm2box',
