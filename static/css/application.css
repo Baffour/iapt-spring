@@ -91,6 +91,14 @@ h1.main-title .glyphicon {
     margin-bottom:20px;
 }
 
+#add-remove-menu {
+    font-size:13px;
+}
+
+#add-remove-menu .glyphicon{
+    margin-right:4px;
+}
+
 #lb-grid-list {
     list-style:none;
     padding:0;
