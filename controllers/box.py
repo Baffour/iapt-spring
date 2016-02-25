@@ -22,7 +22,7 @@ def new():
 def view():
     box = load_box(request.args(0))
     guest = not auth.user or auth.user.id != box.auth_user
-    return dict(box=box, guest=guest, objects=None)
+    return dict(box=box, guest=guest, items=items_in(box))
 
 @auth.requires_login()
 def edit():
