@@ -1,27 +1,11 @@
-/* Bootstrap overrides for contrast */
-.label-info
-{
-  background-color: #00607d;
+.navbar {
+  border-radius:0;
 }
 
-.label-primary
-{
-  background-color: #145b98;
-}
-
-.help-block
-{
-  color: #595959;
-}
-
-/* Disable bootstrap responsiveness */
-.container {
-  width: 940px;
-  max-width: none !important;
-}
-
-body {
-  padding-top: 50px;
+.dropdown-user-icon {
+  margin-right:2px;
+  display:inline-block;
+  width:14px;
 }
 
 #main {
@@ -67,6 +51,8 @@ div.panel div.panel-form {
   margin-right:2px;
   position:relative;
   top:2px;
+  display:inline-block;
+  width:14px;
 }
 
 div.flash:hover {

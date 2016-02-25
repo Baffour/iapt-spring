@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="{{=URL('static','css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{=URL('static','css/bootstrap-theme.min.css')}}"/>
+
+    <link rel="stylesheet" href="{{=URL('static','css/bootstrap-overrides.css')}}"/>
     <link rel="stylesheet" href="{{=URL('static','css/application.css')}}"/>
 
     <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
@@ -17,7 +19,7 @@
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -42,12 +44,12 @@
               </li>
               <li>
                 <a href="{{=URL('notification', 'inbox')}}">
-                  <span id="notif-label" class="label label-info"><i class="glyphicon glyphicon-bell"></i> 4</span>
+                  <span id="notif-label" class="label label-info"><span class="glyphicon glyphicon-bell"></span> 4</span>
                 </a>
               </li>
               <li class="dropdown">
                 <a href="{{=URL('default', 'user/profile')}}" data-toggle="dropdown">
-                  <i class="glyphicon glyphicon-user" style="margin-right:2px"></i>
+                  <span class="dropdown-user-icon glyphicon glyphicon-user"></span>
                   {{=auth.user.username}}
                   <span class="caret"></span>
                 </a>
@@ -74,7 +76,7 @@
 
     <div id="main" class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           {{if response.flash:}}
             <div class="alert alert-{{=response.flash_type or session.flash_type or 'warning'}} flash">
               {{=XML(response.flash)}}
