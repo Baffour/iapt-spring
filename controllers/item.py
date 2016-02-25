@@ -9,9 +9,9 @@ def new():
     form = SQLFORM.factory(
         db.itm.name,
         db.itm.itm_type,
-        Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.itm_condition,
         db.itm.monetary_value,
+        Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,
         submit_button='Add item'
