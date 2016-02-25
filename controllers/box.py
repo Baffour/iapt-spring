@@ -28,6 +28,11 @@ def view():
 def edit():
     box = load_box(request.args(0), editing=True)
 
+    # The unfiled box cannot be renamed
+    if box.unfiled:
+        db.box.name.readable = False
+        db.box.name.writable = False
+
     form = SQLFORM(db.box, box, submit_button='Save', showid=False)
 
     if form.process().accepted:
