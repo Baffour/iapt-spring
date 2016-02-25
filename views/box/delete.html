@@ -1,0 +1,12 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Delete box &ldquo;{{=name}}&rdquo;
+{{end}}
+
+{{block form}}
+<p>Are you sure you want to delete the box &ldquo;{{=name}}&rdquo;?</p>
+<p>Items within the box will not be deleted, but will either remain within any other boxes that contain them or, if this is their only box, be moved to the Unfiled box.</p>
+<p><strong>This action cannot be undone.</strong>
+{{=form}}
+{{end}}

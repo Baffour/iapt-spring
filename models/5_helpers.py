@@ -11,3 +11,10 @@ def load_box(id, editing=False):
             raise HTTP(403)
 
     return box
+
+def load_unfiled_box():
+    return db((db.box.auth_user==auth.user) & (db.box.unfiled==True)).select()[0]
+
+def items_in(box):
+    items_and_boxes = db((db.box.id==db.itm2box.box) & (db.itm2box.itm==db.itm.id) & (db.box.id==box.id))
+    return items_and_boxes.select(db.itm.ALL)

@@ -155,3 +155,7 @@ h1.main-title .glyphicon {
     left:5px;
     top:5px;
 }
+
+.confirmation-form .btn {
+    margin-right:5px;
+}

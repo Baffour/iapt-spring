@@ -45,3 +45,31 @@ def edit():
         response.flash_type = 'danger'
 
     return dict(name=box.name, form=form)
+
+@auth.requires_login()
+def delete():
+    box = load_box(request.args(0), editing=True)
+    box_name = box.name
+
+    if box.unfiled:
+        raise HTTP(403)
+
+    form = FORM.confirm('Delete', {'Cancel': URL('view/' + str(box.id))})
+    form['_class'] = 'confirmation-form'
+    form[0]['_class'] = 'btn btn-danger'
+    form[1]['_class'] = 'btn btn-default'
+
+    if form.accepted:
+        items = items_in(box)
+        del db.box[box.id]
+
+        unfiled = load_unfiled_box()
+        for item in items:
+            if db(db.itm2box.itm==itm.id).isempty():
+                db.itm2box.insert(itm=itm.id, box=unfiled.id)
+
+        session.flash = 'Box "' + box_name + '" successfully deleted.'
+        session.flash_type = 'success'
+        redirect(URL('list'))
+
+    return dict(name=box_name, form=form)

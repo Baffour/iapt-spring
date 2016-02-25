@@ -15,7 +15,7 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit box
   </a>
-  <a class="btn btn-default" href="{{=URL('delete', args=box.id)}}">
+  <a class="btn btn-default{{if box.unfiled:}} disabled{{pass}}" href="{{=URL('delete', args=box.id)}}">
     <span class="glyphicon glyphicon-trash"></span>
     Delete box
   </a>
