@@ -1,5 +1,16 @@
 # IAPT Spring Assessment - Group 13
 
+def load_item(id, editing=False):
+    item = db.itm(id)
+
+    if not item:
+        raise HTTP(404)
+
+    if editing and (not auth.user or item.auth_user.id != auth.user.id):
+        raise HTTP(403)
+
+    return item
+
 def load_box(id, editing=False):
     box = db.box(id)
 

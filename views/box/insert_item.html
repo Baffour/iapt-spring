@@ -1,0 +1,11 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Insert an item into the &ldquo;{{=box.name}}&rdquo; box
+{{end}}
+
+{{block form}}
+<p>The item selected below will be added to the box named above.</p>
+<p>It will also remain in any boxes that it is currently in. To remove an item from a box, select the &ldquo;Remove an item from this box&rdquo; option when viewing the relevant box.</p>
+{{=form}}
+{{end}}

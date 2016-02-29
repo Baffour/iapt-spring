@@ -73,3 +73,23 @@ def delete():
         redirect(URL('list'))
 
     return dict(name=box_name, form=form)
+
+# TODO: This should better handle the case where there are no items able to be inserted
+@auth.requires_login()
+def insert_item():
+    box = load_box(request.args(0), editing=True)
+    item_ids_in_box = [i.id for i in items_in(box)]
+
+    constraint = db(~db.itm.id.belongs(item_ids_in_box) & (db.itm.auth_user == auth.user.id))
+    validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this box')
+
+    if form.process().accepted:
+        itm = load_item(form.vars['itm'], editing=True)
+        db.itm2box.insert(itm=itm.id, box=box.id)
+
+        session.flash = 'Item "' + itm.name + '" added to "' + box.name + '" box successfully.'
+        session.flash_type = 'success'
+        redirect(URL('view', args=box.id))
+
+    return dict(box=box, form=form)
