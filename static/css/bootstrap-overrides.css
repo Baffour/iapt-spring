@@ -11,6 +11,12 @@
   color: #595959;
 }
 
+a
+{
+  color: #145b98;
+}
+
+
 /* Disable bootstrap responsiveness */
 .container {
   width: 940px;
@@ -66,4 +72,11 @@ body {
 /* Redeclare since we override the float above */
 .navbar-nav.navbar-right {
   float: right;
+}
+
+
+#HTMLCS-settings-use-standard-select
+{
+  /*Purely so HTML_CodeSniffer displays correctly*/
+  color: black;
 }

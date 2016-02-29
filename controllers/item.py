@@ -47,7 +47,7 @@ def new():
         session.flash = 'New item "'+ name + '" created successfully.'
         session.flash_type = 'success'
 
-        redirect(URL('object', 'view', args=form.vars['id']))
+        redirect(URL('item', 'view', args=form.vars['id']))
 
     elif form.errors:
         response.flash = 'Invalid details entered. See the annotations below and try again.'
