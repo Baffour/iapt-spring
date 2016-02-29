@@ -95,8 +95,13 @@ h1.main-title .glyphicon {
     font-size:13px;
 }
 
-#add-remove-menu .glyphicon{
+#add-remove-menu .glyphicon {
     margin-right:4px;
+}
+
+.dropdown-menu a.disabled {
+  pointer-events:none;
+  color:#dbdbdb;
 }
 
 #lb-grid-list {
