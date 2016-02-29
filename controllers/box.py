@@ -93,3 +93,34 @@ def insert_item():
         redirect(URL('view', args=box.id))
 
     return dict(box=box, form=form)
+
+@auth.requires_login()
+def remove_item():
+    box = load_box(request.args(0), editing=True)
+    constraint = box.itm2box(db.itm2box.itm==db.itm.id)
+    validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Remove from this box')
+
+    if form.process().accepted:
+        item = load_item(form.vars['itm'], editing=True)
+
+        # TODO: Would be better not to show boxes fitting this criteria at all
+        if box.unfiled and item.itm2box.count() == 1:
+            response.flash = 'Cannot remove this item: This is the Unfiled box, and the item is not part of any other boxes.'
+            response.flash_type = 'danger'
+            return dict(box=box, form=form)
+
+        box.itm2box(db.itm2box.itm==item.id).delete()
+
+        if item.itm2box.isempty():
+            unfiled = load_unfiled_box()
+            db.itm2box.insert(itm=item.id, box=unfiled.id)
+            session.flash = 'Item "' + item.name + '" removed successfully and added to the "' + unfiled.name + '" box.'
+
+        else:
+            session.flash = 'Item "' + item.name + '" removed successfully.'
+
+        session.flash_type = 'success'
+        redirect(URL('view', args=box.id))
+
+    return dict(box=box, form=form)

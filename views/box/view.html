@@ -26,7 +26,7 @@
   </button>
   <ul id="add-remove-menu" class="dropdown-menu dropdown-menu-right">
     <li><a href="{{=URL('insert_item', args=box.id)}}"><span class="glyphicon glyphicon-log-in"></span> Insert an item into this box</a></li>
-    <li><a{{if len(items) == 0:}} class="disabled" {{pass}}href="{{=URL('remove_item', args=box.id)}}"><span class="glyphicon glyphicon-log-out"></span> Remove an item from this box</a></li>
+    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item', args=box.id)}}"><span class="glyphicon glyphicon-log-out"></span> Remove an item from this box</a></li>
     <li role="separator" class="divider"></li>
     <li><a href="{{=URL('item', 'new', args=box.id)}}"><span class="glyphicon glyphicon-plus"></span> Add a new item here</a></li>
   </ul>
