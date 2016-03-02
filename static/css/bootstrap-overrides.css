@@ -3,6 +3,10 @@
   background-color: #00607d;
 }
 
+.label-default{
+  background-color: #595959;
+}
+
 .label-primary {
   background-color: #145b98;
 }

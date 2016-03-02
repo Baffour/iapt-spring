@@ -169,6 +169,11 @@ h1.main-title .glyphicon {
     top:5px;
 }
 
+.box-preview .box-attribute-label {
+    float:left;
+    margin: 2px;
+}
+
 .confirmation-form .btn {
     margin-right:5px;
 }

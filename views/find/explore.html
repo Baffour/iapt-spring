@@ -1,0 +1,21 @@
+{{extend 'grid2.html'}}
+
+{{block title}}
+Explore
+{{end}}
+
+
+{{block grid2}}
+{{for explorable in explorables:}}
+<div class="row">
+  {{boxes=explorable}}
+  {{=H2(boxes.label,_class="col-xs-12")}}
+  <div class="col-xs-12">
+    <div id="lb-grid-list" class="row">
+      {{include "find/list.html"}}
+    </div>
+  </div>
+</div>
+
+{{pass}}
+{{end}}

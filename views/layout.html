@@ -17,6 +17,11 @@
     <script src="{{=URL('static','js/jquery.js')}}"></script>
     <script src="{{=URL('static','js/web2py.js')}}"></script>
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-default">
