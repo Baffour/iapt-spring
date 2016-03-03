@@ -22,7 +22,9 @@ def new():
 def view():
     box = load_box(request.args(0))
     guest = not auth.user or auth.user.id != box.auth_user
-    return dict(box=box, guest=guest, items=items_in(box))
+    items = items_in(box)
+    full = len(items) == db(db.itm.auth_user==auth.user).count()
+    return dict(box=box, guest=guest, items=items, full=full)
 
 @auth.requires_login()
 def edit():
@@ -74,7 +76,6 @@ def delete():
 
     return dict(name=box_name, form=form)
 
-# TODO: This should better handle the case where there are no items able to be inserted
 @auth.requires_login()
 def insert_item():
     box = load_box(request.args(0), editing=True)
