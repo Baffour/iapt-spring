@@ -1,22 +1,30 @@
 {{extend 'layout.html'}}
 
 {{block form}}
-{{for n in notifications:}}
-<div class="row">
+{{if not len(notifications):}}
   <div class="col-xs-8 col-xs-offset-2">
-    <div class="panel panel-default">
-      <div class="panel-form">
-        <div class="notif-item{{if n.new:}} new{{pass}}">
-          <h2>{{=n.msg}}</h2>
-          {{if n.link:}}<a href="{{=n.link}}">{{=n.link_text if n.link_text else "Find out more"}}</a>{{pass}}
-          <div class="notif-meta">
-            {{if n.new:}}<span class="label label-warning">New</span>{{pass}}
-            {{=n.created_at}}
+    <div class="alert alert-warning">
+      <p><strong>You have no notifications.</strong></p>
+      <p>Notifications will start to appear as you use the application.</p>
+    </div>
+  </div>
+{{else:}}
+  {{for n in notifications:}}
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-form">
+          <div class="notif-item{{if n.new:}} new{{pass}}">
+            <h2>{{=n.msg}}</h2>
+            {{if n.link:}}<a href="{{=n.link}}">{{=n.link_text if n.link_text else "Find out more"}}</a>{{pass}}
+            <div class="notif-meta">
+              {{if n.new:}}<span class="label label-warning">New</span>{{pass}}
+              {{=n.created_at}}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {{pass}}
 {{end}}

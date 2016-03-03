@@ -35,5 +35,14 @@
 {{end}}
 
 {{block grid}}
+{{if not len(items):}}
+<div class="col-xs-8 col-xs-offset-2">
+  <div class="alert empty-screen alert-warning">
+    <p><strong>This box is empty.</strong></p>
+    <p>You can add items to this box, or create items here, using the <em>Insert, remove or add items</em> button on the top-left of this page.</p>
+  </div>
+</div>
+{{else:}}
 {{include 'item-preview.html'}}
+{{pass}}
 {{end}}

@@ -216,3 +216,7 @@ h1.main-title .glyphicon {
 .notif-item .notif-meta {
   float: right;
 }
+
+.empty-screen.alert {
+  margin-top: 60px;
+}
