@@ -2,7 +2,8 @@
 
 @auth.requires_login()
 def list():
-    boxes = db(db.box.auth_user==auth.user).select(orderby=db.box.name)
+    query = db(db.box.auth_user==auth.user)
+    boxes = query.select().sort(lambda b: (not b.unfiled, b.name.lower))
     return dict(boxes=boxes)
 
 @auth.requires_login()
