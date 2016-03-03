@@ -2,7 +2,7 @@
 
 @auth.requires_login()
 def list():
-    pass
+    return dict()
 
 @auth.requires_login()
 def new():

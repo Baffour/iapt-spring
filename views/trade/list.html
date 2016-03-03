@@ -1,0 +1,20 @@
+{{extend 'grid.html'}}
+
+{{block title}}
+My Trades
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('trade', 'new')}}">
+    <span class="glyphicon glyphicon-retweet"></span>
+    Propose a trade
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+<div class="col-xs-12">
+  TODO: This page will list active trades, and potentially have and want lists as well
+</div>
+{{end}}
