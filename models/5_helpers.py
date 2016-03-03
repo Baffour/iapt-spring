@@ -30,6 +30,11 @@ def items_in(box):
     items_and_boxes = db((db.box.id==db.itm2box.box) & (db.itm2box.itm==db.itm.id) & (db.box.id==box.id))
     return items_and_boxes.select(db.itm.ALL)
 
+def notification_count():
+    if not auth.user:
+        return 0
+    return db((db.notification.auth_user==auth.user) & (db.notification.unread==True)).count()
+
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
    # source:http://www.web2pyslices.com/slice/show/1373/easy-breadcrumbs

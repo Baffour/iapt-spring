@@ -48,9 +48,11 @@
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
               <li>
+                {{ncount = notification_count()}}
                 <a href="{{=URL('notification', 'inbox')}}">
-                  <span id="notif-label" class="label label-info"><span class="glyphicon glyphicon-bell"></span> 4</span>
-                </a>
+                  <div id="notif-label" class="label {{='label-warning' if ncount else 'label-inactive'}}">
+                    <span class="glyphicon glyphicon-bell"></span><span>{{=ncount}}</span>
+                  </div></a>
               </li>
               <li class="dropdown">
                 <a href="{{=URL('default', 'user/profile')}}" data-toggle="dropdown">

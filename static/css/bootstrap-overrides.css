@@ -104,3 +104,7 @@ body {
   /*Purely so HTML_CodeSniffer displays correctly*/
   color: black;
 }
+
+.label-inactive {
+  background-color:#dbdbdb;
+}
