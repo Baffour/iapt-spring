@@ -203,3 +203,16 @@ h1.main-title .glyphicon {
 {
   text-decoration: none;
 }
+
+.notif-item h2 {
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.notif-item.new h2 {
+  font-weight: bold;
+}
+
+.notif-item .notif-meta {
+  float: right;
+}

@@ -49,7 +49,8 @@ db.define_table('want_item',
 db.define_table('notification',
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('msg', type='text', notnull=True, required=True),
-    Field('link', type='string', length=256, notnull=True, required=False),
+    Field('link', type='string', length=256, notnull=False, required=False),
+    Field('link_text', type='string', length=256, notnull=False, required=False),
     Field('created_at', type='datetime', default=request.now, writable=False, readable=False),
     Field('unread', type='boolean', required=True, notnull=True, default=True)
 )

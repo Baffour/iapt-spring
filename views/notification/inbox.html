@@ -1,9 +1,22 @@
-{{extend 'dialog.html'}}
-
-{{block title}}
-{{=auth.user.username}}&rsquo;s Notifications
-{{end}}
+{{extend 'layout.html'}}
 
 {{block form}}
-TODO: Notifications will be listed here
+{{for n in notifications:}}
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-form">
+        <div class="notif-item{{if n.new:}} new{{pass}}">
+          <h2>{{=n.msg}}</h2>
+          {{if n.link:}}<a href="{{=n.link}}">{{=n.link_text if n.link_text else "Find out more"}}</a>{{pass}}
+          <div class="notif-meta">
+            {{if n.new:}}<span class="label label-warning">New</span>{{pass}}
+            {{=n.created_at}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{pass}}
 {{end}}
