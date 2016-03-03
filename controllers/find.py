@@ -1,7 +1,7 @@
 # IAPT Spring Assessment - Group 13
 
 def search():
-    pass
+    return dict()
 
 def explore():
     newest=__get_n_newest_boxes(2)
