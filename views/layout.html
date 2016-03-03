@@ -47,7 +47,7 @@
               <li {{if rc == 'trade':}}class="active"{{pass}}>
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
-              <li>
+              <li {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
                 <a href="{{=URL('notification', 'inbox')}}">
                   <div id="notif-label" class="label {{='label-warning' if ncount else 'label-inactive'}}">
