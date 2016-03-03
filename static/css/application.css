@@ -104,46 +104,46 @@ h1.main-title .glyphicon {
   color:#dbdbdb;
 }
 
-#lb-grid-list {
+.lb-grid-list. {
     list-style:none;
     padding:0;
 }
 
-#lb-grid-list .thumbnail {
+.lb-grid-list .thumbnail {
     text-align:center;
     position:relative;
 }
 
-#lb-grid-list .thumbnail .preview-image {
+.lb-grid-list .thumbnail .preview-image {
     display:block;
     max-height:195px;
     overflow:hidden;
     margin-bottom:5px;
 }
 
-#lb-grid-list .thumbnail .preview-name, #lb-grid-list .thumbnail .preview-detail {
+.lb-grid-list .thumbnail .preview-name, .lb-grid-list .thumbnail .preview-detail {
     display:block;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
-#lb-grid-list .thumbnail .preview-name {
+.lb-grid-list .thumbnail .preview-name {
     font-size:16px;
     color:#333;
     margin-bottom:5px;
 }
 
-#lb-grid-list .thumbnail .preview-detail {
+.lb-grid-list .thumbnail .preview-detail {
     margin-bottom:2px;
 }
 
-#lb-grid-list .thumbnail .preview-secondary-link {
+.lb-grid-list .thumbnail .preview-secondary-link {
     display:block;
     margin-bottom:5px;
 }
 
-#lb-grid-list .thumbnail a .preview-icon {
+.lb-grid-list .thumbnail a .preview-icon {
     font-size:48px;
     display:block;
     margin-top:10px;
@@ -151,15 +151,15 @@ h1.main-title .glyphicon {
     color:#777;
 }
 
-#lb-grid-list .thumbnail a:hover .preview-icon {
+.lb-grid-list .thumbnail a:hover .preview-icon {
     color:#333;
 }
 
-#lb-grid-list .thumbnail.box-preview a:hover {
+.lb-grid-list .thumbnail.box-preview a:hover {
     text-decoration:none;
 }
 
-#lb-grid-list .thumbnail.box-preview a:hover div {
+.lb-grid-list .thumbnail.box-preview a:hover div {
     text-decoration:underline;
 }
 
@@ -171,9 +171,35 @@ h1.main-title .glyphicon {
 
 .box-preview .box-attribute-label {
     float:left;
-    margin: 2px;
+    margin: 2px;;
 }
 
 .confirmation-form .btn {
     margin-right:5px;
+}
+
+.explore-panel .panel-heading
+{
+  font-size: 18px;
+}
+
+.explore-panel .panel-body
+{
+  padding:5px;
+}
+
+.explore-thumbnail
+{
+  min-height: 200px;
+}
+
+.explore-thumbnail hr
+{
+  margin: 20px 0;
+  border-color: #bbb;
+}
+
+.tooltip-inner
+{
+  text-decoration: none;
 }

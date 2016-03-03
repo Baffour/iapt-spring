@@ -3,7 +3,7 @@
     <div class="thumbnail">
       <a href="{{=URL('item', 'view', args=item.id)}}" class="preview-name">{{=item.name}}</a>
       <a class="preview-image" href="{{=URL('item', 'view', args=item.id)}}">
-        <img src="{{=URL('item', 'image', args=item.thumbnail)}}">
+        <img alt="" src="{{=URL('item', 'image', args=item.thumbnail)}}">
       </a>
       <div class="preview-detail">{{=item.itm_type}}</div>
       <div class="preview-detail">£{{=item.monetary_value}}</div>

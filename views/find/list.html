@@ -6,10 +6,10 @@
     <a class="preview-name" href="{{=URL('box', 'view/' + str(box.id))}}">
       <span class="preview-icon glyphicon glyphicon-inbox"></span>
       <div>{{=box.name}}</div>
+      <hr/>
       <span data-toggle="tooltip" title="User" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-user"></span> {{=box.auth_user.username}}</span>
       <span data-toggle="tooltip" title="Items" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-unchecked"></span> {{=box.quantity}} Items</span>
       <span data-toggle="tooltip" title="Date Created" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-time"></span> Created {{=box.created_at.strftime("%d/%m/%Y")}}</span>
-      <span data-toggle="tooltip" title="Monetary Value" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-gbp"></span>{{=box.monetary_value}}</span>
     </a>
   </div>
 </div>

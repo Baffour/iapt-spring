@@ -19,6 +19,26 @@ a
 {
   color: #145b98;
 }
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover
+{
+  color:#333;
+}
+
+.navbar-default .navbar-nav>li>a
+{
+  color:#555;
+}
+
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover
+{
+  /*Since text is darkened for contrast reasons, background-color is used for feedback */
+  background-color: rgba(208, 216, 255, 0.38);
+}
 
 
 /* Disable bootstrap responsiveness */
