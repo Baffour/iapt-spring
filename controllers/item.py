@@ -6,6 +6,28 @@ def view():
     boxes = item.itm2box(db.itm2box.box==db.box.id).select(db.box.id, db.box.name, db.box.unfiled)
     return dict(item=item, guest=guest, boxes=boxes.sort(lambda b: (not b.unfiled, b.name.lower())))
 
+def edit():
+    pass
+
+@auth.requires_login()
+def delete():
+    item = load_item(request.args(0), editing=True)
+
+    form = FORM.confirm('Delete', {'Cancel': URL('view', args=item.id)})
+    form['_class'] = 'confirmation-form'
+    form[0]['_class'] = 'btn btn-danger'
+    form[1]['_class'] = 'btn btn-default'
+
+    if form.accepted:
+        item_name = item.name
+        del db.itm[item.id]
+
+        session.flash = 'Item "' + item_name + '" successfully deleted.'
+        session.flash_type = 'success'
+        redirect(URL('box', 'list')) # TODO: Is there a better destination possible?
+
+    return dict(name=item.name, form=form)
+
 @auth.requires_login()
 def new():
     # There's no actual logic needed here, the page is just a list of links
