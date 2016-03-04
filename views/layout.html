@@ -47,6 +47,7 @@
               <li {{if rc == 'trade':}}class="active"{{pass}}>
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
+              {{if not rc == 'admin':}}
               <li {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
                 <a href="{{=URL('notification', 'inbox')}}">
@@ -54,6 +55,7 @@
                     <span class="glyphicon glyphicon-bell"></span><span>{{=ncount}}</span>
                   </div></a>
               </li>
+              {{pass}}
               <li class="dropdown">
                 <a href="{{=URL('default', 'user/profile')}}" data-toggle="dropdown">
                   <span class="dropdown-user-icon glyphicon glyphicon-user"></span>
