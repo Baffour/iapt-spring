@@ -1,8 +1,10 @@
 # IAPT Spring Assessment - Group 13
 
-@auth.requires_login()
-def list():
-    pass
+def view():
+    item = load_item(request.args(0))
+    guest = not auth.user or auth.user.id != item.auth_user
+    boxes = item.itm2box(db.itm2box.box==db.box.id).select(db.box.id, db.box.name, db.box.unfiled)
+    return dict(item=item, guest=guest, boxes=boxes.sort(lambda b: (not b.unfiled, b.name.lower())))
 
 @auth.requires_login()
 def new():
