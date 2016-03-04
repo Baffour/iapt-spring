@@ -24,20 +24,6 @@ def new_of_type():
         db.itm.thumbnail,
         submit_button='Add item'
     )
-    form.custom.widget.name['_autofocus'] = True
-
-    # Move the unfiled box to the top of the list of boxes
-    unfiled = load_unfiled_box()
-    box_picker = form.element('#no_table_box')
-    box_picker.element('option[value=' + str(unfiled.id) + ']', replace=None)
-    box_picker.insert(0, OPTION(unfiled.name, _value=unfiled.id))
-
-    # If we're creating this comic within a specified box (e.g. from a box's "New comic here" link)
-    # then that box will be selected by default
-    if 'box' in request.vars:
-        in_box_id = request.vars['box']
-        in_box = load_box(in_box_id, editing=True) # we already have the id, but load the box to check permissions
-        box_picker.element('option[value=' + str(in_box.id) + ']')['_selected'] = 'selected'
 
     if form.process().accepted:
         name = form.vars['name']
@@ -55,11 +41,27 @@ def new_of_type():
         session.flash = 'New item "'+ name + '" created successfully.'
         session.flash_type = 'success'
 
-        redirect(URL('item', 'view', args=form.vars['id']))
+        redirect(URL('item', 'view', args=item_id))
+        return
 
     elif form.errors:
         response.flash = 'Invalid details entered. See the annotations below and try again.'
         response.flash_type = 'danger'
+
+    form.custom.widget.name['_autofocus'] = True
+
+    # Move the unfiled box to the top of the list of boxes
+    unfiled = load_unfiled_box()
+    box_picker = form.element('#no_table_box')
+    box_picker.element('option[value=' + str(unfiled.id) + ']', replace=None)
+    box_picker.insert(0, OPTION(unfiled.name, _value=unfiled.id))
+
+    # If we're creating this comic within a specified box (e.g. from a box's "New comic here" link)
+    # then that box will be selected by default
+    if 'box' in request.vars:
+        in_box_id = request.vars['box']
+        in_box = load_box(in_box_id, editing=True) # we already have the id, but load the box to check permissions
+        box_picker.element('option[value=' + str(in_box.id) + ']')['_selected'] = 'selected'
 
     return dict(type=type, form=form)
 
