@@ -220,3 +220,18 @@ h1.main-title .glyphicon {
 .empty-screen.alert {
   margin-top: 60px;
 }
+
+.new-type-btn {
+  display:block;
+}
+
+.new-type-btn .glyphicon {
+  display:block;
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.panel-heading .panel-meta {
+  float:right;
+  font-weight:normal;
+}

@@ -6,9 +6,17 @@ def list():
 
 @auth.requires_login()
 def new():
+    # There's no actual logic needed here, the page is just a list of links
+    return dict()
+
+@auth.requires_login()
+def new_of_type():
+    type = request.args(0)
+    if not type or type not in ITEM_TYPES:
+        raise HTTP(400)
+
     form = SQLFORM.factory(
         db.itm.name,
-        db.itm.itm_type,
         db.itm.itm_condition,
         db.itm.monetary_value,
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
@@ -35,7 +43,7 @@ def new():
         name = form.vars['name']
         item_id = db.itm.insert(
             name=name,
-            itm_type=form.vars['itm_type'],
+            itm_type=type,
             itm_condition=form.vars['itm_condition'],
             monetary_value=form.vars['monetary_value'],
             description=form.vars['description'],
@@ -53,7 +61,7 @@ def new():
         response.flash = 'Invalid details entered. See the annotations below and try again.'
         response.flash_type = 'danger'
 
-    return dict(form=form)
+    return dict(type=type, form=form)
 
 def image():
     file = request.args(0)
