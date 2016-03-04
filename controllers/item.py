@@ -26,8 +26,8 @@ def new():
 
     # If we're creating this comic within a specified box (e.g. from a box's "New comic here" link)
     # then that box will be selected by default
-    in_box_id = request.args(0)
-    if in_box_id:
+    if 'box' in request.vars:
+        in_box_id = request.vars['box']
         in_box = load_box(in_box_id, editing=True) # we already have the id, but load the box to check permissions
         box_picker.element('option[value=' + str(in_box.id) + ']')['_selected'] = 'selected'
 
