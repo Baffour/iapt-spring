@@ -1,0 +1,32 @@
+{{extend 'grid.html'}}
+
+{{block title}}
+{{if guest:}}{{=user.username}}&rsquo;s{{else:}}My{{pass}} Have List
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    Add or remove items <span class="caret"></span>
+  </button>
+  <ul id="add-remove-menu" class="dropdown-menu dropdown-menu-right">
+    <li><a{{if full:}} class="disabled"{{pass}} href="{{=URL('insert_item')}}"><span class="glyphicon glyphicon-log-in"></span> Add an existing item to this list</a></li>
+    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item')}}"><span class="glyphicon glyphicon-log-out"></span> Remove an item from this list</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="{{=URL('item', 'new', vars=dict(list='have'))}}"><span class="glyphicon glyphicon-plus"></span> Add a new item here</a></li>
+  </ul>
+</div>
+{{end}}
+
+{{block grid}}
+{{if not len(items):}}
+<div class="col-xs-8 col-xs-offset-2">
+  <div class="alert empty-screen alert-warning">
+    <p><strong>Your Have List is empty</strong></p>
+    <p>You can add items to this list, or create items here, using the <em>Add or remove items</em> button on the top-left of this page.</p>
+  </div>
+</div>
+{{else:}}
+{{include 'item-preview.html'}}
+{{pass}}
+{{end}}

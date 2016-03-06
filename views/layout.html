@@ -53,11 +53,11 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-left">
-                  <li><a href="{{=URL('list', 'want')}}">
+                  <li><a href="{{=URL('want', 'view', args=auth.user.id)}}">
                     My Want List<br />
                     <small>(items I'd like to acquire)</small>
                   </a></li>
-                  <li><a href="{{=URL('list', 'have')}}">
+                  <li><a href="{{=URL('have', 'view', args=auth.user.id)}}">
                     My Have List<br />
                     <small>(items I'd like to trade away)</small>
                   </a></li>
