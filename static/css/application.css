@@ -220,3 +220,8 @@ h1.main-title .glyphicon {
 .empty-screen.alert {
   margin-top: 60px;
 }
+
+.navbar-form .search-form input
+{
+  width:250px;
+}
