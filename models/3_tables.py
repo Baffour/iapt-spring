@@ -3,6 +3,10 @@
 ITEM_TYPES = ['book', 'cd', 'dvd', 'game']
 ITEM_CONDITIONS = ['unspecified', 'poor', 'reasonable', 'good', 'mint']
 
+EXTRA_FIELDS = {
+    'cd' : [Field('artist', type='string', length=256, notnull=True, required=False)]
+}
+
 db.define_table('itm',
     Field('name', type='string', length=256, notnull=True, required=True),
     Field('itm_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES), label="Item Type"),
@@ -11,7 +15,8 @@ db.define_table('itm',
     Field('itm_condition', type='string', notnull=True, required=True, default='unspecified', requires=IS_IN_SET(ITEM_CONDITIONS), label="Condition"),
     Field('description', type='text', required=True, comment="Tell your item's story in your own words"),
     Field('thumbnail', type='upload', uploadfolder=uploadfolder, notnull=True),
-    Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False)
+    Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False),
+    *[field for fields in EXTRA_FIELDS.values() for field in fields]
 )
 
 db.define_table('box',

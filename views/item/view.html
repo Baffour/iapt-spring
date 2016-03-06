@@ -32,6 +32,14 @@
           <td>Type</td>
           <td>{{=item.itm_type}}</td>
         </tr>
+        {{if item.itm_type in EXTRA_FIELDS:}}
+        {{for field in EXTRA_FIELDS[item.itm_type]:}}
+        <tr>
+          <td>{{=field.label}}</td>
+          <td>{{=item[field.name]}}</td>
+        </tr>
+        {{pass}}
+        {{pass}}
         <tr>
           <td>Condition</td>
           <td>{{=item.itm_condition}}</td>

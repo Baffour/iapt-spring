@@ -39,25 +39,32 @@ def new_of_type():
     if not type or type not in ITEM_TYPES:
         raise HTTP(400)
 
-    form = SQLFORM.factory(
+    fields = [db.itm.name]
+    extra_fields = [f for f in EXTRA_FIELDS[type]] if type in EXTRA_FIELDS else []
+    fields += extra_fields
+    fields += [
         db.itm.name,
         db.itm.itm_condition,
         db.itm.monetary_value,
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,
-        submit_button='Add item'
-    )
+    ]
+
+    form = SQLFORM.factory(*fields, submit_button='Add item')
 
     if form.process().accepted:
         name = form.vars['name']
+        extra_field_names = [f.name for f in extra_fields]
+        extra_field_vals = dict((k, v) for k, v in form.vars.items() if k in extra_field_names)
         item_id = db.itm.insert(
             name=name,
             itm_type=type,
             itm_condition=form.vars['itm_condition'],
             monetary_value=form.vars['monetary_value'],
             description=form.vars['description'],
-            thumbnail=form.vars['thumbnail']
+            thumbnail=form.vars['thumbnail'],
+            **extra_field_vals
         )
 
         db.itm2box.insert(itm=item_id, box=form.vars['box'])
