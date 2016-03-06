@@ -47,6 +47,22 @@
               <li {{if rc == 'trade':}}class="active"{{pass}}>
                 <a href="{{=URL('trade', 'list')}}">My Trades</a>
               </li>
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown">
+                  My Lists
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                  <li><a href="{{=URL('list', 'want')}}">
+                    My Want List<br />
+                    <small>(items I'd like to acquire)</small>
+                  </a></li>
+                  <li><a href="{{=URL('list', 'have')}}">
+                    My Have List<br />
+                    <small>(items I'd like to trade away)</small>
+                  </a></li>
+                </ul>
+              </li>
               {{if not rc == 'admin':}}
               <li {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
