@@ -1,0 +1,11 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Delete item &ldquo;{{=name}}&rdquo;
+{{end}}
+
+{{block form}}
+<p>Are you sure you want to delete the item &ldquo;{{=name}}&rdquo;?</p>
+<p><strong>This action cannot be undone.</strong>
+{{=form}}
+{{end}}

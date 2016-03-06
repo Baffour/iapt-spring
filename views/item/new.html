@@ -4,6 +4,36 @@
 Add a new item
 {{end}}
 
+{{block title_meta}}
+Step 1 of 2
+{{end}}
+
 {{block form}}
-{{=form}}
+<p>Select the type of item you wish to add:</p>
+<div class="row">
+  <div class="col-xs-3">
+    <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='book', vars=request.vars)}}">
+      <span class="glyphicon glyphicon-book"></span>
+      Book
+    </a>
+  </div>
+  <div class="col-xs-3">
+    <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='cd', vars=request.vars)}}">
+      <span class="glyphicon glyphicon-cd"></span>
+      CD
+    </a>
+  </div>
+  <div class="col-xs-3">
+    <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='dvd', vars=request.vars)}}">
+      <span class="glyphicon glyphicon-film"></span>
+      DVD
+    </a>
+  </div>
+  <div class="col-xs-3">
+    <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='game', vars=request.vars)}}">
+      <span class="glyphicon glyphicon-modal-window"></span>
+      Game
+    </a>
+  </div>
+</div>
 {{end}}

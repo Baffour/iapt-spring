@@ -39,12 +39,17 @@
 }
 
 div.panel div.panel-form {
-    margin:20px;
+  margin:20px;
 }
 
 #notif-label {
   font-size:100%;
   font-weight:normal;
+}
+
+.active #notif-label {
+  color:inherit;
+  background-color:transparent;
 }
 
 #notif-label .glyphicon {
@@ -56,30 +61,30 @@ div.panel div.panel-form {
 }
 
 div.flash:hover {
-    cursor:pointer;
+  cursor:pointer;
 }
 
 div.flash span#closeflash {
-    float:right;
+  float:right;
 }
 
 #toolbox {
-    text-align:right;
-    margin-top:4px;
+  text-align:right;
+  margin-top:4px;
 }
 
 #toolbox .btn {
-    font-size:13px;
+  font-size:13px;
 }
 
 #toolbox .btn-group {
-    margin-left:5px;
+  margin-left:5px;
 }
 
 h1.main-title {
-    font-size:32px;
-    margin-top:0;
-    margin-bottom:0;
+  font-size:32px;
+  margin-top:0;
+  margin-bottom:0;
 }
 
 h1.main-title .glyphicon {
@@ -88,15 +93,15 @@ h1.main-title .glyphicon {
 }
 
 #header-row {
-    margin-bottom:20px;
+  margin-bottom:20px;
 }
 
 #add-remove-menu {
-    font-size:13px;
+  font-size:13px;
 }
 
 #add-remove-menu .glyphicon {
-    margin-right:4px;
+  margin-right:4px;
 }
 
 .dropdown-menu a.disabled {
@@ -105,102 +110,97 @@ h1.main-title .glyphicon {
 }
 
 .lb-grid-list. {
-    list-style:none;
-    padding:0;
+  list-style:none;
+  padding:0;
 }
 
 .lb-grid-list .thumbnail {
-    text-align:center;
-    position:relative;
+  text-align:center;
+  position:relative;
 }
 
 .lb-grid-list .thumbnail .preview-image {
-    display:block;
-    max-height:195px;
-    overflow:hidden;
-    margin-bottom:5px;
+  display:block;
+  max-height:195px;
+  overflow:hidden;
+  margin-bottom:5px;
 }
 
 .lb-grid-list .thumbnail .preview-name, .lb-grid-list .thumbnail .preview-detail {
-    display:block;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .lb-grid-list .thumbnail .preview-name {
-    font-size:16px;
-    color:#333;
-    margin-bottom:5px;
+  font-size:16px;
+  color:#333;
+  margin-bottom:5px;
 }
 
 .lb-grid-list .thumbnail .preview-detail {
-    margin-bottom:2px;
+  margin-bottom:2px;
 }
 
 .lb-grid-list .thumbnail .preview-secondary-link {
-    display:block;
-    margin-bottom:5px;
+  display:block;
+  margin-bottom:5px;
 }
 
 .lb-grid-list .thumbnail a .preview-icon {
-    font-size:48px;
-    display:block;
-    margin-top:10px;
-    margin-bottom:10px;
-    color:#777;
+  font-size:48px;
+  display:block;
+  margin-top:10px;
+  margin-bottom:10px;
+  color:#777;
 }
 
 .lb-grid-list .thumbnail a:hover .preview-icon {
-    color:#333;
+  color:#333;
 }
 
 .lb-grid-list .thumbnail.box-preview a:hover {
-    text-decoration:none;
+  text-decoration:none;
 }
 
 .lb-grid-list .thumbnail.box-preview a:hover div {
-    text-decoration:underline;
+  text-decoration:underline;
 }
 
 .box-preview .private-indicator {
-    position:absolute;
-    left:5px;
-    top:5px;
+  position:absolute;
+  left:5px;
+  top:5px;
 }
 
 .box-preview .box-attribute-label {
-    float:left;
-    margin: 2px;;
+  float:left;
+  margin: 2px;;
 }
 
 .confirmation-form .btn {
-    margin-right:5px;
+  margin-right:5px;
 }
 
-.explore-panel .panel-heading
-{
+.explore-panel .panel-heading {
   font-size: 18px;
 }
 
-.explore-panel .panel-body
-{
+.explore-panel .panel-body {
   padding:5px;
 }
 
-.explore-thumbnail
-{
+.explore-thumbnail {
   min-height: 200px;
 }
 
-.explore-thumbnail hr
-{
+.explore-thumbnail hr {
   margin: 20px 0;
   border-color: #bbb;
 }
 
-.tooltip-inner
-{
+.tooltip-inner {
   text-decoration: none;
 }
 
@@ -224,4 +224,60 @@ h1.main-title .glyphicon {
 .navbar-form .search-form input
 {
   width:250px;
+}
+
+.new-type-btn {
+  display:block;
+}
+
+.new-type-btn .glyphicon {
+  display:block;
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.panel-heading .panel-meta {
+  float:right;
+  font-weight:normal;
+}
+
+#item-info tr td:first-child {
+    width:130px;
+    text-align:right;
+    font-weight:bold;
+}
+
+#item-info tr td ul {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+}
+
+#item-info-panel, #item-cover {
+    margin-top:10px;
+}
+
+#item-boxes-panel .panel-heading a.btn {
+    float:right;
+    position:relative;
+    top:-4px;
+    left:6px;
+}
+
+#item-boxes td:first-child {
+    vertical-align:middle;
+    font-size:16px;
+}
+
+#item-boxes td:first-child .glyphicon {
+    margin-left:8px;
+    margin-right:8px;
+    font-size:22px;
+    line-height:16px;
+    top:4px;
+}
+
+#item-boxes td:last-child {
+    text-align:right;
+
 }
