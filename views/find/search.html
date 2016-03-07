@@ -1,7 +1,14 @@
-{{extend 'layout.html'}}
-
-<div class="col-xs-8 col-xs-offset-2">
-  <div class="alert alert-warning">
-    <p><strong>TODO: Implement search functionality</strong></p>
-  </div>
+{{extend 'grid.html'}}
+<div class="alert alert-warning">
+  <p><strong>TODO: Implement search functionality</strong></p>
 </div>
+{{block grid}}
+<div class="col-xs-8 col-xs-offset-2">
+  {{if results is None:}}
+  {{elif len(results)==0:}}
+  {{else:}}
+  {{items=results}}
+  {{include 'item-preview.html'}}
+  {{pass}}
+</div>
+{{end}}

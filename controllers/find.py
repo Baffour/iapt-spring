@@ -1,7 +1,10 @@
 # IAPT Spring Assessment - Group 13
 
 def search():
-    return dict()
+    results=None
+    db_boxes=db(db.box.private == False).select()
+    results=[item for box_items in [items_in(box) for box in db_boxes] for item in box_items]
+    return dict(results=results)
 
 def explore():
     newest=__get_n_newest_boxes(2)

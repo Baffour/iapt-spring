@@ -281,3 +281,13 @@ h1.main-title .glyphicon {
     text-align:right;
 
 }
+
+.hide-label
+{
+position: absolute;
+left: 0;
+top: -500px;
+width: 1px;
+height: 1px;
+overflow: hidden;
+}
