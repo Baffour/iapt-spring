@@ -1,0 +1,14 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Insert  &ldquo;{{=item.name}}&rdquo; into the box
+{{end}}
+
+{{block form}}
+<p>{{=constraint}}</p>
+<p>The item named above will be added to the box selected below.</p>
+<p>It will also remain in any boxes that it is currently in. To remove an item from a box, select the &ldquo;Remove from this box&rdquo; option when viewing the relevant item.</p>
+{{=form}}
+{{end}}
+
+

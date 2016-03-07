@@ -6,8 +6,24 @@ def view():
     boxes = item.itm2box(db.itm2box.box==db.box.id).select(db.box.id, db.box.name, db.box.unfiled)
     return dict(item=item, guest=guest, boxes=boxes.sort(lambda b: (not b.unfiled, b.name.lower())))
 
+@auth.requires_login()
 def edit():
-    pass
+    item = load_item(request.args(0), editing=True)
+
+    record = None
+    if db((db.itm.id == item.id) & (db.itm.auth_user == auth.user)).select(db.itm.ALL):
+        record = db.itm(item.id)
+
+    if record:
+        form = SQLFORM(db.itm, record, showid=False, fields=['name', 'itm_condition', 'monetary_value',
+                                                                     'description', 'thumbnail'])
+        if form.accepts(request, session):
+            form = redirect(URL('item', 'view', args=item.id))
+        elif form.errors:
+            response.flash = 'Invalid details entered. See the annotations below and try again.'
+            response.flash_type = 'danger'
+
+    return dict(form=form, itemType=item.itm_type)
 
 @auth.requires_login()
 def delete():
@@ -99,3 +115,45 @@ def new_of_type():
 def image():
     file = request.args(0)
     return response.stream(os.path.join(uploadfolder, file))
+
+@auth.requires_login()
+def remove_from_box():
+    item = load_item(request.args(0), editing=False)
+    box = load_box(request.args(1), editing=False)
+
+    # Redirect to item delete if that is the last box that item belongs to
+    if db(db.itm2box.itm == item.id).count() == 1:
+        redirect(URL('item', 'delete', args=item.id))
+        return dict()
+
+    db((db.itm2box.itm == item.id) & (db.itm2box.box == box.id)).delete()
+    db.commit()
+
+    session.flash = "Item " + item.name + " removed from " + box.name + " box successfully."
+    session.flash_type = 'success'
+    redirect(URL('item', 'view', args=item.id))
+
+    return dict()
+
+
+@auth.requires_login()
+def add_to_box():
+
+    item = load_item(request.args(0), editing=True)
+    boxes = db((db.box.id==db.itm2box.box) & (db.itm2box.itm==item.id)).select(db.box.id)
+
+    constraint = db((db.box.auth_user == auth.user) & (~db.box.id.belongs(list(boxes))))
+
+    validator = IS_IN_DB(constraint, 'box.id', 'box.name', zero=None, orderby='box.name')
+    form = SQLFORM.factory(Field('box', 'reference box', requires=validator, label="Box"),
+                           submit_button='Add to this box')
+
+    if form.process().accepted:
+        box = load_box(form.vars['box'], editing=True)
+        db.itm2box.insert(itm=item.id, box=box.id)
+
+        session.flash = 'Item "' + item.name + '" added to "' + box.name + '" box successfully.'
+        session.flash_type = 'success'
+        redirect(URL('item', 'view', args=item.id))
+
+    return dict(item=item, form=form, constraint=constraint)
