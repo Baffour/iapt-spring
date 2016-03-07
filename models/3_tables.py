@@ -4,7 +4,7 @@ ITEM_TYPES = ['book', 'cd', 'dvd', 'game']
 ITEM_CONDITIONS = ['unspecified', 'poor', 'reasonable', 'good', 'mint']
 
 EXTRA_FIELDS = {
-    'cd' : [Field('artist', type='string', length=256, notnull=True, required=False)]
+    'cd' : [Field('artist', type='string', length=256, notnull=False, required=False)]
 }
 
 db.define_table('itm',
