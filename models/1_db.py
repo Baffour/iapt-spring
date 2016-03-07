@@ -20,11 +20,11 @@ uploadfolder = os.path.join(request.folder,'uploads')
 # Define a custom validator for currency values
 class IS_CURRENCY_VALUE(object):
     def __call__(self, value):
-        error_str = 'Enter a currency value, e.g. "2.50"'
+        error_str = 'Enter a currency value, e.g. "£2.50"'
         if value is None or type(value) != str:
             return None, error_str
 
-        regex = re.compile(r"^([0-9]+)(\.[0-9][0-9])?$")
+        regex = re.compile(r"^£?([0-9]+)(\.[0-9][0-9])?$")
         match = regex.match(value)
         if not match:
             return None, error_str

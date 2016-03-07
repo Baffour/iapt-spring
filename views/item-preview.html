@@ -6,7 +6,7 @@
         <img alt="" src="{{=URL('item', 'image', args=item.thumbnail)}}">
       </a>
       <div class="preview-detail">{{=item.itm_type}}</div>
-      <div class="preview-detail">£{{=format_pence_as_pounds(item.monetary_value)}}</div>
+      <div class="preview-detail">{{=format_pence_as_pounds(item.monetary_value)}}</div>
       <a class="preview-secondary-link" href="{{=URL('item', 'view', args=item.id)}}">View item</a>
     </div>
   </div>
