@@ -1,11 +1,22 @@
 # IAPT Spring Assessment - Group 13
 
+import copy
+
 ITEM_TYPES = ['book', 'cd', 'dvd', 'game']
 ITEM_CONDITIONS = ['unspecified', 'poor', 'reasonable', 'good', 'mint']
 
 EXTRA_FIELDS = {
-    'cd' : [Field('artist', type='string', length=256, notnull=False, required=False)]
+    'cd' : [Field('artist', type='string', length=256, notnull=True, required=False)]
 }
+
+def _flatten_and_make_nullable(list):
+    out = []
+    for fields in EXTRA_FIELDS.values():
+        for field in fields:
+            copied = copy.copy(field)
+            copied.notnull = False
+            out.append(copied)
+    return out
 
 db.define_table('itm',
     Field('name', type='string', length=256, notnull=True, required=True),
@@ -16,7 +27,7 @@ db.define_table('itm',
     Field('description', type='text', required=True, comment="Tell your item's story in your own words"),
     Field('thumbnail', type='upload', uploadfolder=uploadfolder, notnull=True),
     Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False),
-    *[field for fields in EXTRA_FIELDS.values() for field in fields]
+    *_flatten_and_make_nullable(EXTRA_FIELDS)
 )
 
 db.define_table('box',
