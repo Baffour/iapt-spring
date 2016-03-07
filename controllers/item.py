@@ -16,7 +16,7 @@ def edit():
     fields += [
         db.itm.name,
         db.itm.itm_condition,
-        db.itm.monetary_value,
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
         db.itm.description,
         Field('thumbnail', type='upload', uploadfolder=uploadfolder, label="Thumbnail (uploaded file will replace existing image)")
     ]
@@ -54,7 +54,7 @@ def edit():
     # Fill form with the item's current attributes
     form.element('input[name=name]')['_value'] = item.name
     form.element('select[name=itm_condition] option[value={}]'.format(item.itm_condition))['_selected'] = True
-    form.element('input[name=monetary_value]')['_value'] = item.monetary_value
+    form.element('input[name=monetary_value]')['_value'] = format_pence_as_pounds(item.monetary_value)
     form.element('textarea[name=description]').append(item.description)
 
     for field in extra_fields:
@@ -98,7 +98,7 @@ def new_of_type():
     fields += [
         db.itm.name,
         db.itm.itm_condition,
-        db.itm.monetary_value,
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,
