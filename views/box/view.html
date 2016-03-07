@@ -23,10 +23,10 @@
 </div>
 <div class="btn-group">
   <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    Insert, remove or add items <span class="caret"></span>
+    Add or remove items <span class="caret"></span>
   </button>
   <ul id="add-remove-menu" class="dropdown-menu dropdown-menu-right">
-    <li><a{{if full:}} class="disabled"{{pass}} href="{{=URL('insert_item', args=box.id)}}"><span class="glyphicon glyphicon-log-in"></span> Insert an item into this box</a></li>
+    <li><a{{if full:}} class="disabled"{{pass}} href="{{=URL('insert_item', args=box.id)}}"><span class="glyphicon glyphicon-log-in"></span> Add an existing item to this box</a></li>
     <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item', args=box.id)}}"><span class="glyphicon glyphicon-log-out"></span> Remove an item from this box</a></li>
     <li role="separator" class="divider"></li>
     <li><a href="{{=URL('item', 'new', vars=dict(box=box.id))}}"><span class="glyphicon glyphicon-plus"></span> Add a new item here</a></li>
