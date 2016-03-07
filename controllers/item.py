@@ -11,7 +11,7 @@ def edit():
     item = load_item(request.args(0), editing=True)
 
     fields = [db.itm.name]
-    extra_fields = [f for f in EXTRA_FIELDS[type]] if type in EXTRA_FIELDS else []
+    extra_fields = _extra_fields_for(item.itm_type)
     fields += extra_fields
     fields += [
         db.itm.name,
@@ -58,7 +58,7 @@ def edit():
     form.element('textarea[name=description]').append(item.description)
 
     for field in extra_fields:
-        form.element('input[name={}]'.format(field.name))['_value'] = itm[field.name]
+        form.element('input[name={}]'.format(field.name))['_value'] = item[field.name]
 
     return dict(item=item, form=form)
 
@@ -93,7 +93,7 @@ def new_of_type():
         raise HTTP(400)
 
     fields = [db.itm.name]
-    extra_fields = [f for f in EXTRA_FIELDS[type]] if type in EXTRA_FIELDS else []
+    extra_fields = _extra_fields_for(type)
     fields += extra_fields
     fields += [
         db.itm.name,
@@ -194,3 +194,6 @@ def add_to_box():
         redirect(URL('item', 'view', args=item.id))
 
     return dict(item=item, form=form, constraint=constraint)
+
+def _extra_fields_for(typ):
+    return [f for f in EXTRA_FIELDS[typ]] if typ in EXTRA_FIELDS else []
