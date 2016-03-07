@@ -28,12 +28,48 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <a role="logo" href="/{{=request.application}}/" class="navbar-brand">{{=APP_NAME}}</a>
+            <a href="/{{=request.application}}/" class="navbar-brand">{{=APP_NAME}}</a>
 
+            <ul class="nav navbar-nav">
+              <li {{if rc == 'find' and rf == 'explore':}}class="active"{{pass}}>
+                <a href="{{=URL('find', 'explore')}}">Explore</a>
+              </li>
+            </ul>
+
+            <form enctype="multipart/form-data" action="{{=URL('find','search')}}" class="navbar-form navbar-left search-form" role="search">
+                <div class="form-group">
+                  <label for="search-query" class="hide-label">Search Query</label>
+                  <input id="search-query" name="query" type="text" class="form-control" placeholder="Search...">
+                </div>
+                <label for="search-submit" class="hide-label">Submit Search</label>
+                <button aria-label="search button" id="search-submit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+
+            </form>
 
             <ul class="nav navbar-nav navbar-right">
               {{if auth.user:}}
-
+              <li {{if rc == 'box':}}class="active"{{pass}}>
+                <a href="{{=URL('box', 'list')}}">My Boxes</a>
+              </li>
+              <li {{if rc == 'trade':}}class="active"{{pass}}>
+                <a href="{{=URL('trade', 'list')}}">My Trades</a>
+              </li>
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown">
+                  My Lists
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                  <li><a href="{{=URL('want', 'view', args=auth.user.id)}}">
+                    My Want List<br />
+                    <small>(items I'd like to acquire)</small>
+                  </a></li>
+                  <li><a href="{{=URL('have', 'view', args=auth.user.id)}}">
+                    My Have List<br />
+                    <small>(items I'd like to trade away)</small>
+                  </a></li>
+                </ul>
+              </li>
               {{if not rc == 'admin':}}
               <li {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
@@ -65,50 +101,6 @@
               </li>
               {{pass}}
             </ul>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <ul class="nav navbar-nav">
-              <li {{if rc == 'find' and rf == 'explore':}}class="active"{{pass}}>
-                <a href="{{=URL('find', 'explore')}}">Explore</a>
-              </li>
-            </ul>
-            <form enctype="multipart/form-data" action="{{=URL('find','search')}}" class="navbar-form navbar-left search-form" role="search">
-                <div class="form-group">
-                  <label for="search-query" class="hide-label">Search Query</label>
-                  <input id="search-query" name="query" type="text" class="form-control" placeholder="Search...">
-                </div>
-                <label for="search-submit" class="hide-label">Submit Search</label>
-                <button aria-label="search button" id="search-submit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
-              {{if auth.user:}}
-            <li {{if rc == 'box':}}class="active"{{pass}}>
-              <a href="{{=URL('box', 'list')}}">My Boxes</a>
-            </li>
-            <li {{if rc == 'trade':}}class="active"{{pass}}>
-              <a href="{{=URL('trade', 'list')}}">My Trades</a>
-            </li>
-            <li class="dropdown">
-              <a href="#" data-toggle="dropdown">
-                My Lists
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-left">
-                <li><a href="{{=URL('want', 'view', args=auth.user.id)}}">
-                  My Want List<br />
-                  <small>(items I'd like to acquire)</small>
-                </a></li>
-                <li><a href="{{=URL('have', 'view', args=auth.user.id)}}">
-                  My Have List<br />
-                  <small>(items I'd like to trade away)</small>
-                </a></li>
-              </ul>
-            </li>
-          </ul>
-          {{pass}}
           </div>
         </div>
       </div>
