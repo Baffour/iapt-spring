@@ -221,9 +221,9 @@ h1.main-title .glyphicon {
   margin-top: 60px;
 }
 
-.navbar-form .search-form input
+#search-query
 {
-  width:250px;
+  width:400px;
 }
 
 .new-type-btn {

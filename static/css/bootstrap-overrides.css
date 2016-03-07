@@ -11,6 +11,10 @@
   background-color: #145b98;
 }
 
+.label-warning {
+background-color: #824c00;
+}
+
 .help-block {
   color: #595959;
 }
@@ -106,5 +110,5 @@ body {
 }
 
 .label-inactive {
-  background-color:#dbdbdb;
+  background-color:#595959;
 }
