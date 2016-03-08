@@ -16,7 +16,7 @@
   width:910px;
   height:290px;
   /* Image source: https://www.flickr.com/photos/pio1976/3330670980/ */
-  background-image: url(../images/shelves.jpg);
+  background-image:url(../images/shelves.jpg);
   position:relative;
   margin-bottom:20px;
 }
@@ -184,7 +184,7 @@ h1.main-title .glyphicon {
 }
 
 .explore-panel .panel-heading {
-  font-size: 18px;
+  font-size:18px;
 }
 
 .explore-panel .panel-body {
@@ -201,24 +201,24 @@ h1.main-title .glyphicon {
 }
 
 .tooltip-inner {
-  text-decoration: none;
+  text-decoration:none;
 }
 
 .notif-item h2 {
-  font-size: 22px;
-  font-weight: normal;
+  font-size:22px;
+  font-weight:normal;
 }
 
 .notif-item.new h2 {
-  font-weight: bold;
+  font-weight:bold;
 }
 
 .notif-item .notif-meta {
-  float: right;
+  float:right;
 }
 
 .empty-screen.alert {
-  margin-top: 60px;
+  margin-top:60px;
 }
 
 #search-query {
@@ -247,15 +247,15 @@ h1.main-title .glyphicon {
 }
 
 #item-info tr td:first-child {
-    width:130px;
-    text-align:right;
-    font-weight:bold;
+  width:130px;
+  text-align:right;
+  font-weight:bold;
 }
 
 #item-info tr td ul {
-    list-style-type:none;
-    padding:0;
-    margin:0;
+  list-style-type:none;
+  padding:0;
+  margin:0;
 }
 
 #item-info #item-desc {
@@ -263,42 +263,40 @@ h1.main-title .glyphicon {
 }
 
 #item-info-panel, #item-cover {
-    margin-top:10px;
+  margin-top:10px;
 }
 
 #item-boxes-panel .panel-heading a.btn {
-    float:right;
-    position:relative;
-    top:-4px;
-    left:6px;
+  float:right;
+  position:relative;
+  top:-4px;
+  left:6px;
 }
 
 #item-boxes td:first-child {
-    vertical-align:middle;
-    font-size:16px;
+  vertical-align:middle;
+  font-size:16px;
 }
 
 #item-boxes td:first-child .glyphicon {
-    margin-left:8px;
-    margin-right:8px;
-    font-size:22px;
-    line-height:16px;
-    top:4px;
+  margin-left:8px;
+  margin-right:8px;
+  font-size:22px;
+  line-height:16px;
+  top:4px;
 }
 
 #item-boxes td:last-child {
-    text-align:right;
-
+  text-align:right;
 }
 
-.hide-label
-{
-position: absolute;
-left: 0;
-top: -500px;
-width: 1px;
-height: 1px;
-overflow: hidden;
+.hide-label {
+  position:absolute;
+  left:0;
+  top:-500px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
 }
 
 .btn-label {
