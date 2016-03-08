@@ -253,6 +253,10 @@ h1.main-title .glyphicon {
     margin:0;
 }
 
+#item-info #item-desc {
+  white-space:pre-wrap;
+}
+
 #item-info-panel, #item-cover {
     margin-top:10px;
 }

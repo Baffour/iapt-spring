@@ -10,20 +10,57 @@ def view():
 def edit():
     item = load_item(request.args(0), editing=True)
 
-    record = None
-    if db((db.itm.id == item.id) & (db.itm.auth_user == auth.user)).select(db.itm.ALL):
-        record = db.itm(item.id)
+    fields = [db.itm.name]
+    extra_fields = _extra_fields_for(item.itm_type)
+    fields += extra_fields
+    fields += [
+        db.itm.name,
+        db.itm.itm_condition,
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
+        db.itm.description,
+        Field('thumbnail', type='upload', uploadfolder=uploadfolder, label="Thumbnail (uploaded file will replace existing image)")
+    ]
 
-    if record:
-        form = SQLFORM(db.itm, record, showid=False, fields=['name', 'itm_condition', 'monetary_value',
-                                                                     'description', 'thumbnail'])
-        if form.accepts(request, session):
-            form = redirect(URL('item', 'view', args=item.id))
-        elif form.errors:
-            response.flash = 'Invalid details entered. See the annotations below and try again.'
-            response.flash_type = 'danger'
+    form = SQLFORM.factory(*fields, submit_button='Save item')
 
-    return dict(form=form, itemType=item.itm_type)
+    if form.process().accepted:
+        newvals = dict(
+            name=form.vars['name'],
+            itm_condition=form.vars['itm_condition'],
+            monetary_value=form.vars['monetary_value'],
+            description=form.vars['description']
+        )
+
+        extra_field_names = [f.name for f in extra_fields]
+        extra_field_vals = dict((k, v) for k, v in form.vars.items() if k in extra_field_names)
+        newvals.update(extra_field_vals)
+
+        uploaded_image = form.vars['thumbnail']
+        if uploaded_image:
+            newvals['thumbnail'] = uploaded_image
+
+        item.update(**newvals)
+        item.update_record()
+
+        session.flash = 'Item changes saved successfully'
+        session.flash_type = 'success'
+        redirect(URL('view', args=item.id))
+
+
+    elif form.errors:
+        response.flash = 'Invalid details entered. See the annotations below and try again.'
+        response.flash_type = 'danger'
+
+    # Fill form with the item's current attributes
+    form.element('input[name=name]')['_value'] = item.name
+    form.element('select[name=itm_condition] option[value={}]'.format(item.itm_condition))['_selected'] = True
+    form.element('input[name=monetary_value]')['_value'] = format_pence_as_pounds(item.monetary_value)
+    form.element('textarea[name=description]').append(item.description)
+
+    for field in extra_fields:
+        form.element('input[name={}]'.format(field.name))['_value'] = item[field.name]
+
+    return dict(item=item, form=form)
 
 @auth.requires_login()
 def delete():
@@ -56,12 +93,12 @@ def new_of_type():
         raise HTTP(400)
 
     fields = [db.itm.name]
-    extra_fields = [f for f in EXTRA_FIELDS[type]] if type in EXTRA_FIELDS else []
+    extra_fields = _extra_fields_for(type)
     fields += extra_fields
     fields += [
         db.itm.name,
         db.itm.itm_condition,
-        db.itm.monetary_value,
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,
@@ -157,3 +194,6 @@ def add_to_box():
         redirect(URL('item', 'view', args=item.id))
 
     return dict(item=item, form=form, constraint=constraint)
+
+def _extra_fields_for(typ):
+    return [f for f in EXTRA_FIELDS[typ]] if typ in EXTRA_FIELDS else []

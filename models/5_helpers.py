@@ -1,5 +1,14 @@
 # IAPT Spring Assessment - Group 13
 
+def format_pence_as_pounds(pence):
+    if pence == 0:
+        return 0
+    pounds = pence / 100
+    pence = pence % 100
+    if pence == 0:
+        return "£{}".format(pounds)
+    return "£{}.{}".format(pounds, str(pence).zfill(2))
+
 def load_item(id, editing=False):
     item = db.itm(id)
 
