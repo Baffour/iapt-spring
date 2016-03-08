@@ -221,9 +221,14 @@ h1.main-title .glyphicon {
   margin-top: 60px;
 }
 
-#search-query
-{
+#search-query {
   width:200px;
+}
+
+#search-submit {
+  width:40px;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .new-type-btn {
@@ -297,8 +302,9 @@ overflow: hidden;
 }
 
 .btn-label {
-    font-size: 0;
-    height: 1px;
-    overflow: hidden;
-    display: block;
+  font-size:0;
+  display:block;
+  overflow:hidden;
+  height:0;
+  width:0;
 }
