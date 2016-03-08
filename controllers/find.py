@@ -38,10 +38,7 @@ def __get_n_most_valuable_boxes(n):
 
 def __add_calculated_fields(boxes):
     for box in boxes:
-        box.quantity=len(db(db.itm2box.box==box).select())
-        values=db(
-                 (db.box.private == False) &
-                 (db.itm2box.box==box) &
-                 (db.itm2box.itm == db.itm.id)).select(db.itm.monetary_value, distinct=True)
-        box.monetary_value=sum([itm.monetary_value for itm in values])
+        items = items_in(box)
+        box.quantity = len(items)
+        box.monetary_value=sum(item.monetary_value for item in items)
     return boxes

@@ -10,7 +10,7 @@
       <span data-toggle="tooltip" title="User" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-user"></span> {{=box.auth_user.username}}</span>
       <span data-toggle="tooltip" title="Items" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-unchecked"></span> {{=box.quantity}} Items</span>
       <span data-toggle="tooltip" title="Date Created" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-time"></span> Created {{=box.created_at.strftime("%d/%m/%Y")}}</span>
-      <span data-toggle="tooltip" title="Value" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-time"></span> £{{=box.monetary_value}}</span>
+      <span data-toggle="tooltip" title="Value" class="box-attribute-label label label-default"><span class="glyphicon glyphicon-time"></span> {{=format_pence_as_pounds(box.monetary_value)}}</span>
     </a>
   </div>
 </div>
