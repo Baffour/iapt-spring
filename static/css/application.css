@@ -223,7 +223,7 @@ h1.main-title .glyphicon {
 
 #search-query
 {
-  width:400px;
+  width:200px;
 }
 
 .new-type-btn {
@@ -290,4 +290,11 @@ top: -500px;
 width: 1px;
 height: 1px;
 overflow: hidden;
+}
+
+.btn-label {
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    display: block;
 }
