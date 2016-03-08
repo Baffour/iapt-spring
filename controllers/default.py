@@ -7,7 +7,8 @@ def index():
     return dict()
 
 def welcome():
-    return dict(registerform=auth.register())
+    form = custom_register_form()
+    return dict(registerform=form)
 
 def user():
     """
