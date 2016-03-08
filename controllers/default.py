@@ -2,7 +2,12 @@
 
 def index():
     # TODO: Controller content
+    if auth.user is None:
+        redirect(URL('welcome'))
     return dict()
+
+def welcome():
+    return dict(registerform=auth.register())
 
 def user():
     """
