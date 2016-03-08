@@ -44,6 +44,25 @@ def notification_count():
         return 0
     return db((db.notification.auth_user==auth.user) & (db.notification.unread==True)).count()
 
+def load_all_public_items():
+    db_boxes=db(db.box.private == False).select()
+    item_ids=set()
+    for box in db_boxes:
+        item_ids=item_ids.union(item.id for item in items_in(box))
+    return db(db.itm.id in item_ids).select(db.itm.ALL)
+
+def custom_register_form():
+    """Adds placeholders and HTML5 validation, which aids in error prevention as users can correct mistakes before submission"""
+    form = auth.register()
+    form.custom.widget.email['_placeholder']="Enter your Email Address"
+    form.custom.widget.username['_placeholder']="Choose a Username"
+    form.custom.widget.password['_placeholder']="Create a Password"
+    form.custom.widget.password_two['_placeholder']="Confirm your Password"
+    form.custom.widget.email['_type']="email"
+    for inp in form.elements('input'):
+        inp['_required'] = 'required'
+    return form
+
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
    # source:http://www.web2pyslices.com/slice/show/1373/easy-breadcrumbs
