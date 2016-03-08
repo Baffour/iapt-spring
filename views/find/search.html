@@ -2,13 +2,20 @@
 <div class="alert alert-warning">
   <p><strong>TODO: Implement search functionality</strong></p>
 </div>
+
+{{block title}}
+Search
+{{end}}
+
 {{block grid}}
-<div class="col-xs-8 col-xs-offset-2">
-  {{if results is None:}}
-  {{elif len(results)==0:}}
-  {{else:}}
-  {{items=results}}
-  {{include 'item-preview.html'}}
-  {{pass}}
+<div class="col-xs-12">
+  <div class="lb-grid-list row">
+    {{if results is None:}}
+    {{elif len(results)==0:}}
+    {{else:}}
+    {{items=results}}
+    {{include 'item-preview.html'}}
+    {{pass}}
+  </div>
 </div>
 {{end}}
