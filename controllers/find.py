@@ -25,9 +25,6 @@ def __search_by_x(query, items, func):
     if len(match_attr) < 2:
         # If no strings similar to query exist, break items down into individual words and query this
         match_attr = set(match_attr + __similar_items_2(query, [func(item) for item in items]))
-        print "Fine grained search", match_attr
-    else:
-        print match_attr
     results = list()
     for mattr in match_attr:
         results.extend([item for item in items if func(item) == mattr])
@@ -47,7 +44,6 @@ def __similar_items_2(query, search_in):
     for attr in search_in:
         similar = __full_text_search(query, attr.split(' '),min_sim=0.3)
         if len(similar) > 0:
-            print attr.split(' ')#, similar
             results.append(attr)
     return results
 
