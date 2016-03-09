@@ -2,19 +2,6 @@
 
 <div class="row">
   <div class="col-xs-12">
-    {{if auth.user:}}
     This is the logged-in user homepage. TODO: Lots of useful stuff here
-    {{else:}}
-    <div id="home-picture">
-      <div id="home-picture-overlay">
-        <h1>Welcome to {{=APP_NAME}}</h1>
-        <span>
-          <a href="{{=URL('default', 'user/register')}}" class="btn btn-default">Register</a> or
-          <a href="{{=URL('default', 'user/login')}}" class="btn btn-default">Login</a>
-          now to start building your collection
-        </span>
-      </div>
-    </div>
-    {{pass}}
   </div>
 </div>

@@ -54,10 +54,10 @@ def load_all_public_items():
 def custom_register_form():
     """Adds placeholders and HTML5 validation, which aids in error prevention as users can correct mistakes before submission"""
     form = auth.register()
-    form.custom.widget.email['_placeholder']="Enter your Email Address"
-    form.custom.widget.username['_placeholder']="Choose a Username"
-    form.custom.widget.password['_placeholder']="Create a Password"
-    form.custom.widget.password_two['_placeholder']="Confirm your Password"
+    form.custom.widget.email['_placeholder']="Enter your email address"
+    form.custom.widget.username['_placeholder']="Choose a username"
+    form.custom.widget.password['_placeholder']="Create a password"
+    form.custom.widget.password_two['_placeholder']="Confirm your password"
     form.custom.widget.email['_type']="email"
     for inp in form.elements('input'):
         inp['_required'] = 'required'

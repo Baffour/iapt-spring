@@ -1,41 +1,27 @@
 {{extend 'layout.html'}}
+
 <div class="row">
-  <div class="col-xs-8">
-      <h1>Trade and Show Off Media Collections!</h1>
-      <p>
-      Shortboxes lets you catalogue all your Books, Comics, DVDs and other collections.
-    </p>
-    <p>
-      You can use it to keep track of your 100+ Batman comic collection,
-      to show off that signed Lord of The Rings Boxset,
-      or maybe even trade your limited edition Beatles vinyl for something new!
-    </p>
-  </div>
-  <div class="col-xs-4">
-    <!-- <h2>So this is that</h2> -->
-    <div class="well" id="register-form">
-      {{=registerform}}
+  <div class="col-xs-12">
+    <div id="home-picture">
+      <div class="col-xs-8">
+        <div id="home-picture-overlay-heading" class="home-picture-overlay">
+          <h1>Welcome to {{=APP_NAME}}</h1>
+          <p>This awesome application is the very best way to trade and show-off your media collection.</p>
+          <p>You can use it to keep track of your video games, to show off that signed Lord of The Rings Boxset, or maybe even to trade your limited edition Beatles vinyl for something new!</p>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div id="home-picture-overlay-form" class="home-picture-overlay">
+          <h2>Get started now&hellip;</h2>
+          {{=registerform}}
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<hr role="presentation"/>
-<div class="row">
-<h2>Catalogue!</h2>
-<p>
-  Keep records of all the items you own.
-</p>
-</div>
 
 <div class="row">
-<h2>Trade!</h2>
-<p>
-  Swap that Spiderman Boxset for a copy Pride and Prejudice...and Zombies!
-</p>
-</div>
-
-
-<div class="row">
-<p>
-  <!-- <hr> -->
-</p>
+  <div class="col-xs-12">
+    TODO: SOME MORE PROMOTIONAL VERBIAGE HERE
+  </div>
 </div>
