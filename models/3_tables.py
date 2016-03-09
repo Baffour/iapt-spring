@@ -2,7 +2,13 @@
 
 import copy
 
-ITEM_TYPES = ['book', 'cd', 'dvd', 'game']
+ITEM_TYPES = {
+    'book' : 'book',
+    'cd' : 'CD',
+    'dvd' : 'DVD',
+    'game' : 'game'
+}
+
 ITEM_CONDITIONS = ['unspecified', 'poor', 'reasonable', 'good', 'mint']
 
 EXTRA_FIELDS = {
@@ -24,7 +30,8 @@ db.define_table('itm',
     Field('itm_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES), label="Item Type"),
     Field('monetary_value', type='integer', notnull=True, required=False, requires=IS_INT_IN_RANGE(1, 1000000)),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
-    Field('itm_condition', type='string', notnull=True, required=True, default='unspecified', requires=IS_IN_SET(ITEM_CONDITIONS), label="Condition"),
+    Field('itm_condition', type='string', notnull=True, required=True, default='unspecified',
+        requires=IS_IN_SET(ITEM_CONDITIONS, zero=None, labels=[c.capitalize() for c in ITEM_CONDITIONS]), label="Condition"),
     Field('description', type='text', required=True, comment="Tell your item's story in your own words"),
     Field('thumbnail', type='upload', uploadfolder=uploadfolder, notnull=True),
     Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False),
