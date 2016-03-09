@@ -31,7 +31,7 @@
       <table id="item-info" class="table table-bordered table-striped">
         <tr>
           <td>Type</td>
-          <td>{{=capfirst(item.itm_type)}}</td>
+          <td>{{=capfirst(ITEM_TYPES[item.itm_type])}}</td>
         </tr>
         {{if item.itm_type in EXTRA_FIELDS:}}
         {{for field in EXTRA_FIELDS[item.itm_type]:}}
