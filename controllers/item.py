@@ -158,20 +158,20 @@ def remove_from_box():
     item = load_item(request.args(0), editing=False)
     box = load_box(request.args(1), editing=False)
 
-    # Redirect to item delete if that is the last box that item belongs to
-    if db(db.itm2box.itm == item.id).count() == 1:
-        redirect(URL('item', 'delete', args=item.id))
-        return dict()
+    itm2box = item.itm2box(db.itm2box.box==box.id)
+    if itm2box.isempty() or (box.unfiled and item.itm2box.count() == 1): raise HTTP(400)
+    itm2box.delete()
 
-    db((db.itm2box.itm == item.id) & (db.itm2box.box == box.id)).delete()
-    db.commit()
+    if item.itm2box.isempty():
+        unfiled = load_unfiled_box()
+        db.itm2box.insert(itm=item.id, box=unfiled.id)
+        session.flash = 'Item removed from box "' + box.name + '" successfully and moved to the "' + unfiled.name + '" box.'
 
-    session.flash = "Item " + item.name + " removed from " + box.name + " box successfully."
+    else:
+        session.flash = 'Item removed from box "' + box.name + '" successfully.'
+
     session.flash_type = 'success'
-    redirect(URL('item', 'view', args=item.id))
-
-    return dict()
-
+    redirect(URL('view', args=item.id))
 
 @auth.requires_login()
 def add_to_box():
