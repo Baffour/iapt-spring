@@ -1,8 +1,5 @@
 # IAPT Spring Assessment - Group 13
 
-def capfirst(s):
-    return s[0].upper() + s[1:]
-
 def format_pence_as_pounds(pence):
     if pence == 0:
         return 0

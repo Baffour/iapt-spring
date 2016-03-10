@@ -14,25 +14,25 @@ Step 1 of 2
   <div class="col-xs-3">
     <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='book', vars=request.vars)}}">
       <span class="glyphicon glyphicon-book"></span>
-      {{=capfirst(ITEM_TYPES['book'])}}
+      {{=ITEM_TYPES['book'].capitalize()}}
     </a>
   </div>
   <div class="col-xs-3">
     <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='cd', vars=request.vars)}}">
       <span class="glyphicon glyphicon-music"></span>
-      {{=capfirst(ITEM_TYPES['cd'])}}
+      {{=ITEM_TYPES['cd'].capitalize()}}
     </a>
   </div>
   <div class="col-xs-3">
     <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='dvd', vars=request.vars)}}">
       <span class="glyphicon glyphicon-film"></span>
-      {{=capfirst(ITEM_TYPES['dvd'])}}
+      {{=ITEM_TYPES['dvd'].capitalize()}}
     </a>
   </div>
   <div class="col-xs-3">
     <a class="new-type-btn btn btn-default" href="{{=URL('new_of_type', args='game', vars=request.vars)}}">
       <span class="glyphicon glyphicon-modal-window"></span>
-      {{=capfirst(ITEM_TYPES['game'])}}
+      {{=ITEM_TYPES['game'].capitalize()}}
     </a>
   </div>
 </div>

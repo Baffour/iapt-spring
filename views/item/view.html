@@ -31,7 +31,7 @@
       <table id="item-info" class="table table-bordered table-striped">
         <tr>
           <td>Type</td>
-          <td>{{=capfirst(ITEM_TYPES[item.itm_type])}}</td>
+          <td>{{=ITEM_TYPES[item.itm_type].capitalize()}}</td>
         </tr>
         {{if item.itm_type in EXTRA_FIELDS:}}
         {{for field in EXTRA_FIELDS[item.itm_type]:}}
@@ -81,7 +81,7 @@
   </div>
   <div class="col-xs-4">
     <div id="item-cover" class="thumbnail">
-      <img alt="{{='Image uploaded by User:\'{0}\' depicting their {1} \'{2}\''.format(item.auth_user.username,capfirst(ITEM_TYPES[item.itm_type]),item.name)}}" src="{{=URL('image', args=item.thumbnail)}}" />
+      <img alt="{{='Image uploaded by User:\'{0}\' depicting their {1} \'{2}\''.format(item.auth_user.username,ITEM_TYPES[item.itm_type].capitalize(),item.name)}}" src="{{=URL('image', args=item.thumbnail)}}" />
     </div>
   </div>
 </div>

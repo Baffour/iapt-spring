@@ -4,8 +4,8 @@ import copy
 
 ITEM_TYPES = {
     'book' : 'book',
-    'cd' : 'CD',
-    'dvd' : 'DVD',
+    'cd' : 'album',
+    'dvd' : 'movie',
     'game' : 'game'
 }
 
