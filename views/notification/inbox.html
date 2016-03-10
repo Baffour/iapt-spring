@@ -1,5 +1,9 @@
 {{extend 'layout.html'}}
 
+{{block title}}
+Notifications
+{{end}}
+
 {{block form}}
 {{if not len(notifications):}}
   <div class="col-xs-8 col-xs-offset-2">

@@ -120,6 +120,7 @@ def new_of_type():
             **extra_field_vals
         )
 
+        compress_image(form.vars['thumbnail'])
         db.itm2box.insert(itm=item_id, box=form.vars['box'])
 
         session.flash = 'New item "'+ name + '" created successfully.'

@@ -67,6 +67,18 @@ def custom_register_form():
             inp['_required'] = 'required'
     return form
 
+def compress_image(image_name):
+    try:
+        img_file=os.path.join(uploadfolder, image_name)
+        from PIL import Image
+        im = Image.open(img_file)
+        im.thumbnail((im.width, im.height), Image.ANTIALIAS)
+        im.save(img_file)
+    except:
+        pass
+        # If compression fails it's not worth raising an error over, this just helps us meet the file size limit if we have
+        # large images and a populated database on submission.
+
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
    # source:http://www.web2pyslices.com/slice/show/1373/easy-breadcrumbs
