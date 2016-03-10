@@ -16,7 +16,7 @@
   width:910px;
   height:360px;
   /* Image source: https://www.flickr.com/photos/stadiumlove/6766586589/ */
-  background-image:url(../images/shelves.jpg);
+  background-image:black url(../images/shelves.jpg);
   position:relative;
   margin-bottom:20px;
 }
