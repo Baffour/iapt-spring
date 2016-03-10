@@ -63,7 +63,8 @@ def custom_register_form():
     form.custom.widget.password_two['_placeholder']="Confirm your password"
     form.custom.widget.email['_type']="email"
     for inp in form.elements('input'):
-        inp['_required'] = 'required'
+        if inp['_type'] != "submit":
+            inp['_required'] = 'required'
     return form
 
 def breadcrumbs(arg_title=None):
