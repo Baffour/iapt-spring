@@ -70,7 +70,7 @@ def compress_image(image_name):
         from PIL import Image
         im = Image.open(img_file)
         im.thumbnail((im.width, im.height), Image.ANTIALIAS)
-        im.save(img_file)
+        im.save(img_file, optimize=True,quality=75)
     except:
         pass
         # If compression fails it's not worth raising an error over, this just helps us meet the file size limit if we have
