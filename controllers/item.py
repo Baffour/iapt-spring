@@ -53,6 +53,7 @@ def edit():
 
     # Fill form with the item's current attributes
     form.element('input[name=name]')['_value'] = item.name
+    form.element('select[name=itm_condition] option')['_selected'] = False # Deselects first option
     form.element('select[name=itm_condition] option[value={}]'.format(item.itm_condition))['_selected'] = True
     form.element('input[name=monetary_value]')['_value'] = format_pence_as_pounds(item.monetary_value)
     form.element('textarea[name=description]').append(item.description)
