@@ -112,3 +112,8 @@ body {
 .label-inactive {
   background-color:#595959;
 }
+
+.thumbnail
+{
+  border-width: 2px;
+}

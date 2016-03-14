@@ -195,6 +195,10 @@ h1.main-title .glyphicon {
   text-decoration:underline;
 }
 
+.lb-grid-list div.thumbnail.box-preview:hover{
+  background-color: #EBF2F8;
+}
+
 .box-preview .private-indicator {
   position:absolute;
   left:5px;
@@ -369,4 +373,9 @@ body
 .container .footer-text
 {
   margin:20px 0;
+}
+
+.create-box
+{
+  border-style: dashed;
 }
