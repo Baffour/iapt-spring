@@ -1,9 +1,9 @@
 {{for item in items:}}
   <div class="col-xs-3">
-    <div class="thumbnail">
+    <div class="thumbnail item-preview">
       <a data-toggle="tooltip" title="{{=item.name}}" href="{{=URL('item', 'view', args=item.id)}}" class="preview-name">{{=item.name}}</a>
       <a data-toggle="tooltip" title="{{=item.description}}" class="preview-image" href="{{=URL('item', 'view', args=item.id)}}">
-        <img alt="" src="{{=URL('item', 'image', args=item.thumbnail)}}">
+        <img alt="" src="{{=URL('item', 'image', args=item.thumbnail)}}"/>
       </a>
       <div class="preview-detail">{{=ITEM_TYPES[item.itm_type].capitalize()}}</div>
       <div class="preview-detail">{{=format_pence_as_pounds(item.monetary_value)}}</div>

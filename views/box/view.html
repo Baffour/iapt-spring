@@ -44,5 +44,15 @@
 </div>
 {{else:}}
 {{include 'item-preview.html'}}
+{{if show_toolbox:}}
+<div class="col-xs-3">
+  <div class="thumbnail item-preview create-item">
+    <a  class="preview-name" href="{{=URL('item','new',vars=dict(box=box.id))}}">Create a new Item
+      <div class="preview-icon glyphicon glyphicon-plus">
+      </div>
+    </a>
+  </div>
+</div>
+{{pass}}
 {{pass}}
 {{end}}

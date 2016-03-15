@@ -148,7 +148,7 @@ h1.main-title .glyphicon {
 
 .lb-grid-list .thumbnail .preview-image {
   display:block;
-  max-height:195px;
+  height:195px;
   overflow:hidden;
   margin-bottom:5px;
 }
@@ -195,7 +195,8 @@ h1.main-title .glyphicon {
   text-decoration:underline;
 }
 
-.lb-grid-list div.thumbnail.box-preview:hover{
+.lb-grid-list div.thumbnail.box-preview:hover,
+.lb-grid-list div.thumbnail.item-preview:hover{
   background-color: #EBF2F8;
 }
 
@@ -375,7 +376,15 @@ body
   margin:20px 0;
 }
 
-.create-box
+.create-box,
+.create-item
 {
   border-style: dashed;
+  background-color: #F5F5F5;
+}
+
+.lb-grid-list .item-preview .preview-icon
+{
+  font-size: 100px;
+  margin:auto;
 }
