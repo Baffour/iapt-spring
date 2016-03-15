@@ -147,7 +147,8 @@ def new_of_type():
     if 'box' in request.vars:
         in_box_id = request.vars['box']
         in_box = load_box(in_box_id, editing=True) # we already have the id, but load the box to check permissions
-        box_picker.element('option[value=' + str(in_box.id) + ']')['_selected'] = 'selected'
+        if in_box.id != unfiled.id:
+            box_picker.element('option[value=' + str(in_box.id) + ']')['_selected'] = 'selected'
 
     return dict(type=type, form=form)
 
