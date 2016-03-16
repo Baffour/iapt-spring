@@ -1,8 +1,6 @@
 # IAPT Spring Assessment - Group 13
 
 def format_pence_as_pounds(pence):
-    if pence == 0:
-        return 0
     pounds = pence / 100
     pence = pence % 100
     if pence == 0:
@@ -50,6 +48,14 @@ def load_all_public_items():
     for box in db_boxes:
         item_ids=item_ids.union(item.id for item in items_in(box))
     return db(db.itm.id in item_ids).select(db.itm.ALL)
+
+def get_item_popularity(item):
+    """ TODO, count likes for this item, items named 'The Life of Pablo' have 10 likes, everything else none """
+    return 10 if item.name == 'The Life of Pablo' else (-20 if item.name == 'The Room' else 0)
+
+def get_user_popularity(user, public_only=True):
+    items = [b for b in load_all_public_items() if b.auth_user.id == user.id] if public_only else db(db.itm.auth_user == user).select()
+    return sum([get_item_popularity(i) for i in items])
 
 def custom_register_form():
     """Adds placeholders and HTML5 validation, which aids in error prevention as users can correct mistakes before submission"""
