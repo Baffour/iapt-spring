@@ -16,15 +16,12 @@ def new():
         if not user:
             response.flash = 'User "{}" does not exist. Try entering a valid username.'.format(username)
             response.flash_type = 'danger'
-            form.element('#no_table_user')['_class'] += ' form-control'
-            return dict(form=form)
-
-        if user.id == auth.user.id:
+        elif user.id == auth.user.id:
             raise HTTP(400) # A user cannot trade with themself
-
-        propid = db.trade_proposal.insert(target=user)
-        redirect(URL('edit', args=propid))
-        return
+        else:
+            propid = db.trade_proposal.insert(target=user)
+            redirect(URL('edit', args=propid))
+            return
 
     form.element('#no_table_user')['_class'] += ' form-control'
     return dict(form=form)
