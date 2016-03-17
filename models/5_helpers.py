@@ -35,6 +35,24 @@ def load_box(id, editing=False):
 def load_unfiled_box():
     return db((db.box.auth_user==auth.user) & (db.box.unfiled==True)).select()[0]
 
+def load_trade_proposal(id, editing=False):
+    prop = db.trade_proposal(id)
+
+    if not prop:
+        raise HTTP(404)
+
+    if not auth.user:
+        raise HTTP(403)
+
+    if auth.user.id == prop.sender:
+        return prop
+
+    if auth.user.id == prop.target:
+        if not editing and prop.status != 'pending':
+            return prop
+
+    raise HTTP(403)
+
 def items_in(box):
     items_and_boxes = db((db.box.id==db.itm2box.box) & (db.itm2box.itm==db.itm.id) & (db.box.id==box.id))
     return items_and_boxes.select(db.itm.ALL)

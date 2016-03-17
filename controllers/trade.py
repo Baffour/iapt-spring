@@ -20,15 +20,20 @@ def new():
             raise HTTP(400) # A user cannot trade with themself
         else:
             propid = db.trade_proposal.insert(target=user)
-            redirect(URL('edit', args=propid))
+            redirect(URL('choose_items', args=propid))
             return
 
     form.element('#no_table_user')['_class'] += ' form-control'
     return dict(form=form)
 
 @auth.requires_login()
-def edit():
-    pass
+def choose_items():
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'pending':
+        raise HTTP(400)
+    target = db.auth_user(prop.target)
+    # TODO: Gather items on both sides
+    return dict(prop=prop, target=target)
 
 @auth.requires_login()
 def view():

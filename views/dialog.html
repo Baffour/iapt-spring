@@ -1,7 +1,10 @@
+{{width = globals().get('dialog_width', 8)}}
+{{offset = (12 - width) / 2}}
 {{extend 'layout.html'}}
 
+
 <div class="row">
-  <div class="col-xs-8 col-xs-offset-2">
+  <div class="col-xs-{{=width}} col-xs-offset-{{=offset}}">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h1 class="panel-title">{{block title}}{{end}}<span class="panel-meta">{{block title_meta}}{{end}}</span></h1>
