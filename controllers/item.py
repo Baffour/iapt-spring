@@ -176,7 +176,6 @@ def remove_from_box():
 
 @auth.requires_login()
 def add_to_box():
-
     item = load_item(request.args(0), editing=True)
     boxes = db((db.box.id==db.itm2box.box) & (db.itm2box.itm==item.id)).select(db.box.id)
 
