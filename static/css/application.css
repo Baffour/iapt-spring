@@ -8,7 +8,7 @@
   width:14px;
 }
 
-#main {
+#maincontent {
   margin-top:20px;
 }
 
@@ -206,9 +206,10 @@ h1.main-title .glyphicon {
   top:5px;
 }
 
-.box-preview .box-attribute-label {
+.preview .box-attribute-label {
   float:left;
-  margin: 2px;;
+  margin: 2px;
+  font-size:12px;
 }
 
 .confirmation-form .btn {
@@ -228,7 +229,7 @@ h1.main-title .glyphicon {
 }
 
 .explore-thumbnail hr {
-  margin: 20px 0;
+  margin: 10px 0;
   border-color: #bbb;
 }
 
@@ -387,4 +388,46 @@ body
 {
   font-size: 100px;
   margin:auto;
+}
+
+#skiptocontent a {
+	padding:6px;
+	position: absolute;
+	top:-40px;
+	left:0px;
+	color:white;
+	border-right:1px solid white;
+	border-bottom:1px solid white;
+	border-bottom-right-radius:8px;
+	background:transparent;
+	-webkit-transition: top 1s ease-out, background 1s linear;
+  transition: top 1s ease-out, background 1s linear;
+  z-index: 100;
+}
+
+#skiptocontent a:focus {
+	position:absolute;
+	left:0px;
+	top:0px;
+	background:#145b98;
+	outline:0;
+	-webkit-transition: top .1s ease-in, background .5s linear;
+  transition: top .1s ease-in, background .5s linear;
+}
+
+label:hover,
+.glyphicon:hover
+{
+  text-decoration: none;
+}
+
+.tab-pane
+{
+  padding: 10px;
+}
+
+.tab-content
+{
+  border:1px solid #ddd;
+  border-top: none;
 }

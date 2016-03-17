@@ -24,6 +24,7 @@
     </script>
   </head>
   <body>
+    <div id="skiptocontent"><a href="#maincontent" class="">skip to main content</a></div>
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="row">
@@ -108,7 +109,7 @@
       </div>
     </nav>
 
-    <div id="main" class="container">
+    <div id="maincontent" tabindex="-1" class="container">
       <div class="row">
         <div class="col-xs-12">
           {{if response.flash:}}
