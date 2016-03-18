@@ -1,0 +1,35 @@
+{{dialog_width = 12}}
+{{extend 'dialog.html'}}
+
+{{block title}}
+Choose items to trade with &ldquo;{{=target.username}}&rdquo;
+{{end}}
+
+{{block title_meta}}
+Step 2 of 3
+{{end}}
+
+{{block form}}
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h1 class="panel-title">Items offered (required)</h1>
+      </div>
+      <div class="panel-form">
+        TODO: OFFERED ITEMS LIST
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h1 class="panel-title">Items requested in return (optional)</h1>
+      </div>
+      <div class="panel-form">
+        TODO: WANTED ITEMS LIST
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}

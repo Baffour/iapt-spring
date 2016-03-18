@@ -54,12 +54,12 @@ db.define_table('itm2box',
 PROPOSAL_STATUSES = ['pending', 'sent', 'accepted', 'rejected', 'superseded']
 
 db.define_table('trade_proposal',
-    Field('sender', 'reference auth_user', notnull=True, required=True),
-    Field('received', 'reference auth_user', notnull=True, required=True),
+    Field('sender', 'reference auth_user', notnull=True, required=True, default=auth.user),
+    Field('target', 'reference auth_user', notnull=True, required=True),
     Field('status', type='string', notnull=True, required=True, default='pending', requires=IS_IN_SET(PROPOSAL_STATUSES)),
-    Field('msg', type='text', notnull=True, comment="Send a message with your proposal"),
-    Field('created_at', type='datetime', default=request.now, writable=False, readable=False),
-    Field('parent', 'reference trade_proposal', notnull=True, required=False)
+    Field('msg', type='text', notnull=False, required=False, comment="Send a message with your proposal"),
+    Field('created_at', type='datetime', writable=False, readable=False),
+    Field('parent', 'reference trade_proposal', notnull=False, required=False)
 )
 
 db.define_table('want_item',
