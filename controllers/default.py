@@ -27,3 +27,7 @@ def user():
     to decorate functions that need access control
     """
     return dict(form=auth())
+
+def profile_page():
+    username = request.vars.user
+    return "TODO: Create Personal Profile Page.\nUser:{0}".format(username)
