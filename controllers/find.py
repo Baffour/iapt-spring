@@ -79,7 +79,7 @@ def __get_users_with_largest_boxes():
     db_users = db(db.auth_user).select()
     users = __add_calculated_user_info(db_users)
     box_sizes = lambda user: [len(items_in(box)) for box in load_public_boxes(user)]
-    users = sort_rows(users, lambda user: max(box_sizes(user)), reverse=True)
+    users = sort_rows(users, lambda user: max_or_default(box_sizes(user)), reverse=True)
     users.explore_info.append(size_of_users_largest_box)
     users.label = "Users with Largest Boxes"
     return users
@@ -141,7 +141,7 @@ size_of_users_largest_box = {
             'tooltip':'Largest Box Size',
             'icon' : 'glyphicon-th',
             'data_display' : 'Box of {0}',
-            'data' :lambda user: max([len(items_in(box)) for box in load_public_boxes(user)])
+            'data' :lambda user: max_or_default([len(items_in(box)) for box in load_public_boxes(user)])
             }
 
 date_created = {

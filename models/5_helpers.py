@@ -106,6 +106,12 @@ def sort_rows(rows,f,reverse=False):
     new_rows.__dict__.update(additional_attributes)
     return new_rows
 
+def max_or_default(sequence):
+    if sequence is None or len(sequence) == 0:
+        return None
+    else:
+        return max(sequence)
+
 def compress_image(image_name):
     try:
         img_file=os.path.join(uploadfolder, image_name)
