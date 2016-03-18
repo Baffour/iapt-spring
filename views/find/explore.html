@@ -4,31 +4,60 @@
 Explore
 {{end}}
 
-
 {{block grid2}}
-{{for explorable in explorables:}}
-<div class="row">
-  {{boxes=explorable}}
-  {{=H2(boxes.label,_class="col-xs-12")}}
-  <div class="lb-grid-list col-xs-12">
-      {{include "find/list.html"}}
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="explore-tabs">
+  <li role="presentation"><a href="#explore-boxes" aria-controls="explore-boxes" role="tab" data-toggle="tab">Boxes</a></li>
+  <li role="presentation"><a href="#explore-users" aria-controls="explore-users" role="tab" data-toggle="tab">Users</a></li>
+  <li role="presentation"><a href="#explore-have-lists" aria-controls="explore-have-lists" role="tab" data-toggle="tab">Have Lists</a></li>
+  <li role="presentation"><a href="#explore-want-lists" aria-controls="explore-want-lists" role="tab" data-toggle="tab">Want Lists</a></li>
+</ul>
+
+<!-- Tab conent -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade" id="explore-boxes">
+    {{include "find/explore-boxes.html"}}
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="explore-users">
+    {{include "find/explore-users.html"}}
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="explore-have-lists">
+    {{include "find/explore-have-lists.html"}}
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="explore-want-lists">
+    {{include "find/explore-want-lists.html"}}
   </div>
 </div>
 
-<!-- <div class="row">
-  <div class="col-xs-12">
 
-<div class="panel panel-default explore-panel">
-  <div class="panel-heading">
-    {{boxes=explorable}}
-    {{=boxes.label}}
-  </div>
-  <div class="lb-grid-list panel-body row">
-    {{include "find/list.html"}}
-  </div>
-</div>
-</div>
-</div> -->
 
-{{pass}}
+<script>
+$('#explore-tabs a').click(function(e) {
+  e.preventDefault();
+  $(this).tab('show');
+});
+
+// store the currently selected tab in the hash value
+$("ul.nav-tabs > li > a").on("show.bs.tab", function(e) {
+  var id = $(e.target).attr("href");
+  if(id==$('#explore-tabs a:first').attr("href"))
+  {
+    window.location.hash='';
+  }
+  else{
+    window.location.hash = id;
+  }
+});
+
+$(document).ready(function(){
+  // on load of the page: switch to the currently selected tab
+  var hash = window.location.hash;
+  if (!hash || ['#explore-boxes','#explore-have-lists','#explore-want-lists','#explore-users'].indexOf(hash)<0){
+    $('#explore-tabs a:first').tab('show');
+  }
+  else{
+    $('#explore-tabs a[href="' + hash + '"]').tab('show');
+  }
+});
+</script>
 {{end}}

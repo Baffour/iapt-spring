@@ -42,6 +42,9 @@ def notification_count():
         return 0
     return db((db.notification.auth_user==auth.user) & (db.notification.unread==True)).count()
 
+def load_public_boxes(user):
+    return db((db.box.auth_user == user.id) & (db.box.private == False)).select()
+
 def load_all_public_items():
     db_boxes=db(db.box.private == False).select()
     item_ids=set()
@@ -69,6 +72,21 @@ def custom_register_form():
         if inp['_type'] != "submit":
             inp['_required'] = 'required'
     return form
+
+def first_n_rows(rows, n):
+    """returns the firts n row objects in rows maintaining dictionary attributes"""
+    temp = rows.__dict__
+    new_rows = rows[:n]
+    additional_attributes = {key:temp[key] for key in temp if key not in new_rows.__dict__.keys()}
+    new_rows.__dict__.update(additional_attributes)
+    return new_rows
+
+def sort_rows(rows,f,reverse=False):
+    temp = rows.__dict__
+    new_rows = rows.sort(f, reverse=reverse)
+    additional_attributes = {key:temp[key] for key in temp if key not in new_rows.__dict__.keys()}
+    new_rows.__dict__.update(additional_attributes)
+    return new_rows
 
 def compress_image(image_name):
     try:

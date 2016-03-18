@@ -48,38 +48,141 @@ def __similar_items_2(query, search_in):
     return results
 
 def explore():
-    newest=__get_n_newest_boxes(2)
-    largest=__get_n_largest_boxes(2)
-    valuable=__get_n_most_valuable_boxes(2)
-    return dict(explorables=[valuable, largest, newest])
+    N=4
+    boxes = __get_box_groups_of_n(N)
+    users = __get_user_groups_of_n(N)
+    havelists=[]
+    wantlists=[]
+    return dict(explore_boxes=boxes,explore_havelists=havelists,explore_wantlists=wantlists,explore_users=users)
 
+def __get_box_groups_of_n(N):
+    newest = first_n_rows(__get_newest_boxes(), N)
+    largest = first_n_rows(__get_largest_boxes(), N)
+    valuable = first_n_rows(__get_most_valuable_boxes(), N)
+    popular = first_n_rows(__get_most_popular_boxes(), N)
 
-def __get_n_newest_boxes(n):
-    db_boxes=db(db.box.private == False).select(orderby=~db.box.created_at,limitby=(0, n))
-    boxes=__add_calculated_fields(db_boxes)
-    boxes.label="Newest Boxes"
+    return [valuable, popular, newest, largest]
+
+def __get_user_groups_of_n(N):
+    popular = first_n_rows(__get_most_popular_users(), N)
+    largest = first_n_rows(__get_users_with_largest_boxes(), N)
+    return [popular, largest]
+
+def __get_most_popular_users():
+    db_users = db(db.auth_user).select()
+    users = __add_calculated_user_info(db_users)
+    users = sort_rows(users, lambda user: get_user_popularity(user), reverse=True)
+    users.label = "Most Popular Users"
+    return users
+
+def __get_users_with_largest_boxes():
+    db_users = db(db.auth_user).select()
+    users = __add_calculated_user_info(db_users)
+    box_sizes = lambda user: [len(items_in(box)) for box in load_public_boxes(user)]
+    users = sort_rows(users, lambda user: max(box_sizes(user)), reverse=True)
+    users.explore_info.append(size_of_users_largest_box)
+    users.label = "Users with Largest Boxes"
+    return users
+
+def __get_newest_boxes():
+    db_boxes=db(db.box.private == False).select(orderby=~db.box.created_at)
+    boxes=__add_calculated_box_info(db_boxes)
+    boxes.explore_info.append(date_created)
+    boxes.label = "Newest Boxes"
     return boxes
 
 
-def __get_n_largest_boxes(n):
+def __get_largest_boxes():
     db_boxes=db(db.box.private == False).select()
-    boxes=__add_calculated_fields(db_boxes)
-    boxes=boxes.sort(lambda box: box.quantity, reverse=True)
-    boxes=boxes[:n]
+    boxes=__add_calculated_box_info(db_boxes)
+    boxes=sort_rows(boxes, lambda box: box.itemcount, reverse=True)
+    boxes.explore_info.append(itemcount)
     boxes.label="Largest Boxes"
     return boxes
 
-def __get_n_most_valuable_boxes(n):
+def __get_most_valuable_boxes():
     bxs=db(db.box.private == False).select()
-    boxes=__add_calculated_fields(bxs)
-    boxes=boxes.sort(lambda box: box.monetary_value, reverse=True)
-    boxes=boxes[:n]
+    boxes=__add_calculated_box_info(bxs)
+    boxes=sort_rows(boxes, lambda box: box.monetary_value, reverse=True)
+    boxes.explore_info.append(monetary_value)
     boxes.label="Most Valuable Boxes"
     return boxes
 
-def __add_calculated_fields(boxes):
+def __get_most_popular_boxes():
+    bxs=db(db.box.private == False).select()
+    boxes=__add_calculated_box_info(bxs)
+    boxes=sort_rows(boxes, lambda box: box.popularity, reverse=True)
+    boxes.explore_info.append(popularity)
+    boxes.label="Most Popular Boxes"
+    return boxes
+
+def __add_calculated_box_info(boxes):
     for box in boxes:
         items = items_in(box)
-        box.quantity = len(items)
+        box.itemcount = len(items)
         box.monetary_value=sum(item.monetary_value for item in items)
+        box.popularity = sum(get_item_popularity(item) for item in items)
+    boxes.explore_info = [users_name]
     return boxes
+
+def __add_calculated_user_info(users):
+    for user in users:
+        public_items = [b for b in load_all_public_items() if b.auth_user.id == user.id]
+        public_boxes = db((db.box.auth_user == user.id) & (db.box.private == False)).select()
+        user.itemcount = len(public_items)
+        user.boxcount = len(public_boxes)
+        user.popularity = get_user_popularity(user)
+    public_itemcount = dict(itemcount)
+    public_itemcount['tooltip']= 'Public Items'
+    users.explore_info = [public_boxcount, public_itemcount, popularity]
+    return users
+
+size_of_users_largest_box = {
+            'tooltip':'Largest Box Size',
+            'icon' : 'glyphicon-th',
+            'data_display' : 'Box of {0}',
+            'data' :lambda user: max([len(items_in(box)) for box in load_public_boxes(user)])
+            }
+
+date_created = {
+    'tooltip':'Date Created',
+    'icon' : 'glyphicon-time',
+    'data_display' : '{0}',
+    'data': lambda box : box.created_at.strftime("%d/%m/%Y")
+}
+
+monetary_value = {
+    'tooltip':'Value',
+    'icon' : 'glyphicon-credit-card',
+    'data_display' : '{0}',
+    'data' : lambda box : format_pence_as_pounds(box.monetary_value)
+}
+
+itemcount = {
+    'tooltip': 'Items',
+    'icon' : 'glyphicon-unchecked',
+    'data_display' : '{0} Items',
+    'data' : lambda x : x.itemcount
+}
+
+popularity = {
+    'tooltip' : 'Total Item Likes',
+    'icon' : 'glyphicon-heart',
+    'data_display' : '{0}',
+    'data' : lambda x: x.popularity
+}
+
+public_boxcount = {
+    'tooltip' : 'Public Boxes',
+    'icon' : 'glyphicon-th-large',
+    'data_display' : '{0} Boxes',
+    'data' : lambda user: user.boxcount
+}
+
+users_name = {
+    'tooltip' : 'View Profile',
+    'icon' : 'glyphicon-user',
+    'data_display' : '{0}',
+    'data' : lambda box: box.auth_user.username,
+    'href' : lambda box: URL('default','profile_page',vars=dict(user=box.auth_user.username))
+}

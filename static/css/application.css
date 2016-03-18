@@ -183,24 +183,27 @@ h1.main-title .glyphicon {
   color:#777;
 }
 
-.lb-grid-list .thumbnail a:hover .preview-icon {
-  color:#333;
+.lb-grid-list .thumbnail a:hover .preview-icon,
+.lb-grid-list .thumbnail a:focus .preview-icon {
+  color:#00607D;
 }
 
-.lb-grid-list .thumbnail.box-preview a:hover {
+.lb-grid-list .thumbnail.preview a:hover,
+.lb-grid-list .thumbnail.preview a:focus {
   text-decoration:none;
 }
 
-.lb-grid-list .thumbnail.box-preview a:hover div {
+.lb-grid-list .thumbnail.preview a:hover div,
+.lb-grid-list .thumbnail.preview a:focus div {
   text-decoration:underline;
 }
 
-.lb-grid-list div.thumbnail.box-preview:hover,
-.lb-grid-list div.thumbnail.item-preview:hover{
+.lb-grid-list div.thumbnail.preview:hover,
+.lb-grid-list div.thumbnail.preview:focus{
   background-color: #EBF2F8;
 }
 
-.box-preview .private-indicator {
+.preview .private-indicator {
   position:absolute;
   left:5px;
   top:5px;
@@ -224,9 +227,7 @@ h1.main-title .glyphicon {
   padding:5px;
 }
 
-.explore-thumbnail {
-  min-height: 200px;
-}
+
 
 .explore-thumbnail hr {
   margin: 10px 0;
@@ -384,7 +385,7 @@ body
   background-color: #F5F5F5;
 }
 
-.lb-grid-list .item-preview .preview-icon
+.lb-grid-list .preview .preview-icon
 {
   font-size: 100px;
   margin:auto;
@@ -407,18 +408,12 @@ body
 
 #skiptocontent a:focus {
 	position:absolute;
-	left:0px;
-	top:0px;
+	left:0;
+	top:0;
 	background:#145b98;
 	outline:0;
 	-webkit-transition: top .1s ease-in, background .5s linear;
   transition: top .1s ease-in, background .5s linear;
-}
-
-label:hover,
-.glyphicon:hover
-{
-  text-decoration: none;
 }
 
 .tab-pane
@@ -430,4 +425,35 @@ label:hover,
 {
   border:1px solid #ddd;
   border-top: none;
+  margin-bottom: 10px;
+}
+
+.preview a .box-attribute-label
+{
+  background-color: #00607d;
+}
+
+.preview a .box-attribute-label:hover,
+.preview a:focus .box-attribute-label
+{
+  background-color: #7D005F;
+  /*background-color: #004257;*/
+}
+
+.tab-pane .explore-header
+{
+  margin-top: 10px;
+  padding-left: 30px;
+}
+
+.tab-pane
+{
+  padding-top:0;
+  padding:0;
+  overflow-x: hidden;
+}
+
+.explore-row:nth-child(even)
+{
+  background: #FBFBFB;
 }

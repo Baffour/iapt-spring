@@ -1,0 +1,18 @@
+{{if hasattr(item_list,'explore_info'):}}
+  {{for attrib in item_list.explore_info:}}
+  {{is_link = 'href' in attrib.keys()}}
+  {{link_url = attrib['href'](item) if is_link else None}}
+  {{if is_link:}}
+  <a class="label-link" href="{{=link_url}}">
+  {{pass}}
+  <span  data-toggle="tooltip"
+         title="{{=attrib['tooltip']}}"
+         class="box-attribute-label label label-default">
+         <span class="glyphicon {{=attrib['icon']}}"></span>
+         {{=attrib['data_display'].format(attrib['data'](item))}}
+  </span>
+  {{if is_link:}}
+  </a>
+  {{pass}}
+  {{pass}}
+  {{pass}}

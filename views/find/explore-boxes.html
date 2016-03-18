@@ -1,0 +1,11 @@
+{{for box_list in explore_boxes:}}
+<div class="row explore-row">
+  {{boxes=box_list}}
+  {{=H2(boxes.label,_class="col-xs-12 explore-header")}}
+  <div class="lb-grid-list col-xs-12">
+    {{include "find/list-boxes.html"}}
+  </div>
+  <div class="clearfix"></div>
+  <hr style="margin:0;"/>
+</div>
+{{pass}}

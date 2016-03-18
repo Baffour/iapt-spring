@@ -20,7 +20,7 @@ My Boxes
 {{block grid}}
 {{for box in boxes:}}
 <div class="col-xs-3">
-  <div class="thumbnail box-preview">
+  <div class="thumbnail preview">
     <a class="preview-name" href="{{=URL('box', 'view/' + str(box.id))}}">
       {{if box.private: }}
         <span class="private-indicator label label-primary"><span class="glyphicon glyphicon-lock"></span> Private</span>
@@ -32,7 +32,7 @@ My Boxes
 </div>
 {{pass}}
 <div class="col-xs-3">
-  <div class="thumbnail box-preview create-box">
+  <div class="thumbnail box-preview preview create-box">
     <a class="preview-name" href="{{=URL('box', 'new')}}">
       <span class="preview-icon glyphicon glyphicon-plus"></span>
       <div>Create a new box</div>
