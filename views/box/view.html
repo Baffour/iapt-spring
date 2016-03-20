@@ -45,6 +45,11 @@
   </div>
 </div>
 {{else:}}
+<div class="col-xs-12">
+<h3>
+  Total Monetary Value: {{=format_pence_as_pounds(sum(i.monetary_value for i in items_in(box)))}}
+</h3>
+</div>
 {{include 'item-preview.html'}}
 {{if show_toolbox:}}
 <div class="col-xs-3">
