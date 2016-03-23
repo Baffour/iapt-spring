@@ -32,8 +32,30 @@ def choose_items():
     if prop.status != 'pending':
         raise HTTP(400)
     target = db.auth_user(prop.target)
-    # TODO: Gather items on both sides
-    return dict(prop=prop, target=target)
+
+    oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
+    offered_items = oi_query.select(db.itm.ALL)
+
+    wi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
+    wanted_items = wi_query.select(db.itm.ALL)
+
+    return dict(prop=prop, target=target, offered_items=offered_items, wanted_items=wanted_items)
+
+@auth.requires_login()
+def add_offered_item():
+    return dict()
+
+@auth.requires_login()
+def remove_offered_item():
+    return dict()
+
+@auth.requires_login()
+def add_requested_item():
+    return dict()
+
+@auth.requires_login()
+def remove_requested_item():
+    return dict()
 
 @auth.requires_login()
 def view():

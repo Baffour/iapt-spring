@@ -12,23 +12,55 @@ Step 2 of 3
 {{block form}}
 <div class="row">
   <div class="col-xs-6">
-    <div class="panel panel-warning">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h1 class="panel-title">Items offered (required)</h1>
       </div>
-      <div class="panel-form">
-        TODO: OFFERED ITEMS LIST
-      </div>
+      <table id="wanted-items" class="table choose-items-list">
+        {{for item in offered_items:}}
+        <tr>
+          <td>{{=icon_for_item(item)}} {{=item.name}}</td>
+          <td>
+            <a class="btn btn-default btn-sm"
+               href="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">Remove this item</a>
+          </td>
+        </tr>
+        {{pass}}
+        <tr>
+          <td>
+            <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box">
+              <span class="glyphicon glyphicon-save-file"></span>
+              Add one of your own items
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
   <div class="col-xs-6">
-    <div class="panel panel-warning">
+    <div class="panel panel-info">
       <div class="panel-heading">
         <h1 class="panel-title">Items requested in return (optional)</h1>
       </div>
-      <div class="panel-form">
-        TODO: WANTED ITEMS LIST
-      </div>
+      <table id="wanted-items" class="table choose-items-list">
+        {{for item in offered_items:}}
+        <tr>
+          <td>{{=icon_for_item(item)}} {{=item.name}}</td>
+          <td>
+            <a class="btn btn-default btn-sm"
+               href="{{=URL('remove_requested_item', args=[trade_id, item.id])}}">Remove this item</a>
+          </td>
+        </tr>
+        {{pass}}
+        <tr>
+          <td>
+            <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box">
+              <span class="glyphicon glyphicon-save-file"></span>
+              Add one of {{=target.username}}&rsquo;s items
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
