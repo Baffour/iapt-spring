@@ -14,12 +14,12 @@ Step 2 of 3
   <div class="col-xs-6">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h1 class="panel-title">Items offered (required)</h1>
+        <h1 class="panel-title">Items offered<span class="panel-meta">(required)</span></h1>
       </div>
-      <table id="wanted-items" class="table choose-items-list">
+      <table id="wanted-items" class="table list-editor-table">
         {{for item in offered_items:}}
         <tr>
-          <td>{{=icon_for_item(item)}} {{=item.name}}</td>
+          <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
           <td>
             <a class="btn btn-default btn-sm"
                href="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">Remove this item</a>
@@ -27,12 +27,12 @@ Step 2 of 3
         </tr>
         {{pass}}
         <tr>
-          <td>
+          <th colspan="2">
             <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of your own items
             </a>
-          </td>
+          </th>
         </tr>
       </table>
     </div>
@@ -40,25 +40,25 @@ Step 2 of 3
   <div class="col-xs-6">
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h1 class="panel-title">Items requested in return (optional)</h1>
+        <h1 class="panel-title">Items requested in return<span class="panel-meta">(optional)</span></h1>
       </div>
-      <table id="wanted-items" class="table choose-items-list">
-        {{for item in offered_items:}}
+      <table id="wanted-items" class="table list-editor-table">
+        {{for item in requested_items:}}
         <tr>
-          <td>{{=icon_for_item(item)}} {{=item.name}}</td>
+          <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
           <td>
             <a class="btn btn-default btn-sm"
-               href="{{=URL('remove_requested_item', args=[trade_id, item.id])}}">Remove this item</a>
+               href="{{=URL('remove_requested_item', args=[prop.id, item.id])}}">Remove this item</a>
           </td>
         </tr>
         {{pass}}
         <tr>
-          <td>
+          <th colspan="2">
             <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of {{=target.username}}&rsquo;s items
             </a>
-          </td>
+          </th>
         </tr>
       </table>
     </div>

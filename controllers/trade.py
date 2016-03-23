@@ -36,14 +36,30 @@ def choose_items():
     oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
     offered_items = oi_query.select(db.itm.ALL)
 
-    wi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
-    wanted_items = wi_query.select(db.itm.ALL)
+    ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
+    requested_items = ri_query.select(db.itm.ALL)
 
-    return dict(prop=prop, target=target, offered_items=offered_items, wanted_items=wanted_items)
+    return dict(prop=prop, target=target, offered_items=offered_items, requested_items=requested_items)
 
 @auth.requires_login()
 def add_offered_item():
-    return dict()
+    prop = load_trade_proposal(request.args(0), editing=True)
+    target = db.auth_user(prop.target)
+
+    oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
+    oi_ids = oi_query.select(db.itm.id)
+
+    constraint = db(~db.itm.id.belongs(oi_ids) & (db.itm.auth_user == auth.user.id))
+    validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
+
+    if form.process().accepted:
+        itm = load_item(form.vars['itm'], editing=True)
+        db.itm2trade_proposal.insert(itm=itm.id, trade_proposal=prop.id)
+        redirect(URL('choose_items', args=prop.id))
+        return
+
+    return dict(target=target, form=form)
 
 @auth.requires_login()
 def remove_offered_item():
