@@ -222,7 +222,26 @@ def accept():
 
 @auth.requires_login()
 def reject():
-    pass
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'sent':
+        raise HTTP(400)
+    sender = db.auth_user(prop.sender)
+
+    prop.status = 'rejected'
+    prop.update_record()
+
+    db.notification.insert(
+        auth_user=sender.id,
+        msg="{} rejected your trade proposal.".format(auth.user.username),
+        link=URL('trade', 'view', args=prop.id),
+        link_text="View rejected proposal"
+    )
+
+    session.flash = "You have rejected {}'s proposal".format(sender.username)
+    redirect(URL('list'))
 
 @auth.requires_login()
 def counter():
