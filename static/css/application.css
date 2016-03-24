@@ -323,7 +323,7 @@ h1.main-title .glyphicon {
   top:1px;
 }
 
-.list-editor-table td:first-child .glyphicon {
+.list-editor-table td:first-child a > .glyphicon {
   margin-right:8px;
   font-size:22px;
   line-height:15px;
@@ -331,8 +331,13 @@ h1.main-title .glyphicon {
   color:#333;
 }
 
+.list-editor-table tr.highlight {
+  background-color:#fcf8e3;
+}
+
 .list-editor-table td:first-child a:hover,
-.list-editor-table td:first-child a:hover span.glyphicon {
+.list-editor-table td:first-child a:hover span.glyphicon,
+.list-editor-table td:first-child a:hover span.label {
   text-decoration:none;
 }
 
