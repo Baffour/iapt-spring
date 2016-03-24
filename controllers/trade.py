@@ -71,7 +71,7 @@ def remove_offered_item():
     item = load_item(request.args(1))
 
     if prop.status == 'pending':
-        if prop.sender == auth.user.id:
+        if prop.sender == item.auth_user:
             itm2tp = item.itm2trade_proposal(db.itm2trade_proposal.trade_proposal==prop.id)
             if itm2tp.isempty(): raise HTTP(400)
             itm2tp.delete()
@@ -83,11 +83,53 @@ def remove_offered_item():
 
 @auth.requires_login()
 def add_requested_item():
-    return dict()
+    prop = load_trade_proposal(request.args(0), editing=True)
+    target = db.auth_user(prop.target)
+
+    ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
+    ri_ids = ri_query.select(db.itm.id)
+
+    target_user_items = db(~db.itm.id.belongs(ri_ids) & (db.itm.auth_user==target.id)).select()
+    ri_selectable_ids = [item.id for item in target_user_items if is_public(item)]
+
+    constraint = db(db.itm.id.belongs(ri_selectable_ids))
+    reprfn = lambda i: "{} ({}, {} condition, {})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
+
+    if form.process().accepted:
+        itm = load_item(form.vars['itm'])
+
+        if itm.auth_user != target.id or not is_public(itm):
+            raise HTTP(403)
+
+        db.itm2trade_proposal.insert(itm=itm.id, trade_proposal=prop.id)
+        redirect(URL('choose_items', args=prop.id))
+        return
+
+    return dict(target=target, form=form)
+
+def is_public(item):
+    return item.itm2box((db.itm2box.box==db.box.id) & (db.box.private==False)).count() > 0
 
 @auth.requires_login()
 def remove_requested_item():
-    return dict()
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    item = load_item(request.args(1))
+
+    if prop.status == 'pending':
+        if prop.target == item.auth_user:
+            itm2tp = item.itm2trade_proposal(db.itm2trade_proposal.trade_proposal==prop.id)
+            if itm2tp.isempty(): raise HTTP(400)
+            itm2tp.delete()
+            redirect(URL('choose_items', args=prop.id))
+        else:
+            raise HTTP(403)
+    else:
+        raise HTTP(400) # TODO: Handle other prop statuses if needed
 
 @auth.requires_login()
 def confirm():
