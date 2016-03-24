@@ -157,7 +157,7 @@ def confirm():
             auth_user=target.id,
             msg="{} proposed a trade with you.".format(auth.user.username),
             link=URL('trade', 'view', args=prop.id),
-            link_text="Respond to this proposal"
+            link_text="View and respond to this proposal"
         )
 
         session.flash = "Trade proposal sent to {} successfully.".format(target.username)
@@ -181,7 +181,17 @@ def cancel():
 
 @auth.requires_login()
 def view():
-    pass
+    prop = load_trade_proposal(request.args(0))
+    sender = db.auth_user(prop.sender)
+    target = db.auth_user(prop.target)
+
+    oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==sender.id))
+    offered_items = oi_query.select(db.itm.ALL)
+
+    ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
+    requested_items = ri_query.select(db.itm.ALL)
+
+    return dict(prop=prop, sender=sender, offered_items=offered_items, requested_items=requested_items)
 
 @auth.requires_login()
 def accept():

@@ -1,0 +1,62 @@
+{{extend 'grid.html'}}
+
+{{block title}}
+Trade proposal from {{=sender.username}}
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-success" href="#">
+    Accept proposal
+  </a>
+  <a class="btn btn-danger" href="#">
+    Reject proposal
+  </a>
+  <a class="btn btn-default" href="#">
+    Make a counter-offer
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Items offered by {{=sender.username}}</h1>
+        </div>
+        <table id="wanted-items" class="table list-editor-table">
+          {{for item in offered_items:}}
+          <tr>
+            <td>
+              <a href="{{=URL('item', 'view', args=item.id)}}">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              </a>
+            </td>
+          </tr>
+          {{pass}}
+        </table>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Items requested from your collection</h1>
+        </div>
+        <table id="wanted-items" class="table list-editor-table">
+          {{for item in requested_items:}}
+          <tr>
+            <td>
+              <a href="{{=URL('item', 'view', args=item.id)}}">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              </a>
+            </td>
+          </tr>
+          {{pass}}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}

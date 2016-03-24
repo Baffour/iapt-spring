@@ -231,8 +231,6 @@ h1.main-title .glyphicon {
   padding:5px;
 }
 
-
-
 .explore-thumbnail hr {
   margin: 10px 0;
   border-color: #bbb;
@@ -311,9 +309,14 @@ h1.main-title .glyphicon {
   left:6px;
 }
 
+.list-editor-table td:last-child {
+  text-align:right;
+}
+
 .list-editor-table td:first-child {
   vertical-align:middle;
   font-size:16px;
+  text-align:left;
 }
 
 .list-editor-table td:first-child .glyphicon {
@@ -322,10 +325,16 @@ h1.main-title .glyphicon {
   font-size:22px;
   line-height:16px;
   top:4px;
+  color:#333;
 }
 
-.list-editor-table td:last-child {
-  text-align:right;
+.list-editor-table td:first-child a:hover,
+.list-editor-table td:first-child a:hover span.glyphicon {
+  text-decoration:none;
+}
+
+.list-editor-table td:first-child a:hover span {
+  text-decoration:underline;
 }
 
 .list-editor-table th {
