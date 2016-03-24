@@ -156,8 +156,14 @@ def confirm():
         db.notification.insert(
             auth_user=target.id,
             msg="{} proposed a trade with you.".format(auth.user.username),
-            # TODO
+            link=URL('trade', 'view', args=prop.id),
+            link_text="Respond to this proposal"
         )
+
+        session.flash = "Trade proposal sent to {} successfully.".format(target.username)
+        session.flash_type = 'success'
+        redirect(URL('list'))
+        return
 
     return dict(form=form, target=target, ocount=ocount, rcount=rcount)
 
