@@ -12,7 +12,7 @@ Step 2 of 3
 {{block form}}
 <div class="row">
   <div class="col-xs-6">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
       <div class="panel-heading">
         <h1 class="panel-title">Items offered<span class="panel-meta">(required)</span></h1>
       </div>
@@ -62,6 +62,14 @@ Step 2 of 3
         </tr>
       </table>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <a class="btn btn-primary" style="float:right" href="{{=URL('add_message', args=prop.id)}}">
+      Include these items in this proposal &rarr;
+    </a>
+    <a class="btn btn-default" href="{{=URL('new')}}">&larr; Go back to the user selection screen</a>
   </div>
 </div>
 {{end}}
