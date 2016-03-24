@@ -193,7 +193,7 @@ def view():
     ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
     requested_items = ri_query.select(db.itm.ALL)
 
-    return dict(prop=prop, sender=sender, offered_items=offered_items, requested_items=requested_items)
+    return dict(prop=prop, sender=sender, target=target, offered_items=offered_items, requested_items=requested_items)
 
 @auth.requires_login()
 def accept():
