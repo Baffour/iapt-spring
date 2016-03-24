@@ -50,7 +50,8 @@ def add_offered_item():
     oi_ids = oi_query.select(db.itm.id)
 
     constraint = db(~db.itm.id.belongs(oi_ids) & (db.itm.auth_user == auth.user.id))
-    validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
+    reprfn = lambda i: "{} ({}, {} condition, {})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
 
     if form.process().accepted:
