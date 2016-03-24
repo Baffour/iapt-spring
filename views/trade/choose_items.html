@@ -2,7 +2,11 @@
 {{extend 'dialog.html'}}
 
 {{block title}}
-Choose items to trade with &ldquo;{{=target.username}}&rdquo;
+{{if prop.parent:}}
+Choose items for your counter-offer to {{=target.username}}&rsquo;s proposal
+{{else:}}
+Choose items to trade with {{=target.username}}
+{{pass}}
 {{end}}
 
 {{block title_meta}}

@@ -4,7 +4,7 @@
 {{response.title = "Trade proposal from {}".format(sender.username)}}
 {{pass}}
 
-{{show_toolbox = prop.status == 'sent'}}
+{{show_toolbox = auth.user.id == prop.target and prop.status == 'sent'}}
 {{extend 'grid.html'}}
 
 {{block title}}
@@ -42,6 +42,10 @@
     {{else:}}
     You have rejected this trade proposal.
     {{pass}}
+  </div>
+  {{elif prop.status == 'superseded':}}
+  <div class="alert alert-warning">
+    This proposal has been superseded by <a href="{{=URL('view', args=child.id)}}">a new trade proposal</a>.
   </div>
   {{pass}}
   <div class="row">

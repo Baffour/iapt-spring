@@ -13,7 +13,8 @@ def list():
 @auth.requires_login()
 def new():
     widget = SQLFORM.widgets.autocomplete(request, db.auth_user.username, db=db(db.auth_user.id!=auth.user.id), limitby=(0,10), min_length=1)
-    form = SQLFORM.factory(Field('user', widget=widget, required=True, notnull=True, label="User to trade with", comment="Start typing above and matching users will appear"), submit_button="Propose a trade with this user")
+    field = Field('user', widget=widget, required=True, notnull=True, label="User to trade with", comment="Start typing above and matching users will appear")
+    form = SQLFORM.factory(field, submit_button="Propose a trade with this user")
 
     if form.process().accepted:
         username = form.vars['user']
@@ -161,12 +162,24 @@ def confirm():
         prop.created_at = request.now
         prop.update_record()
 
-        db.notification.insert(
-            auth_user=target.id,
-            msg="{} proposed a trade with you.".format(auth.user.username),
-            link=URL('trade', 'view', args=prop.id),
-            link_text="View and respond to this proposal"
-        )
+        if prop.parent:
+            parent = db.trade_proposal(prop.parent)
+            parent.status = 'superseded'
+            parent.update_record()
+
+            db.notification.insert(
+                auth_user=target.id,
+                msg="{} made a counter-offer to your proposal.".format(auth.user.username),
+                link=URL('trade', 'view', args=prop.id),
+                link_text="View and respond to the counter-proposal"
+            )
+        else:
+            db.notification.insert(
+                auth_user=target.id,
+                msg="{} proposed a trade with you.".format(auth.user.username),
+                link=URL('trade', 'view', args=prop.id),
+                link_text="View and respond to this proposal"
+            )
 
         session.flash = "Trade proposal sent to {} successfully.".format(target.username)
         session.flash_type = 'success'
@@ -199,7 +212,11 @@ def view():
     ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
     requested_items = ri_query.select(db.itm.ALL)
 
-    return dict(prop=prop, sender=sender, target=target, offered_items=offered_items, requested_items=requested_items)
+    child = None
+    if prop.status == 'superseded':
+        child = db.trade_proposal(db.trade_proposal.parent==prop.id)
+
+    return dict(prop=prop, sender=sender, target=target, offered_items=offered_items, requested_items=requested_items, child=child)
 
 @auth.requires_login()
 def accept():
@@ -251,4 +268,17 @@ def reject():
 
 @auth.requires_login()
 def counter():
-    pass
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'sent':
+        raise HTTP(400)
+    sender = db.auth_user(prop.sender)
+
+    cprop_id = db.trade_proposal.insert(sender=auth.user.id, target=sender.id, parent=prop.id)
+    item_ids = db(db.itm2trade_proposal.trade_proposal==prop.id).select(db.itm2trade_proposal.itm)
+    for i in item_ids:
+        db.itm2trade_proposal.insert(trade_proposal=cprop_id, itm=i.itm)
+
+    redirect(URL('choose_items', args=cprop_id))
