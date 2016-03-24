@@ -158,8 +158,8 @@ def image():
 
 @auth.requires_login()
 def remove_from_box():
-    item = load_item(request.args(0), editing=False)
-    box = load_box(request.args(1), editing=False)
+    item = load_item(request.args(0), editing=True)
+    box = load_box(request.args(1), editing=True)
 
     itm2box = item.itm2box(db.itm2box.box==box.id)
     if itm2box.isempty() or (box.unfiled and item.itm2box.count() == 1): raise HTTP(400)

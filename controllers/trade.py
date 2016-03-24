@@ -63,7 +63,22 @@ def add_offered_item():
 
 @auth.requires_login()
 def remove_offered_item():
-    return dict()
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    item = load_item(request.args(1))
+
+    if prop.status == 'pending':
+        if prop.sender == auth.user.id:
+            itm2tp = item.itm2trade_proposal(db.itm2trade_proposal.trade_proposal==prop.id)
+            if itm2tp.isempty(): raise HTTP(400)
+            itm2tp.delete()
+            redirect(URL('choose_items', args=prop.id))
+        else:
+            raise HTTP(403)
+    else:
+        raise HTTP(400) # TODO: Handle other prop statuses if needed
 
 @auth.requires_login()
 def add_requested_item():

@@ -21,8 +21,9 @@ Step 2 of 3
         <tr>
           <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
           <td>
-            <a class="btn btn-default btn-sm"
-               href="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">Remove this item</a>
+            <form method="post" action="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">
+              <input type="submit" class="btn btn-default btn-sm" value="Remove this item" />
+            </form>
           </td>
         </tr>
         {{pass}}
@@ -47,8 +48,9 @@ Step 2 of 3
         <tr>
           <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
           <td>
-            <a class="btn btn-default btn-sm"
-               href="{{=URL('remove_requested_item', args=[prop.id, item.id])}}">Remove this item</a>
+            <form method="post" action="{{=URL('remove_requested_item', args=[prop.id, item.id])}}">
+              <input type="submit" class="btn btn-default btn-sm" text="Remove this item" />
+            </form>
           </td>
         </tr>
         {{pass}}
