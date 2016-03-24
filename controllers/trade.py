@@ -90,6 +90,48 @@ def remove_requested_item():
     return dict()
 
 @auth.requires_login()
+def confirm():
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'pending':
+        raise HTTP(400)
+    target = db.auth_user(prop.target)
+
+    oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
+    ocount = oi_query.count()
+    if not ocount: raise HTTP(400)
+
+    ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
+    rcount = ri_query.count()
+
+    form = SQLFORM.factory(db.trade_proposal.msg, submit_button="Send trade proposal")
+
+    if form.process().accepted:
+        prop.msg = form.vars['msg']
+        prop.status = 'sent'
+        prop.created_at = request.now
+        prop.update_record()
+
+        db.notification.insert(
+            auth_user=target.id,
+            msg="{} proposed a trade with you.".format(auth.user.username),
+            # TODO
+        )
+
+    return dict(form=form, target=target, ocount=ocount, rcount=rcount)
+
+@auth.requires_login()
+def cancel():
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'pending':
+        raise HTTP(400)
+
+    del db.trade_proposal[prop.id]
+    redirect(URL('new'))
+
+@auth.requires_login()
 def view():
     pass
 
@@ -99,10 +141,6 @@ def accept():
 
 @auth.requires_login()
 def reject():
-    pass
-
-@auth.requires_login()
-def delete():
     pass
 
 @auth.requires_login()

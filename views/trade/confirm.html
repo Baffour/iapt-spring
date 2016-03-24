@@ -1,0 +1,11 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Send your trade proposal to &ldquo;{{=target.username}}&rdquo;
+{{end}}
+
+{{block form}}
+<p>You are about to propose trading {{=ocount}} of your items for {{=rcount}} of {{=target.username}}&rsquo;s items.</p>
+<p>If you'd like you can write a message to go with your proposal in the text-box below, otherwise just click on the &ldquo;Send trade proposal&rdquo; button below to send your proposal.</p>
+{{=form}}
+{{end}}

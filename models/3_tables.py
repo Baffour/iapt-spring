@@ -57,7 +57,7 @@ db.define_table('trade_proposal',
     Field('sender', 'reference auth_user', notnull=True, required=True, default=auth.user),
     Field('target', 'reference auth_user', notnull=True, required=True),
     Field('status', type='string', notnull=True, required=True, default='pending', requires=IS_IN_SET(PROPOSAL_STATUSES)),
-    Field('msg', type='text', notnull=False, required=False, comment="Send a message with your proposal"),
+    Field('msg', type='text', notnull=False, required=False, label="Message"),
     Field('created_at', type='datetime', writable=False, readable=False),
     Field('parent', 'reference trade_proposal', notnull=False, required=False)
 )
