@@ -145,10 +145,12 @@ def confirm():
     ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
     rcount = ri_query.count()
 
-    form = SQLFORM.factory(db.trade_proposal.msg, submit_button="Send trade proposal")
+    form = FORM.confirm('Send trade proposal', {'Back to item selection': URL('choose_items', args=prop.id)})
+    form['_class'] = 'confirmation-form'
+    form[0]['_class'] = 'btn btn-primary'
+    form[1]['_class'] = 'btn btn-default'
 
-    if form.process().accepted:
-        prop.msg = form.vars['msg']
+    if form.accepted:
         prop.status = 'sent'
         prop.created_at = request.now
         prop.update_record()
@@ -195,7 +197,28 @@ def view():
 
 @auth.requires_login()
 def accept():
-    pass
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    prop = load_trade_proposal(request.args(0), editing=True)
+    if prop.status != 'sent':
+        raise HTTP(400)
+    sender = db.auth_user(prop.sender)
+
+    prop.status = 'accepted'
+    prop.update_record()
+
+    db.notification.insert(
+        auth_user=sender.id,
+        msg="{} accepted your trade proposal. You should contact them on {} to arrange logistics for swapping items.".format(auth.user.username, auth.user.email),
+        link=URL('trade', 'view', args=prop.id),
+        link_text="View accepted proposal"
+    )
+
+    session.flash = """You have accepted {}'s proposal.
+        They have been notified and should contact you by email shortly.""".format(sender.username)
+    session.flash_type = 'success'
+    redirect(URL('list'))
 
 @auth.requires_login()
 def reject():

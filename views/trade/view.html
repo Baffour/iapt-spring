@@ -1,3 +1,5 @@
+{{response.title = "Trade proposal from " + sender.username}}
+{{show_toolbox = prop.status == 'sent'}}
 {{extend 'grid.html'}}
 
 {{block title}}
@@ -5,21 +7,29 @@ Trade proposal from {{=sender.username}}
 {{end}}
 
 {{block toolbox}}
-<div class="btn-group">
-  <a class="btn btn-success" href="#">
-    Accept proposal
-  </a>
-  <a class="btn btn-danger" href="#">
-    Reject proposal
-  </a>
-  <a class="btn btn-default" href="#">
-    Make a counter-offer
-  </a>
-</div>
+  <form class="inline-block" action="{{=URL('accept', args=prop.id)}}" method="post">
+    <input type="submit" class="btn btn-success" value="Accept proposal">
+  </form>
+  <form class="inline-block" action="{{=URL('reject', args=prop.id)}}" method="post">
+    <input type="submit" class="btn btn-danger" value="Reject proposal">
+  </form>
+  <form class="inline-block" action="{{=URL('counter', args=prop.id)}}" method="post">
+    <input type="submit" class="btn btn-default" value="Make a counter-offer">
+  </form>
 {{end}}
 
 {{block grid}}
 <div class="col-xs-12">
+  {{if prop.status == 'accepted':}}
+  <div class="alert alert-success">
+    You have accepted this trade proposal.
+    A notification has been sent to {{=sender.username}} and they should contact you soon by email.
+  </div>
+  {{elif prop.status == 'rejected':}}
+  <div class="alert alert-danger">
+    You have rejected this trade proposal.
+  </div>
+  {{pass}}
   <div class="row">
     <div class="col-xs-6">
       <div class="panel panel-default">
