@@ -62,6 +62,11 @@ db.define_table('trade_proposal',
     Field('parent', 'reference trade_proposal', notnull=False, required=False)
 )
 
+db.define_table('itm2trade_proposal',
+    Field('itm', 'reference itm', notnull=True, required=True),
+    Field('trade_proposal', 'reference trade_proposal', notnull=True, required=True)
+)
+
 db.define_table('want_item',
     Field('name', type='string', length=256, notnull=True, required=True),
     Field('thing_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),

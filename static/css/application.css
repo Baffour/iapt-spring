@@ -307,12 +307,12 @@ h1.main-title .glyphicon {
   left:6px;
 }
 
-#item-boxes td:first-child {
+.list-editor-table td:first-child {
   vertical-align:middle;
   font-size:16px;
 }
 
-#item-boxes td:first-child .glyphicon {
+.list-editor-table td:first-child .glyphicon {
   margin-left:8px;
   margin-right:8px;
   font-size:22px;
@@ -320,8 +320,13 @@ h1.main-title .glyphicon {
   top:4px;
 }
 
-#item-boxes td:last-child {
+.list-editor-table td:last-child {
   text-align:right;
+}
+
+.list-editor-table th {
+  width:100%;
+  text-align:center;
 }
 
 .hide-label {

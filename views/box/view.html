@@ -53,10 +53,10 @@
 {{include 'item-preview.html'}}
 {{if show_toolbox:}}
 <div class="col-xs-3">
-  <div class="thumbnail item-preview create-item">
-    <a  class="preview-name" href="{{=URL('item','new',vars=dict(box=box.id))}}">Create a new Item
-      <div class="preview-icon glyphicon glyphicon-plus">
-      </div>
+  <div class="thumbnail preview create-item">
+    <a class="preview-name" href="{{=URL('item','new',vars=dict(box=box.id))}}">
+      <span class="preview-icon glyphicon glyphicon-plus"></span>
+      <div>Add a new item</div>
     </a>
   </div>
 </div>
