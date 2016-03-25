@@ -7,10 +7,6 @@
 {{show_toolbox = auth.user.id == prop.target and prop.status == 'sent'}}
 {{extend 'grid.html'}}
 
-{{block title}}
-{{=response.title}}
-{{end}}
-
 {{block toolbox}}
 <form class="inline-block" action="{{=URL('accept', args=prop.id)}}" method="post">
   <input type="submit" class="btn btn-success" value="Accept proposal">
