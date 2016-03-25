@@ -48,6 +48,11 @@
     This proposal has been superseded by <a href="{{=URL('view', args=child.id)}}">a new trade proposal</a>.
   </div>
   {{pass}}
+  {{if parent:}}
+  <div class="alert alert-warning">
+    This proposal is a counter-offer to <a href="{{=URL('view', args=parent.id)}}">this superseded proposal</a>.
+  </div>
+  {{pass}}
   <div class="row">
     <div class="col-xs-6">
       <div class="panel panel-default">

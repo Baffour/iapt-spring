@@ -212,11 +212,11 @@ def view():
     ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
     requested_items = ri_query.select(db.itm.ALL)
 
-    child = None
-    if prop.status == 'superseded':
-        child = db.trade_proposal(db.trade_proposal.parent==prop.id)
+    child = db.trade_proposal(db.trade_proposal.parent==prop.id) if prop.status == 'superseded' else None
+    parent = db.trade_proposal(prop.parent) if prop.parent else None
 
-    return dict(prop=prop, sender=sender, target=target, offered_items=offered_items, requested_items=requested_items, child=child)
+    return dict(prop=prop, sender=sender, target=target, child=child, parent=parent,
+                offered_items=offered_items, requested_items=requested_items)
 
 @auth.requires_login()
 def accept():
