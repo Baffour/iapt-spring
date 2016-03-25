@@ -1,7 +1,26 @@
-{{extend 'layout.html'}}
+{{extend 'grid.html'}}
 
-<div class="row">
-  <div class="col-xs-12">
-    This is the logged-in user homepage. TODO: Lots of useful stuff here
-  </div>
+{{block title}}
+My Homepage
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('item', 'new')}}">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add a new item
+  </a>
 </div>
+<div class="btn-group">
+  <a class="btn btn-default{{if no_items:}} disabled{{pass}}" href="{{=URL('trade', 'new')}}">
+    <span class="glyphicon glyphicon-retweet"></span>
+    Propose a trade
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+<div class="col-xs-12">
+  TODO: This page will contain more stuff than it does at present
+</div>
+{{end}}

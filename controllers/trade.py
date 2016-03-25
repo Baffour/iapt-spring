@@ -2,13 +2,15 @@
 
 @auth.requires_login()
 def list():
+    no_items = db(db.itm.auth_user==auth.user.id).count() == 0
+
     spquery = db((db.trade_proposal.sender==auth.user.id) & (db.trade_proposal.status!='pending'))
     sent_props = spquery.select().sort(lambda p: (p.status == 'sent', p.created_at), reverse=True)
 
     rpquery = db((db.trade_proposal.target==auth.user.id) & (db.trade_proposal.status!='pending'))
     rec_props = rpquery.select().sort(lambda p: (p.status == 'sent', p.created_at), reverse=True)
 
-    return dict(sent_proposals=sent_props, received_proposals=rec_props)
+    return dict(no_items=no_items, sent_proposals=sent_props, received_proposals=rec_props)
 
 @auth.requires_login()
 def new():

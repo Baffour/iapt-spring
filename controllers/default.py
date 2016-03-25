@@ -1,10 +1,10 @@
 # IAPT Spring Assessment - Group 13
 
 def index():
-    # TODO: Controller content
     if auth.user is None:
         redirect(URL('welcome'))
-    return dict()
+    no_items = db(db.itm.auth_user==auth.user.id).count() == 0
+    return dict(no_items=no_items)
 
 def welcome():
     form = custom_register_form()
