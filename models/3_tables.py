@@ -68,10 +68,11 @@ db.define_table('itm2trade_proposal',
 
 db.define_table('want_item',
     Field('name', type='string', length=256, notnull=True, required=True),
-    Field('thing_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),
+    Field('itm_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('description', type='text', required=True),
-    Field('source_itm', 'reference itm', notnull=True, required=False, writable=False)
+    Field('source_itm', 'reference itm', notnull=True, required=False, writable=False),
+    *_flatten_and_make_nullable(EXTRA_FIELDS)
 )
 
 db.define_table('notification',
