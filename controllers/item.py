@@ -163,6 +163,9 @@ def image():
 
 @auth.requires_login()
 def remove_from_box():
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
     item = load_item(request.args(0), editing=True)
     box = load_box(request.args(1), editing=True)
 

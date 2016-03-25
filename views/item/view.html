@@ -74,8 +74,10 @@
             </a>
           </td>
           <td>
-            <a class="btn btn-default btn-sm{{if box.unfiled and len(boxes) == 1:}} disabled{{pass}}"
-              href="{{=URL('remove_from_box', args=[item.id, box.id])}}">Remove from this box</a>
+            <form action="{{=URL('remove_from_box', args=[item.id, box.id])}}" method="post">
+              <input class="btn btn-default btn-sm"{{if box.unfiled and len(boxes) == 1:}}disabled="disabled"{{pass}}
+                     type="submit" value="Remove from this box" />
+            </form>
           </td>
         </tr>
         {{pass}}
