@@ -1,0 +1,108 @@
+{{if auth.user.id == prop.sender:}}
+{{response.title = "Trade proposal to {}".format(target.username)}}
+{{else:}}
+{{response.title = "Trade proposal from {}".format(sender.username)}}
+{{pass}}
+
+{{show_toolbox = auth.user.id == prop.target and prop.status == 'sent'}}
+{{extend 'grid.html'}}
+
+{{block toolbox}}
+<form class="inline-block" action="{{=URL('accept', args=prop.id)}}" method="post">
+  <input type="submit" class="btn btn-success" value="Accept proposal">
+</form>
+<form class="inline-block" action="{{=URL('reject', args=prop.id)}}" method="post">
+  <input type="submit" class="btn btn-danger" value="Reject proposal">
+</form>
+<form class="inline-block" action="{{=URL('counter', args=prop.id)}}" method="post">
+  <input type="submit" class="btn btn-default" value="Make a counter-offer">
+</form>
+{{end}}
+
+{{block grid}}
+<div class="col-xs-12">
+  {{if prop.status == 'accepted':}}
+  <div class="alert alert-success">
+    {{if auth.user.id == prop.sender:}}
+    This proposal has been accepted by {{=target.username}}. You should contact them on {{=target.email}}
+    to arrange logistics for swapping items.
+    {{else:}}
+    You have accepted this trade proposal.
+    A notification has been sent to {{=sender.username}} and they should contact you soon by email.
+    {{pass}}
+  </div>
+  {{elif prop.status == 'rejected':}}
+  <div class="alert alert-danger">
+    {{if auth.user.id == prop.sender:}}
+    This proposal has been rejected by {{=target.username}}.
+    {{else:}}
+    You have rejected this trade proposal.
+    {{pass}}
+  </div>
+  {{elif prop.status == 'superseded':}}
+  <div class="alert alert-warning">
+    This proposal has been superseded by <a href="{{=URL('view', args=child.id)}}">a new trade proposal</a>.
+  </div>
+  {{pass}}
+  {{if parent:}}
+  <div class="alert alert-warning">
+    This proposal is a counter-offer to <a href="{{=URL('view', args=parent.id)}}">this superseded proposal</a>.
+  </div>
+  {{pass}}
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">
+            {{if auth.user.id == prop.sender:}}
+            Items offered from your collection
+            {{else:}}
+            Items offered by {{=sender.username}}
+            {{pass}}
+          </h1>
+        </div>
+        <table id="wanted-items" class="table list-editor-table">
+          {{for item in offered_items:}}
+          <tr>
+            <td>
+              <a href="{{=URL('item', 'view', args=item.id)}}">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              </a>
+            </td>
+          </tr>
+          {{pass}}
+        </table>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">
+            {{if auth.user.id == prop.sender:}}
+            Items requested from {{=target.username}}&rsquo;s collection
+            {{else:}}
+            Items requested from your collection
+            {{pass}}
+          </h1>
+        </div>
+        <table id="wanted-items" class="table list-editor-table">
+          {{if not len(requested_items):}}
+          <tr>
+            <td>No items requested</td>
+          </tr>
+          {{pass}}
+          {{for item in requested_items:}}
+          <tr>
+            <td>
+              <a href="{{=URL('item', 'view', args=item.id)}}">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              </a>
+            </td>
+          </tr>
+          {{pass}}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}

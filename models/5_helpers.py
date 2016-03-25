@@ -59,6 +59,8 @@ def load_trade_proposal(id, editing=False):
     if auth.user.id == prop.target:
         if not editing and prop.status != 'pending':
             return prop
+        if editing and prop.status == 'sent':
+            return prop
 
     raise HTTP(403)
 

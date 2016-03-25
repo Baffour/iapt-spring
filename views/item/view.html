@@ -68,10 +68,16 @@
       <table class="table list-editor-table">
         {{for box in boxes:}}
         <tr>
-          <td><span class="glyphicon glyphicon-inbox"></span> <a href="{{=URL('box', 'view', args=box.id)}}">{{=box.name}}</a></td>
           <td>
-            <a class="btn btn-default btn-sm{{if box.unfiled and len(boxes) == 1:}} disabled{{pass}}"
-              href="{{=URL('remove_from_box', args=[item.id, box.id])}}">Remove from this box</a>
+            <a href="{{=URL('box', 'view', args=box.id)}}">
+              <span class="glyphicon glyphicon-inbox"></span> <span>{{=box.name}}</span>
+            </a>
+          </td>
+          <td>
+            <form action="{{=URL('remove_from_box', args=[item.id, box.id])}}" method="post">
+              <input class="btn btn-default btn-sm"{{if box.unfiled and len(boxes) == 1:}}disabled="disabled"{{pass}}
+                     type="submit" value="Remove from this box" />
+            </form>
           </td>
         </tr>
         {{pass}}

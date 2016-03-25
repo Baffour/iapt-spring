@@ -57,7 +57,6 @@ db.define_table('trade_proposal',
     Field('sender', 'reference auth_user', notnull=True, required=True, default=auth.user),
     Field('target', 'reference auth_user', notnull=True, required=True),
     Field('status', type='string', notnull=True, required=True, default='pending', requires=IS_IN_SET(PROPOSAL_STATUSES)),
-    Field('msg', type='text', notnull=False, required=False, comment="Send a message with your proposal"),
     Field('created_at', type='datetime', writable=False, readable=False),
     Field('parent', 'reference trade_proposal', notnull=False, required=False)
 )
@@ -69,10 +68,11 @@ db.define_table('itm2trade_proposal',
 
 db.define_table('want_item',
     Field('name', type='string', length=256, notnull=True, required=True),
-    Field('thing_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),
+    Field('itm_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('description', type='text', required=True),
-    Field('source_itm', 'reference itm', notnull=True, required=False, writable=False)
+    Field('source_itm', 'reference itm', notnull=True, required=False, writable=False),
+    *_flatten_and_make_nullable(EXTRA_FIELDS)
 )
 
 db.define_table('notification',

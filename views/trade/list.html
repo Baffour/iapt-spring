@@ -1,8 +1,5 @@
+{{response.title = "My Trades"}}
 {{extend 'grid.html'}}
-
-{{block title}}
-My Trades
-{{end}}
 
 {{block toolbox}}
 <div class="btn-group">
@@ -14,7 +11,74 @@ My Trades
 {{end}}
 
 {{block grid}}
-<div class="col-xs-12">
-  TODO: This page will list active trades, and potentially have and want lists as well
+<div class="col-xs-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Trade proposals sent</h1>
+    </div>
+    <table class="table list-editor-table">
+      {{if not len(sent_proposals):}}
+      <tr>
+        <td>No proposals sent</td>
+      </tr>
+      {{pass}}
+      {{for prop in sent_proposals:}}
+      {{target = db.auth_user(prop.target)}}
+      <tr>
+        <td>
+          <a href="{{=URL('view', args=prop.id)}}">
+          <span class="glyphicon glyphicon-user"></span> <span>{{=target.username}}</span>
+          </a>
+        </td>
+        <td>
+          {{if prop.status == 'sent':}}
+          <span class="label label-info">Sent</span>
+          {{elif prop.status == 'accepted':}}
+          <span class="label label-success">Accepted</span>
+          {{elif prop.status == 'rejected':}}
+          <span class="label label-danger">Rejected</span>
+          {{else:}}
+          <span class="label label-default">{{=prop.status.capitalize()}}</span>
+          {{pass}}
+        </td>
+      </tr>
+      {{pass}}
+    </table>
+  </div>
+</div>
+<div class="col-xs-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Trade proposals received</h1>
+    </div>
+    <table class="table list-editor-table">
+      {{if not len(received_proposals):}}
+      <tr>
+        <td>No proposals received</td>
+      </tr>
+      {{pass}}
+      {{for prop in received_proposals:}}
+      {{sender = db.auth_user(prop.sender)}}
+      <tr{{if prop.status == 'sent':}} class="highlight"{{pass}}>
+        <td>
+          <a href="{{=URL('view', args=prop.id)}}">
+          <span class="glyphicon glyphicon-user"></span> <span>{{=sender.username}}</span>
+        </a>
+        </td>
+        <td>
+          {{if prop.status == 'sent':}}
+          <span class="label label-info">Received</span>
+          {{elif prop.status == 'accepted':}}
+          <span class="label label-success">Accepted</span>
+          {{elif prop.status == 'rejected':}}
+          <span class="label label-danger">Rejected</span>
+          {{else:}}
+          <span class="label label-default">{{=prop.status.capitalize()}}</span>
+          {{pass}}
+        </td>
+      </tr>
+      {{pass}}
+    </table>
+  </div>
 </div>
 {{end}}

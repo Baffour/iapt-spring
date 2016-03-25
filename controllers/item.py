@@ -111,6 +111,11 @@ def new_of_type():
         name = form.vars['name']
         extra_field_names = [f.name for f in extra_fields]
         extra_field_vals = dict((k, v) for k, v in form.vars.items() if k in extra_field_names)
+
+        if 'list' in request.vars:
+            if request.vars['list'] == 'have':
+                extra_field_vals['in_have_list'] = True
+
         item_id = db.itm.insert(
             name=name,
             itm_type=type,
@@ -158,8 +163,11 @@ def image():
 
 @auth.requires_login()
 def remove_from_box():
-    item = load_item(request.args(0), editing=False)
-    box = load_box(request.args(1), editing=False)
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    item = load_item(request.args(0), editing=True)
+    box = load_box(request.args(1), editing=True)
 
     itm2box = item.itm2box(db.itm2box.box==box.id)
     if itm2box.isempty() or (box.unfiled and item.itm2box.count() == 1): raise HTTP(400)
