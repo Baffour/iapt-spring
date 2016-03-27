@@ -2,7 +2,7 @@
 
 def view():
     user = user_from_request(request)
-    guest = user.id != auth.user.id
+    guest = auth.user is None or user.id != auth.user.id
 
     iquery = db((db.itm.auth_user==user.id) & (db.itm.in_have_list==True))
     items = iquery.select().sort(lambda i: i.name.lower())
