@@ -20,7 +20,7 @@ Step 2 of 3
       <div class="panel-heading">
         <h1 class="panel-title">Items offered<span class="panel-meta">(required)</span></h1>
       </div>
-      <table id="wanted-items" class="table list-editor-table">
+      <table class="wanted-items table list-editor-table">
         {{for item in offered_items:}}
         <tr>
           <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
@@ -47,7 +47,7 @@ Step 2 of 3
       <div class="panel-heading">
         <h1 class="panel-title">Items requested in return<span class="panel-meta">(optional)</span></h1>
       </div>
-      <table id="wanted-items" class="table list-editor-table">
+      <table class="wanted-items table list-editor-table">
         {{for item in requested_items:}}
         <tr>
           <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
