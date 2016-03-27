@@ -31,6 +31,10 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
+    if request.args(0) == 'profile':
+        response.title = 'Edit profile'
+    else:
+        response.title = request.args(0).replace('_',' ').capitalize()
     return dict(form=auth())
 
 def profile_page():
