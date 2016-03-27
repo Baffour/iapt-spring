@@ -71,8 +71,8 @@ db.define_table('want_item',
     Field('itm_type', type='string', notnull=True, required=True, requires=IS_IN_SET(ITEM_TYPES)),
     Field('auth_user', 'reference auth_user', default=auth.user, required=True, notnull=True, writable=False, readable=False),
     Field('description', type='text', required=True),
-    Field('source_itm', 'reference itm', notnull=True, required=False, writable=False),
-    Field('thumbnail', type='upload', uploadfolder=uploadfolder, requires=IS_NOT_EMPTY("Please upload an image of your item")),
+    Field('source_itm', 'reference itm', notnull=False, required=False),
+    Field('thumbnail', type='upload', uploadfolder=uploadfolder, notnull=True, requires=IS_NOT_EMPTY("Please upload an image of your item")),
     *_flatten_and_make_nullable(EXTRA_FIELDS)
 )
 

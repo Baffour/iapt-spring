@@ -18,6 +18,17 @@ def load_item(id, editing=False):
 
     return item
 
+def load_want_item(id, editing=False):
+    item = db.want_item(id)
+
+    if not item:
+        raise HTTP(404)
+
+    if editing and (not auth.user or item.auth_user.id != auth.user.id):
+        raise HTTP(403)
+
+    return item
+
 ICONS_FOR_ITEM_TYPES = {
     'book' : 'book',
     'cd' : 'music',

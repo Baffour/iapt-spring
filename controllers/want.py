@@ -55,7 +55,20 @@ def new_item_of_type():
 
 @auth.requires_login()
 def remove_item():
-    pass
+    constraint = db(db.want_item.auth_user==auth.user.id)
+    validator = IS_IN_DB(constraint, 'want_item.id', 'want_item.name', zero=None, orderby='want_item.name')
+    form = SQLFORM.factory(Field('want_item', 'reference want_item', requires=validator, label="Want Item"), submit_button='Delete want item')
+
+    if form.process().accepted:
+        want_item = load_want_item(form.vars['want_item'], editing=True)
+        name = want_item.name
+        del db.want_item[want_item.id]
+
+        session.flash = 'Item "' + name + '" removed successfully.'
+        session.flash_type = 'success'
+        redirect(URL('view', args=auth.user.id))
+
+    return dict(form=form)
 
 def user_from_request(r):
     user = db.auth_user(r.args(0))
