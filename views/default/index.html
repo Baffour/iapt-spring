@@ -1,7 +1,75 @@
-{{extend 'layout.html'}}
+{{extend 'grid.html'}}
 
-<div class="row">
-  <div class="col-xs-12">
-    This is the logged-in user homepage. TODO: Lots of useful stuff here
+{{block title}}
+My Homepage
+{{end}}
+
+{{block toolbox}}
+<div class="btn-group">
+  <a class="btn btn-default{{if no_items:}} disabled{{pass}}" href="{{=URL('trade', 'new')}}">
+    <span class="glyphicon glyphicon-retweet"></span>
+    Propose a trade
+  </a>
+</div>
+<div class="btn-group">
+  <a class="btn btn-default" href="{{=URL('item', 'new')}}">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add a new item
+  </a>
+</div>
+{{end}}
+
+{{block grid}}
+<div class="col-xs-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">My newest items</h1>
+    </div>
+    TODO
   </div>
 </div>
+<div class="col-xs-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Newest public boxes</h1>
+    </div>
+    TODO
+  </div>
+</div>
+<div class="col-xs-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Newly-received trade proposals</h1>
+    </div>
+    <table class="table list-editor-table">
+      {{if not len(received_proposals):}}
+      <tr>
+        <td>No proposals received</td>
+      </tr>
+      {{pass}}
+      {{for prop in received_proposals:}}
+      {{sender = db.auth_user(prop.sender)}}
+      <tr{{if prop.status == 'sent':}} class="highlight"{{pass}}>
+        <td>
+          <a href="{{=URL('trade', 'view', args=prop.id)}}">
+          <span class="glyphicon glyphicon-user"></span> <span>{{=sender.username}}</span>
+        </a>
+        </td>
+        <td>
+          {{if prop.status == 'sent':}}
+          <span class="label label-info">Received</span>
+          {{elif prop.status == 'accepted':}}
+          <span class="label label-success">Accepted</span>
+          {{elif prop.status == 'rejected':}}
+          <span class="label label-danger">Rejected</span>
+          {{else:}}
+          <span class="label label-default">{{=prop.status.capitalize()}}</span>
+          {{pass}}
+        </td>
+      </tr>
+      {{pass}}
+    </table>
+  </div>
+  <a class="home-col-link" href="{{=URL('trade', 'list')}}">View all my trade proposals</a>
+</div>
+{{end}}

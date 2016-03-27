@@ -1,10 +1,15 @@
 # IAPT Spring Assessment - Group 13
 
 def index():
-    # TODO: Controller content
     if auth.user is None:
         redirect(URL('welcome'))
-    return dict()
+    no_items = db(db.itm.auth_user==auth.user.id).count() == 0
+
+
+    rpquery = db((db.trade_proposal.target==auth.user.id) & (db.trade_proposal.status!='pending'))
+    rec_props = rpquery.select().sort(lambda p: (p.status == 'sent', p.created_at), reverse=True)[0:10]
+
+    return dict(no_items=no_items, received_proposals=rec_props)
 
 def welcome():
     form = custom_register_form()

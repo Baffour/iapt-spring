@@ -3,7 +3,7 @@
 
 {{block toolbox}}
 <div class="btn-group">
-  <a class="btn btn-default" href="{{=URL('trade', 'new')}}">
+  <a class="btn btn-default{{if no_items:}} disabled{{pass}}" href="{{=URL('trade', 'new')}}">
     <span class="glyphicon glyphicon-retweet"></span>
     Propose a trade
   </a>
