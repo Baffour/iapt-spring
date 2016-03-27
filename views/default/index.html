@@ -33,8 +33,29 @@ My Homepage
     <div class="panel-heading">
       <h1 class="panel-title">Newest public boxes</h1>
     </div>
-    TODO
+    <table class="table list-editor-table">
+      {{if not len(newest_boxes):}}
+      <tr>
+        <td>No public boxes created</td>
+      </tr>
+      {{pass}}
+      {{for box in newest_boxes:}}
+      <tr>
+        <td>
+          <a href="{{=URL('box', 'view', args=box.id)}}">
+            <span class="glyphicon glyphicon-inbox"></span> <span>{{=box.name}}</span>
+          </a>
+        </td>
+        <td>
+          <span class="label label-default">
+            <span data-toggle="tooltip" data-original-title="{{=box.created_at}}" class="glyphicon glyphicon-time"></span>
+          </span>
+        </td>
+      </tr>
+      {{pass}}
+    </table>
   </div>
+  <a class="home-col-link" href="{{=URL('find', 'explore')}}">Explore more public boxes</a>
 </div>
 <div class="col-xs-4">
   <div class="panel panel-default">
