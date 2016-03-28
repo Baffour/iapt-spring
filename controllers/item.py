@@ -97,7 +97,6 @@ def new_of_type():
     extra_fields = _extra_fields_for(type)
     fields += extra_fields
     fields += [
-        db.itm.name,
         db.itm.itm_condition,
         Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
