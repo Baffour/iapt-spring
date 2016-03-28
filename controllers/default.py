@@ -6,11 +6,12 @@ def index():
     no_items = db(db.itm.auth_user==auth.user.id).count() == 0
 
     newest_boxes = db(db.box.private==False).select(db.box.ALL, orderby=~db.box.created_at, limitby=(0, 10))
+    newest_items = db(db.itm.auth_user==auth.user.id).select(db.itm.ALL, orderby=~db.itm.created_at, limitby=(0, 10))
 
     rpquery = db((db.trade_proposal.target==auth.user.id) & (db.trade_proposal.status!='pending'))
     rec_props = rpquery.select().sort(lambda p: (p.status == 'sent', p.created_at), reverse=True)[0:10]
 
-    return dict(no_items=no_items, newest_boxes=newest_boxes, received_proposals=rec_props)
+    return dict(no_items=no_items, newest_items=newest_items, newest_boxes=newest_boxes, received_proposals=rec_props)
 
 def welcome():
     form = custom_register_form()

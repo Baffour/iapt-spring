@@ -35,6 +35,7 @@ db.define_table('itm',
     Field('description', type='text', required=True, comment="Tell your item's story in your own words"),
     Field('thumbnail', type='upload', uploadfolder=uploadfolder, notnull=True,requires=IS_NOT_EMPTY("Please upload an image of your item")),
     Field('in_have_list', type='boolean', default=False, notnull=True, writable=False, readable=False),
+    Field('created_at', type='datetime', default=request.now, writable=False, readable=False),
     *_flatten_and_make_nullable(EXTRA_FIELDS)
 )
 
