@@ -44,6 +44,10 @@ a
   background-color: rgba(208, 216, 255, 0.38);
 }
 
+.navbar-default .navbar-brand
+{
+  color: #494949;
+}
 
 /* Disable bootstrap responsiveness */
 .container {
