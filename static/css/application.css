@@ -522,3 +522,7 @@ body
 {
   background: #FBFBFB;
 }
+
+form .error {
+  color:#a94442;
+}
