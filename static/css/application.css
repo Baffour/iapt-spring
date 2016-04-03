@@ -526,3 +526,8 @@ body
 form .error {
   color:#a94442;
 }
+
+form.signup-form .error
+{
+  color:white;
+}

@@ -105,6 +105,7 @@ def get_user_popularity(user, public_only=True):
 def custom_register_form():
     """Adds placeholders and HTML5 validation, which aids in error prevention as users can correct mistakes before submission"""
     form = auth.register()
+    form['_class']='signup-form'
     form.custom.widget.email['_placeholder']="Enter your email address"
     form.custom.widget.username['_placeholder']="Choose a username"
     form.custom.widget.password['_placeholder']="Create a password"
