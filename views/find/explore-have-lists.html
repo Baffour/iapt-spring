@@ -1,10 +1,9 @@
-TODO: Explore Have Lists
 {{for hl in explore_havelists:}}
 <div class="row">
-  {{boxes=explorable}}
-  {{=H2(boxes.label,_class="col-xs-12")}}
+  {{=H2(hl.label,_class="col-xs-12 explore-header")}}
   <div class="lb-grid-list col-xs-12">
-      {{include "find/list-boxes.html"}}
+    {{items=hl}}
+    {{include "item-preview.html"}}
   </div>
 </div>
 {{pass}}

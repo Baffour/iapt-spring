@@ -51,16 +51,35 @@ def explore():
     N=4
     boxes = __get_box_groups_of_n(N)
     users = __get_user_groups_of_n(N)
-    havelists=[]
-    wantlists=[]
+    havelists= __get_have_lists_of_n(N)
+    wantlists= __get_want_lists_of_n(N)
     return dict(explore_boxes=boxes,explore_havelists=havelists,explore_wantlists=wantlists,explore_users=users)
+
+def __get_have_lists_of_n(N):
+    get_have_list = lambda user: db((db.itm.auth_user==user) & (db.itm.in_have_list==True)).select()
+    user_lists = list()
+    for user in db(db.auth_user).select():
+        to_add = first_n_rows(get_have_list(user), N)
+        if len(to_add):
+            to_add.label = "User: {0}".format(user.username)
+            user_lists.append(to_add)
+    return user_lists
+
+def __get_want_lists_of_n(N):
+    get_want_list = lambda user: db(db.want_item.auth_user==user).select()
+    user_lists = list()
+    for user in db(db.auth_user).select():
+        to_add = first_n_rows(get_want_list(user), N)
+        if len(to_add):
+            to_add.label = "User: {0}".format(user.username)
+            user_lists.append(to_add)
+    return user_lists
 
 def __get_box_groups_of_n(N):
     newest = first_n_rows(__get_newest_boxes(), N)
     largest = first_n_rows(__get_largest_boxes(), N)
     valuable = first_n_rows(__get_most_valuable_boxes(), N)
     popular = first_n_rows(__get_most_popular_boxes(), N)
-
     return [valuable, popular, newest, largest]
 
 def __get_user_groups_of_n(N):
