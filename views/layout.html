@@ -22,6 +22,36 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
     </script>
+
+    <script>
+    $(document).ready(function(){
+      var count={{=notification_count()}};
+      function update_count(){
+      return $.ajax("{{=URL('notification','update_count')}}")
+      .done(function(new_count){
+          if(new_count!=count)
+          {
+            count=new_count;
+            $('#notif-count').text(new_count);
+            if(new_count==0){
+              $('#notif-label').addClass("label-inactive");
+              $('#notif-label').removeClass("label-warning");
+            }
+            else {
+              $('#notif-label').removeClass("label-inactive");
+              $('#notif-label').addClass("label-warning");
+            }
+          }
+        });
+      }
+      setInterval(update_count, 2000);
+    });
+    // {{ncount = notification_count()}}
+    // <a href="{{=URL('notification', 'inbox')}}">
+    //   <div id="notif-label" class="label {{='label-warning' if ncount else 'label-inactive'}}">
+    //     <span class="glyphicon glyphicon-bell"></span><span>{{=ncount}}</span>
+    //   </div></a>
+    </script>
   </head>
   <body>
     <div id="skiptocontent"><a href="#maincontent" class="">skip to main content</a></div>
@@ -73,11 +103,11 @@
                 </ul>
               </li>
               {{if not rc == 'admin':}}
-              <li {{if rc == 'notification':}}class="active"{{pass}}>
+              <li id="notifications" {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
                 <a href="{{=URL('notification', 'inbox')}}">
                   <div id="notif-label" class="label {{='label-warning' if ncount else 'label-inactive'}}">
-                    <span class="glyphicon glyphicon-bell"></span><span>{{=ncount}}</span>
+                    <span class="glyphicon glyphicon-bell"></span><span id="notif-count">{{=ncount}}</span>
                   </div></a>
               </li>
               {{pass}}

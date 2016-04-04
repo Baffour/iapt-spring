@@ -11,3 +11,6 @@ def inbox():
         else:
             n.new = False
     return dict(notifications=notifications)
+
+def update_count():
+    return notification_count()
