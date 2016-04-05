@@ -1,0 +1,21 @@
+<script>
+  $(document).ready(function() {
+      formmodified=0;
+      $('.panel-form form').data('serialize',$('.panel-form form').serialize());
+
+      $('.panel-form form').change(function(){
+          changed = $('.panel-form form').serialize()!=$('.panel-form form').data('serialize')
+          console.log(changed)
+          formmodified= changed ? 1 : 0;
+      });
+      window.onbeforeunload = confirmExit;
+      function confirmExit() {
+          if (formmodified == 1) {
+              return "Changes will not be saved. Do you wish to leave the page?";
+          }
+      }
+      $("input[type='submit']").click(function() {
+          formmodified = 0;
+      });
+  });
+</script>
