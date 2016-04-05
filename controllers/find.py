@@ -4,9 +4,34 @@ import operator
 
 def search():
     results=None
-    if request.vars.query is not None:
-        items = load_all_public_items()
-        results = __search_by_x(request.vars.query, items, lambda x : x.name)
+    filter = lambda lst : db(db.itm).select().find(lambda row: row in lst)
+    do_search = len(request.vars) > 0
+    if do_search:
+        show_private = (auth.user is not None ) and (request.vars.owner == str(auth.user.id))
+        items = db(db.itm.auth_user == auth.user.id).select(db.itm.ALL) if show_private else load_all_public_items()
+        results=items
+        if request.vars.query:
+            result_list = __search_by_x(request.vars.query, results, lambda x : x.name)
+            results = filter(result_list)
+        if request.vars.type is not None and request.vars.type != "All":
+            result_list = [item for item in results if item.itm_type==request.vars.type]
+            results = filter(result_list)
+
+        if request.vars.min_value:
+            result_list = [item for item in results if int(request.vars.min_value) <= item.monetary_value]
+            results=filter(result_list)
+
+        if request.vars.max_value:
+            result_list = [item for item in results if int(request.vars.max_value) >= item.monetary_value]
+            results=filter(result_list)
+
+        if request.vars.owner is not None:
+            result_list = [item for item in results if item.auth_user.id == int(request.vars.owner)]
+            results=filter(result_list)
+
+
+
+        results.explore_info = [users_name, monetary_value, item_type]
 
     if results is None:
         response.flash = "Please enter a search query in the form above"
@@ -204,4 +229,11 @@ users_name = {
     'data_display' : '{0}',
     'data' : lambda box: box.auth_user.username,
     'href' : lambda box: URL('default','profile_page',vars=dict(user=box.auth_user.username))
+}
+
+item_type = {
+    'tooltip' : 'Type',
+    'icon' : 'glyphicon-list',
+    'data_display' : '{0}',
+    'data' : lambda item: ITEM_TYPES[item.itm_type].capitalize()
 }

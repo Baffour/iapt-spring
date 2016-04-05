@@ -91,8 +91,9 @@ def load_all_public_items():
     db_boxes=db(db.box.private == False).select()
     item_ids=set()
     for box in db_boxes:
-        item_ids=item_ids.union(item.id for item in items_in(box))
-    return db(db.itm.id in item_ids).select(db.itm.ALL)
+        items = items_in(box)
+        item_ids=item_ids.union(item.id for item in items)
+    return db(db.itm.id.belongs(item_ids)).select(db.itm.ALL)
 
 def get_item_popularity(item):
     """ TODO, count likes for this item, items named 'The Life of Pablo' have 10 likes, everything else none """
@@ -117,7 +118,7 @@ def custom_register_form():
     return form
 
 def first_n_rows(rows, n):
-    """returns the firts n row objects in rows maintaining dictionary attributes"""
+    """returns the first n row objects in rows maintaining dictionary attributes"""
     temp = rows.__dict__
     new_rows = rows[:n]
     additional_attributes = {key:temp[key] for key in temp if key not in new_rows.__dict__.keys()}

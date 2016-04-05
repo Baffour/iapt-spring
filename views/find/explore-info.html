@@ -7,8 +7,8 @@
   {{pass}}
   <span  data-toggle="tooltip"
          title="{{=attrib['tooltip']}}"
-         class="box-attribute-label label label-default">
-         <span class="glyphicon {{=attrib['icon']}}"></span>
+         class="attribute-label label label-default">
+         <span class="glyphicon {{=attrib['icon']}}" aria-hidden="true"></span>
          {{=attrib['data_display'].format(attrib['data'](item))}}
   </span>
   {{if is_link:}}

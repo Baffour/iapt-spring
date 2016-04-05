@@ -1,0 +1,51 @@
+<div>
+  <!-- <ul> -->
+    {{if auth.user is not None:}}
+    <!-- <li> -->
+      {{newvars=Storage(request.vars)}}
+      {{newvars.owner=auth.user.id}}
+      <a href="{{=URL('search',vars=newvars)}}">My items only</a>
+    <!-- </li> -->
+    {{pass}}
+    <!-- <li> -->
+      <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Type<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        {{newvars=Storage(request.vars)}}
+        {{newvars.type="All"}}
+        <li><a href="{{=URL('search',vars=newvars)}}">All</a></li>
+        {{for itm_type in ["book", "cd","dvd","game"]:}}
+        {{newvars=Storage(request.vars)}}
+        {{newvars.type=itm_type}}
+        <li><a href="{{=URL('search',vars=newvars)}}">{{=ITEM_TYPES[itm_type].capitalize()}}s</a></li>
+        {{pass}}
+      </ul>
+      </div>
+    <!-- </li> -->
+    <!-- <li> -->
+      <form class="form-inline" enctype="multipart/form-data" action="{{=URL('search')}}">
+        <div class="input-group">
+          <input name="min_value" type="text" value="{{=request.vars.min_value}}" class="form-control" placeholder="Min&hellip;">
+          <input name="max_value" type="text" value="{{=request.vars.max_value}}" class="form-control" placeholder="Max&hellip;">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">Go</button>
+          </span>
+        </div>
+      </form>
+    <!-- </li> -->
+    <!-- <li> -->
+      {{users=db(db.auth_user).select()}}
+      <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        {{newvars=Storage(request.vars)}}
+
+        <li><a href="{{=URL('search',vars=newvars)}}">All</a></li>
+        {{for user in users:}} {{newvars=Storage(request.vars)}} {{newvars.owner=user.id}}
+        <li><a href="{{=URL('search',vars=newvars)}}">{{=user.username}}</a></li>
+        {{pass}}
+      </ul>
+      </div>
+    <!-- </li> -->
+  <!-- </ul> -->
+</div>

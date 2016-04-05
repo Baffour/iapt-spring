@@ -252,7 +252,7 @@ h1.main-title .glyphicon {
   top:5px;
 }
 
-.preview .box-attribute-label {
+.attribute-label {
   float:left;
   margin: 2px;
   font-size:12px;
@@ -493,13 +493,13 @@ body
   margin-bottom: 10px;
 }
 
-.preview a .box-attribute-label
+a .attribute-label
 {
   background-color: #00607d;
 }
 
-.preview a .box-attribute-label:hover,
-.preview a:focus .box-attribute-label
+a .attribute-label:hover,
+a:focus .attribute-label
 {
   background-color: #7D005F;
   /*background-color: #004257;*/

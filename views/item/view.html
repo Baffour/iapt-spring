@@ -50,6 +50,17 @@
           <td>{{=format_pence_as_pounds(item.monetary_value)}}</td>
         </tr>
         <tr>
+          <td>Owner</td>
+          <td>
+            {{if not guest:}}
+            You
+            {{else:}}
+            {{username=item.auth_user.username}}
+            {{=A(username, _href=URL('default','profile_page',vars=dict(user=username)))}}
+            {{pass}}
+          </td>
+        </tr>
+        <tr>
           <td>Description</td>
           <td id="item-desc">{{if item.description:}}{{=item.description}}{{else:}}<em>No description provided</em>{{pass}}</td>
         </tr>

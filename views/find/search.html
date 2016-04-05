@@ -1,20 +1,20 @@
+{{from gluon.storage import Storage}}
 {{extend 'grid.html'}}
-<div class="alert alert-warning">
-  <p><strong>TODO: Implement search functionality</strong></p>
-</div>
+
 
 {{block title}}
 Search
 {{end}}
 
 {{block grid}}
+{{include 'find/search-filter.html'}}
 <div class="col-xs-12">
   <div class="lb-grid-list row">
     {{if results is None:}}
     {{elif len(results)==0:}}
     {{else:}}
     {{items=results}}
-    {{include 'item-preview.html'}}
+    {{include 'find/search-item-preview.html'}}
     {{pass}}
   </div>
 </div>
