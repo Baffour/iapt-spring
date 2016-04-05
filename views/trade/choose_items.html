@@ -32,7 +32,7 @@ Step 2 of 3
         </tr>
         {{pass}}
         <tr>
-          <th colspan="2">
+          {{if len(offered_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
             <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of your own items
@@ -59,7 +59,7 @@ Step 2 of 3
         </tr>
         {{pass}}
         <tr>
-          <th colspan="2">
+          {{if len(requested_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
             <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of {{=target.username}}&rsquo;s items
