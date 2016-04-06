@@ -5,15 +5,17 @@ import operator
 def search():
     results=None
     filter = lambda lst : db(db.itm).select().find(lambda row: row in lst)
+    not_null_or_empty = lambda x : x is not None and x != ""
+
     do_search = len(request.vars) > 0
     if do_search:
         show_private = (auth.user is not None ) and (request.vars.owner == str(auth.user.id))
         items = db(db.itm.auth_user == auth.user.id).select(db.itm.ALL) if show_private else load_all_public_items()
         results=items
-        if request.vars.query:
+        if request.vars.query is not None:
             result_list = __search_by_x(request.vars.query, results, lambda x : x.name)
             results = filter(result_list)
-        if request.vars.type is not None and request.vars.type != "All":
+        if not_null_or_empty(request.vars.type):
             result_list = [item for item in results if item.itm_type==request.vars.type]
             results = filter(result_list)
 
@@ -25,7 +27,7 @@ def search():
             result_list = [item for item in results if int(request.vars.max_value) >= item.monetary_value]
             results=filter(result_list)
 
-        if request.vars.owner is not None:
+        if not_null_or_empty(request.vars.owner):
             result_list = [item for item in results if item.auth_user.id == int(request.vars.owner)]
             results=filter(result_list)
 
@@ -41,7 +43,7 @@ def search():
         response.flash = "Your search for '{0}' returned 1 result".format(request.vars.query)
     else:
         response.flash = "Your search for '{0}' returned {1} results".format(request.vars.query,len(results))
-    return dict(results=results)
+    return dict(results=results,filter_form=__search_filter_form())
 
 
 def __search_by_x(query, items, func):
@@ -180,6 +182,43 @@ def __add_calculated_user_info(users):
     public_itemcount['tooltip']= 'Public Items'
     users.explore_info = [public_boxcount, public_itemcount, popularity]
     return users
+
+def __search_filter_form():
+    x_or_default=lambda x, y: x if x is not None else y
+    users = [user for user in db(db.auth_user).select() if len(load_all_public_items(user)) > 0]
+
+    item_type = SELECT(OPTION('All Types',_value=""),
+                       *[OPTION(ITEM_TYPES[x].capitalize(),_value=x) for x in ITEM_TYPES.keys()],
+                       _name="type",
+                       value=x_or_default(request.vars.type,''))
+
+    item_owner = SELECT(OPTION('All Users',_value=""),
+                        *[OPTION(user.username,_value=user.id) for user in users],
+                        _name="owner",
+                        value=x_or_default(request.vars.owner,''))
+
+    query = INPUT(_name="query", _value=x_or_default(request.vars.query,''), _placeholder="Keyword")
+    min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''),_placeholder="Min Value")
+    max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''),_placeholder="Max Value")
+    inputs=[query,item_type,item_owner,min_value,max_value]
+
+    labels=list()
+    label_dict = {'query':'Search Query','owner':'Owner','type' : 'Item Type','min_value':'Minimum Value','max_value':'Maximum Value'}
+
+    for inp in inputs:
+        inp['_class'] = inp['_class']+" form-control" if '_class' in inp else "form-control"
+        _id = "filter-{0}".format(inp['_name'])
+        inp['_id']=_id
+        label=LABEL(label_dict[inp['_name']],_class="hide-label",_for=_id)
+        labels.append(label)
+    inputs = [SPAN(i,_class="pull-left") for i in inputs]
+    inputs+=labels
+
+    submit_button=BUTTON("Filter Results",_type="submit",_class="btn btn-default")
+    clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default")
+
+    inputs+=[submit_button,clear_button]
+    return FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-horizontal pull-left",_action=URL('search'),_method="GET")
 
 size_of_users_largest_box = {
             'tooltip':'Largest Box Size',

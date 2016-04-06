@@ -7,7 +7,12 @@ Search
 {{end}}
 
 {{block grid}}
-{{include 'find/search-filter.html'}}
+<div class="col-xs-12 well">
+  {{include 'find/search-filter.html'}}
+</div>
+<div class="col-xs-12">
+<hr/>
+</div>
 <div class="col-xs-12">
   <div class="lb-grid-list row">
     {{if results is None:}}

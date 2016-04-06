@@ -531,3 +531,15 @@ form.signup-form .error
 {
   color:white;
 }
+
+#filter-min_value,
+#filter-max_value
+{
+  width: 110px;
+}
+
+form[name="filter-form"]  > span,
+form[name="filter-form"]  > button
+{
+  margin:0 3px;
+}
