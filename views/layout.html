@@ -65,10 +65,14 @@
             <form class="navbar-form navbar-left search-form"
                   enctype="multipart/form-data" action="{{=URL('find','search')}}">
               <label for="search-query" class="hide-label">Search Query</label>
+
               <div class="input-group" role="search">
-                <input id="search-query" name="query" type="text" class="form-control" placeholder="Search public items&hellip;">
-                <span class="input-group-btn">
+                <input id="search-query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
+                <span class="input-group-btn pull-left">
                   <button id="search-submit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span><span class="btn-label">Search</span></button>
+                  <a data-toggle="tooltip" data-original-title="Advanced Search" aria-label="Advanced Search"
+                     data-placement="bottom" id="advanced-search" class="btn btn-default" href="{{=URL('find','search')}}">
+                     <span class="glyphicon glyphicon-list-alt"></span></a>
                 </span>
               </div>
             </form>

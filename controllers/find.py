@@ -36,7 +36,7 @@ def search():
         results.explore_info = [users_name, monetary_value, item_type]
 
     if results is None:
-        response.flash = "Please enter a search query in the form above"
+        response.flash = "Please enter a search query in the form below"
     elif len(results) == 0:
         response.flash = "No results were found for '{0}'".format(request.vars.query)
     elif len(results) == 1:
