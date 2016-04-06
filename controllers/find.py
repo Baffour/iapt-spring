@@ -9,12 +9,15 @@ def search():
 
     do_search = len(request.vars) > 0
     if do_search:
-        show_private = (auth.user is not None ) and (request.vars.owner == str(auth.user.id))
+        show_private = (auth.user is not None ) #and (request.vars.owner == str(auth.user.id))
         items = db(db.itm.auth_user == auth.user.id).select(db.itm.ALL) if show_private else load_all_public_items()
         results=items
         if request.vars.query is not None:
-            result_list = __search_by_x(request.vars.query, results, lambda x : x.name)
-            results = filter(result_list)
+            by_name = __search_by_x(request.vars.query, results, lambda x : x.name)
+            by_description = __search_by_x(request.vars.query, results, lambda x : x.description)
+            by_author = __search_by_x(request.vars.query, results, lambda x : x.author if x.author is not None else '')
+            by_artist = __search_by_x(request.vars.query, results, lambda x : x.artist if x.artist is not None else '')
+            results = filter(by_name + by_description + by_author + by_artist)
         if not_null_or_empty(request.vars.type):
             result_list = [item for item in results if item.itm_type==request.vars.type]
             results = filter(result_list)
@@ -48,7 +51,10 @@ def search():
 
 def __search_by_x(query, items, func):
     """Given a query and a set of item rows, returns a list of item rows whose attribute (defined by func) is similar to the query"""
+    if query == "":
+        return list()
     match_attr = __full_text_search(query, [func(item) for item in items], min_sim=0.1)
+
     if len(match_attr) < 2:
         # If no strings similar to query exist, break items down into individual words and query this
         match_attr = set(match_attr + __similar_items_2(query, [func(item) for item in items]))
