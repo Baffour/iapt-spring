@@ -211,8 +211,14 @@ def __search_filter_form():
                         value=x_or_default(request.vars.owner,''))
 
     query = INPUT(_name="query", _value=x_or_default(request.vars.query,''), _placeholder="Keyword")
-    min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''), _step="any", _placeholder="Min Value")
-    max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''), _step="any", _placeholder="Max Value")
+    min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''), _min=0,
+                      _step="0.01", _placeholder="Min Value")
+    max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''), _min=0,
+                      _step="0.01", _placeholder="Max Value")
+    for val in [min_value, max_value]:
+        val['_data-number-to-fixed']=2
+        val['_data-number-step-factor']=100
+        val['_min']=0
     inputs=[query,item_type,item_owner,min_value,max_value]
 
     labels=list()
