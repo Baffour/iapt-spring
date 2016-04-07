@@ -9,15 +9,22 @@ def search():
 
     do_search = len(request.vars) > 0
     if do_search:
-        show_private = (auth.user is not None ) #and (request.vars.owner == str(auth.user.id))
-        items = db(db.itm.auth_user == auth.user.id).select(db.itm.ALL) if show_private else load_all_public_items()
+        show_private = (auth.user is not None) #and (request.vars.owner == str(auth.user.id))
+        items = load_all_public_items()
+        if show_private:
+            my_items = db(db.itm.auth_user == auth.user.id).select(db.itm.ALL)
+            # private_items = my_items.exclude(load_all_public_items(auth.user))
+            private_items = load_all_private_items(auth.user)
+            items = private_items & items
         results=items
+
         if request.vars.query is not None:
             by_name = __search_by_x(request.vars.query, results, lambda x : x.name)
             by_description = __search_by_x(request.vars.query, results, lambda x : x.description)
             by_author = __search_by_x(request.vars.query, results, lambda x : x.author if x.author is not None else '')
             by_artist = __search_by_x(request.vars.query, results, lambda x : x.artist if x.artist is not None else '')
             results = filter(by_name + by_description + by_author + by_artist)
+
         if not_null_or_empty(request.vars.type):
             result_list = [item for item in results if item.itm_type==request.vars.type]
             results = filter(result_list)

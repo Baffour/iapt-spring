@@ -88,10 +88,16 @@ def load_public_boxes(user):
     return db((db.box.auth_user == user.id) & (db.box.private == False)).select()
 
 def load_all_public_items(user=None):
+    return load_all_items_of_visibility_x(False,user=user)
+
+def load_all_private_items(user=None):
+    return load_all_items_of_visibility_x(True,user=user)
+
+def load_all_items_of_visibility_x(private,user=None):
     if user is None:
-        db_boxes=db(db.box.private == False).select()
+        db_boxes=db(db.box.private == private).select()
     else:
-        db_boxes=db((db.box.private == False) & (db.box.auth_user==user)).select()
+        db_boxes=db((db.box.private == private) & (db.box.auth_user==user)).select()
 
     item_ids=set()
     for box in db_boxes:
