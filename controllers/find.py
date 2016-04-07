@@ -30,11 +30,11 @@ def search():
             results = filter(result_list)
 
         if request.vars.min_value:
-            result_list = [item for item in results if int(request.vars.min_value) <= item.monetary_value]
+            result_list = [item for item in results if float(request.vars.min_value) <= float(item.monetary_value)/100]
             results=filter(result_list)
 
         if request.vars.max_value:
-            result_list = [item for item in results if int(request.vars.max_value) >= item.monetary_value]
+            result_list = [item for item in results if float(request.vars.max_value) >= float(item.monetary_value)/100]
             results=filter(result_list)
 
         if not_null_or_empty(request.vars.owner):
@@ -211,8 +211,8 @@ def __search_filter_form():
                         value=x_or_default(request.vars.owner,''))
 
     query = INPUT(_name="query", _value=x_or_default(request.vars.query,''), _placeholder="Keyword")
-    min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''),_placeholder="Min Value")
-    max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''),_placeholder="Max Value")
+    min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''), _step="any", _placeholder="Min Value")
+    max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''), _step="any", _placeholder="Max Value")
     inputs=[query,item_type,item_owner,min_value,max_value]
 
     labels=list()
