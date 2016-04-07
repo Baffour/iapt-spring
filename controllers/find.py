@@ -219,25 +219,31 @@ def __search_filter_form():
         val['_data-number-to-fixed']=2
         val['_data-number-step-factor']=100
         val['_min']=0
-    inputs=[query,item_type,item_owner,min_value,max_value]
+    inps=[query,item_type, item_owner, min_value, max_value]
 
     labels=list()
+    inputs=list()
     label_dict = {'query':'Search Query','owner':'Owner','type' : 'Item Type','min_value':'Minimum Value','max_value':'Maximum Value'}
 
-    for inp in inputs:
+    for inp in inps:
         inp['_class'] = inp['_class']+" form-control" if '_class' in inp else "form-control"
         _id = "filter-{0}".format(inp['_name'])
         inp['_id']=_id
         label=LABEL(label_dict[inp['_name']],_class="hide-label",_for=_id)
         labels.append(label)
-    inputs = [SPAN(i,_class="pull-left") for i in inputs]
+        if inp['_name'] in ["min_value","max_value"]:
+            inputs.append(SPAN(SPAN("£",_class="input-group-addon"),inp,_class="input-group pull-left"))
+        else:
+            inputs.append(SPAN(inp,_class="pull-left"))
+
+    # inputs = [SPAN(i,_class="pull-left") for i in inputs]
     inputs+=labels
 
-    submit_button=BUTTON("Filter Results",_type="submit",_class="btn btn-default")
-    clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default")
+    submit_button=BUTTON("Filter Results",_type="submit",_class="btn btn-default pull-left")
+    clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default pull-left")
 
     inputs+=[submit_button,clear_button]
-    return FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-horizontal pull-left",_action=URL('search'),_method="GET")
+    return FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
 
 size_of_users_largest_box = {
             'tooltip':'Largest Box Size',
