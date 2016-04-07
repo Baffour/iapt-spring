@@ -543,3 +543,8 @@ form[name="filter-form"]  > button
 {
   margin:0 3px;
 }
+
+#filter-query
+{
+  width: 165px;
+}
