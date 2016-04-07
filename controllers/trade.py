@@ -59,7 +59,7 @@ def add_offered_item():
     oi_ids = oi_query.select(db.itm.id)
 
     constraint = db(~db.itm.id.belongs(oi_ids) & (db.itm.auth_user == auth.user.id))
-    reprfn = lambda i: "{} ({}, {} condition, {})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    reprfn = lambda i: "{} ({}, {} condition, £{})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
 
@@ -102,7 +102,7 @@ def add_requested_item():
     ri_selectable_ids = [item.id for item in target_user_items if is_public(item)]
 
     constraint = db(db.itm.id.belongs(ri_selectable_ids))
-    reprfn = lambda i: "{} ({}, {} condition, {})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    reprfn = lambda i: "{} ({}, {} condition, £{})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
 

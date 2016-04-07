@@ -30,11 +30,11 @@ def search():
             results = filter(result_list)
 
         if request.vars.min_value:
-            result_list = [item for item in results if float(request.vars.min_value) <= float(item.monetary_value)/100]
+            result_list = [item for item in results if float(request.vars.min_value) <= item.monetary_value/100.0]
             results=filter(result_list)
 
         if request.vars.max_value:
-            result_list = [item for item in results if float(request.vars.max_value) >= float(item.monetary_value)/100]
+            result_list = [item for item in results if float(request.vars.max_value) >= item.monetary_value/100.0]
             results=filter(result_list)
 
         if not_null_or_empty(request.vars.owner):

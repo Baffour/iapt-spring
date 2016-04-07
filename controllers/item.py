@@ -16,7 +16,7 @@ def edit():
     fields += [
         db.itm.name,
         db.itm.itm_condition,
-        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True, widget=currency_widget),
         db.itm.description,
         Field('thumbnail', type='upload', uploadfolder=uploadfolder, label="Thumbnail (uploaded file will replace existing image)")
     ]
@@ -101,7 +101,7 @@ def new_of_type():
     fields += extra_fields
     fields += [
         db.itm.itm_condition,
-        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True),
+        Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True, widget=currency_widget),
         Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,

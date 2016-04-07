@@ -1,11 +1,7 @@
 # IAPT Spring Assessment - Group 13
 
 def format_pence_as_pounds(pence):
-    pounds = pence / 100
-    pence = pence % 100
-    if pence == 0:
-        return "£{}".format(pounds)
-    return "£{}.{}".format(pounds, str(pence).zfill(2))
+    return "{0:.2f}".format(pence/100.0)
 
 def load_item(id, editing=False):
     item = db.itm(id)
@@ -159,6 +155,17 @@ def compress_image(image_name):
         pass
         # If compression fails it's not worth raising an error over, this just helps us meet the file size limit if we have
         # large images and a populated database on submission.
+
+def currency_widget(field, value):
+    inp = INPUT(_name=field.name,
+                _id="%s_%s" % (field._tablename, field.name),
+                _type="number", _value="{0:.2f}".format(long(value)) if value is not None else None,
+                _min=0, _step="0.01",
+                _class="form-control",
+                requires=field.requires)
+    inp['_data-number-to-fixed']=2
+    inp['_data-number-step-factor']=100
+    return DIV(DIV("£",_class="input-group-addon"),inp,_class="input-group pull-left")
 
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
