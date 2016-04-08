@@ -252,11 +252,6 @@ h1.main-title .glyphicon {
   top:5px;
 }
 
-.attribute-label {
-  float:left;
-  margin: 2px;
-  font-size:12px;
-}
 
 .confirmation-form .btn {
   margin-right:5px;
@@ -428,7 +423,7 @@ body
   margin-bottom: 60px;
 }
 
-.footer
+.info
 {
   position: absolute;
   bottom: 0;
@@ -493,13 +488,21 @@ body
   margin-bottom: 10px;
 }
 
-a .attribute-label
+.attribute-label
+{
+  font-size:12px;
+  display: block;
+  float: left;
+  margin: 2px;
+}
+
+.label-link
 {
   background-color: #00607d;
 }
 
-a .attribute-label:hover,
-a:focus .attribute-label
+.label-link:hover,
+.label-link:focus
 {
   background-color: #7D005F;
   /*background-color: #004257;*/
@@ -548,3 +551,31 @@ form[name="filter-form"]  > button
 {
   width: 165px;
 }
+
+.currency_symbol
+{
+  height: 34px;
+  padding: 6px 12px;
+  float:left;
+  display: block;
+}
+
+.currency_group .currency_input
+{
+  float:left;
+  display: block;
+  width: calc(99% - 26px);
+}
+
+.currency_group
+{
+  float: left;
+  width: 100%;
+}
+
+/* For Screen reader testing*/
+/*
+*:focus
+{
+outline: fuchsia auto 5px!important;
+}*/

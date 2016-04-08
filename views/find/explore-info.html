@@ -3,16 +3,18 @@
   {{is_link = 'href' in attrib.keys()}}
   {{link_url = attrib['href'](item) if is_link else None}}
   {{if is_link:}}
-  <a class="label-link" href="{{=link_url}}">
-  {{pass}}
-  <span  data-toggle="tooltip"
-         title="{{=attrib['tooltip']}}"
-         class="attribute-label label label-default">
+  <a  data-toggle="tooltip" title="{{=attrib['tooltip']}}"
+      class="attribute-label label label-link"
+      href="{{=link_url}}">
+
+
+         {{else:}}
+ <a  data-toggle="tooltip"  title="{{=attrib['tooltip']}}"
+     class="attribute-label label label-default">
+        {{pass}}
+         <span class="hide-label">{{=attrib['tooltip']}}</span>
          <span class="glyphicon {{=attrib['icon']}}" aria-hidden="true"></span>
          {{=attrib['data_display'].format(attrib['data'](item))}}
-  </span>
-  {{if is_link:}}
-  </a>
-  {{pass}}
+   </a>
   {{pass}}
   {{pass}}

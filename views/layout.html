@@ -32,7 +32,6 @@
           if(new_count!=count)
           {
             count=new_count;
-            $('#notif-count').text(new_count);
             if(new_count==0){
               $('#notif-label').addClass("label-inactive");
               $('#notif-label').removeClass("label-warning");
@@ -41,9 +40,11 @@
               $('#notif-label').removeClass("label-inactive");
               $('#notif-label').addClass("label-warning");
             }
+            $('#notif-count').text(new_count);
           }
         });
       }
+      update_count();
       setInterval(update_count, 2000);
     });
     </script>
@@ -105,9 +106,12 @@
               <li id="notifications" {{if rc == 'notification':}}class="active"{{pass}}>
                 {{ncount = notification_count()}}
                 <a href="{{=URL('notification', 'inbox')}}">
-                  <div id="notif-label" class="label {{='label-warning' if ncount else 'label-inactive'}}">
-                    <span class="glyphicon glyphicon-bell"></span><span id="notif-count">{{=ncount}}</span>
-                  </div></a>
+                  <div id="notif-label" role="status" aria-live="polite" class="label {{='label-warning' if ncount else 'label-inactive'}}">
+                       <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                       <span id="notif-count"   aria-describedby="notif-desc">{{=ncount}}</span>
+                       <span id="notif-desc" class="hide-label">Unread Notifications</span>
+                  </div>
+                </a>
               </li>
               {{pass}}
               <li class="dropdown">
@@ -138,7 +142,7 @@
       </div>
     </nav>
 
-    <div id="maincontent" tabindex="-1" class="container">
+    <div id="maincontent" class="container">
       <div class="row">
         <div class="col-xs-12">
           {{if response.flash:}}
@@ -152,10 +156,10 @@
         </div>
       </div>
     </div>
-    <footer class="footer">
-      <div class="container">
+    <div class="info" role="contentinfo">
+      <footer class="container">
         <p class="footer-text">&copy; IAPT 2015-16 Group 13</p>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>

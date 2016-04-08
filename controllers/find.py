@@ -232,7 +232,7 @@ def __search_filter_form():
         label=LABEL(label_dict[inp['_name']],_class="hide-label",_for=_id)
         labels.append(label)
         if inp['_name'] in ["min_value","max_value"]:
-            inputs.append(SPAN(SPAN("£",_class="input-group-addon"),inp,_class="input-group pull-left"))
+            inputs.append(SPAN(SPAN("£",_class="input-group-addon currency"),inp,_class="input-group pull-left"))
         else:
             inputs.append(SPAN(inp,_class="pull-left"))
 
@@ -242,8 +242,10 @@ def __search_filter_form():
     submit_button=BUTTON("Filter Results",_type="submit",_class="btn btn-default pull-left")
     clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default pull-left")
 
-    inputs+=[submit_button,clear_button]
-    return FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
+    inputs+=[SPAN(submit_button,clear_button,_class="input-group-btn")]
+    form = FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
+    form['_aria-label']="Filter Search Results"
+    return form
 
 size_of_users_largest_box = {
             'tooltip':'Largest Box Size',
@@ -262,7 +264,7 @@ date_created = {
 monetary_value = {
     'tooltip':'Value',
     'icon' : 'glyphicon-credit-card',
-    'data_display' : '{0}',
+    'data_display' : '£{0}',
     'data' : lambda box : format_pence_as_pounds(box.monetary_value)
 }
 

@@ -160,15 +160,13 @@ def compress_image(image_name):
         # large images and a populated database on submission.
 
 def currency_widget(field, value):
-    inp = INPUT(_name=field.name,
-                _id="%s_%s" % (field._tablename, field.name),
-                _type="number", _value="{0:.2f}".format(long(value)) if value is not None else None,
-                _min=0, _step="0.01",
-                _class="form-control",
-                requires=field.requires)
-    inp['_data-number-to-fixed']=2
-    inp['_data-number-step-factor']=100
-    return DIV(DIV("£",_class="input-group-addon"),inp,_class="input-group pull-left")
+    inp = INPUT(_type="number", _value="{0:.2f}".format(long(value)) if (value is not None and value != '') else None,
+                _min=0, _step="0.01", _class="form-control currency_input", requires=field.requires, _name=field.name, _id="%s_%s" % (field._tablename, field.name))
+    inp['_data-number-to-fixed'] = 2
+    inp['_data-number-step-factor'] = 100
+    symbol = DIV("£",_class="input-group-addon currency_symbol")
+    wrapper = DIV(symbol, inp,_class="currency_group input-group pull-left")
+    return wrapper
 
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
