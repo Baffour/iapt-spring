@@ -9,7 +9,10 @@ def load_item(id, editing=False):
     if not item:
         raise HTTP(404)
 
-    if editing and (not auth.user or item.auth_user.id != auth.user.id):
+    owner = auth.user is not None and item.auth_user.id == auth.user.id
+    is_private = not item.in_have_list and all(x.private for x in db((db.box.id == db.itm2box.box) & (db.itm2box.itm == item)).select(db.box.private))
+
+    if (editing or is_private) and not owner:
         raise HTTP(403)
 
     return item
