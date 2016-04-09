@@ -1,5 +1,11 @@
 {{extend 'dialog.html'}}
 
+{{block pre_dialog}}
+<!-- <a class="btn btn-default"><span>&lt;&lt; Back</span></a> -->
+  <a href="{{=URL('new')}}"><span class="glyphicon glyphicon-arrow-left"></span> Back to Type Selection</a>
+{{end}}
+
+
 {{block title}}
 Add a new {{=ITEM_TYPES[type]}}
 {{end}}

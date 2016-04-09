@@ -2,12 +2,14 @@
 {{extend 'grid.html'}}
 
 {{block title}}
-{{if box.private:}}
-<span class="glyphicon glyphicon-lock"></span>
-{{else:}}
 <span class="glyphicon glyphicon-inbox"></span>
-{{pass}}
 {{=box.name}}
+{{end}}
+
+{{block subtitle}}
+  {{if box.private: }}
+  <span class="private-indicator label label-primary"><span class="glyphicon glyphicon-lock"></span> Private</span>
+  {{pass}}
 {{end}}
 
 {{block toolbox}}

@@ -1,7 +1,11 @@
 {{extend 'grid.html'}}
 
 {{block title}}
-{{="User {0}'s Public Profile".format(user.username)}}
+{{if auth.user is not None and auth.user.id == user.id:}}
+{{="My Public Profile Page".format(user.username)}}
+{{else:}}
+{{="{0}'s Public Profile Page".format(user.username)}}
+{{pass}}
 {{end}}
 
 {{block grid}}

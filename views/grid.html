@@ -2,8 +2,11 @@
 {{extend 'layout.html'}}
 
 <div class="row" id="header-row">
-  <div class="{{if show_toolbox:}}col-xs-6{{else:}}col-xs-12{{pass}}">
-    <h1 class="main-title">{{block title}}{{=response.title}}{{end}}</h1>
+  <div class="{{if show_toolbox:}}col-xs-6{{else:}}col-xs-12{{pass}} title-container">
+    <h1 class="main-title pull-left">{{block title}}{{=response.title}}{{end}}</h1>
+    <div class="subtitle">
+      {{block subtitle}}{{end}}
+    </div>
   </div>
   {{if show_toolbox:}}
   <div class="col-xs-6" id="toolbox">

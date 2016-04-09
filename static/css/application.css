@@ -571,6 +571,29 @@ form[name="filter-form"]  > button
 {
   float: left;
   width: 100%;
+  margin-bottom: 15px;
+}
+
+.subtitle .private-indicator
+{
+margin-left: 10px;
+}
+.title-container
+{
+  align-items:center;
+  display: flex;
+}
+
+.add-another
+{
+  margin-left: 30px;
+}
+
+.optional-field:before
+{
+  font-style: italic;
+  color: gray;
+  content: " - optional";
 }
 
 /* For Screen reader testing*/

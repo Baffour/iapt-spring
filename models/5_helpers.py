@@ -160,7 +160,7 @@ def compress_image(image_name):
         # large images and a populated database on submission.
 
 def currency_widget(field, value):
-    inp = INPUT(_type="number", _value="{0:.2f}".format(long(value)) if (value is not None and value != '') else None,
+    inp = INPUT(_type="number", _value="{0:.2f}".format(float(value)) if (value is not None and value != '') else None,
                 _min=0, _step="0.01", _class="form-control currency_input", requires=field.requires, _name=field.name, _id="%s_%s" % (field._tablename, field.name))
     inp['_data-number-to-fixed'] = 2
     inp['_data-number-step-factor'] = 100

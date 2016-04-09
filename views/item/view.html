@@ -71,7 +71,13 @@
     <div id="item-boxes-panel" class="panel panel-default">
       <div class="panel-heading">
         <span class="panel-title">Boxes containing this item</span>
+
+        {{in_all_boxes=len(boxes) == len(db(db.box.auth_user == auth.user.id).select())}}
+        {{if in_all_boxes:}}
+        <a style="pointer-events:auto" class="btn btn-default btn-sm disabled" data-toggle="tooltip" title="This item is already in all of your boxes">
+        {{else:}}
         <a class="btn btn-default btn-sm" href="{{=URL('add_to_box', args=item.id)}}">
+        {{pass}}
           <span class="glyphicon glyphicon-save-file"></span>
           Add to a box
         </a>

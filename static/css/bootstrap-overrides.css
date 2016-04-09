@@ -121,3 +121,8 @@ body {
 {
   border-width: 2px;
 }
+
+.input-group-addon
+{
+  color: #4f4f4f;
+}
