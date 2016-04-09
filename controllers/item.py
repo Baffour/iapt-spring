@@ -134,7 +134,7 @@ def new_of_type():
         db.itm2box.insert(itm=item_id, box=form.vars['box'])
 
         add_another = A("Add another", _href=URL('new'), _class="btn btn-primary add-another")
-        session.flash = T('New item "'+ name + '" created successfully.', add_another)
+        session.flash = SPAN('New item "'+ name + '" created successfully.', add_another)
         session.flash_type = 'success'
 
         redirect(URL('item', 'view', args=item_id))
