@@ -1,7 +1,13 @@
 {{extend 'dialog.html'}}
 
 {{block title}}
-Add a new {{=ITEM_TYPES[type]}} to your want list
+Add a new
+{{if type == 'other':}}
+miscellaneous item
+{{else:}}
+{{=ITEM_TYPES[type]}}
+{{pass}}
+to your want list
 {{end}}
 
 {{block title_meta}}
