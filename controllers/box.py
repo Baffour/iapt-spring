@@ -11,6 +11,10 @@ def new():
     form = SQLFORM(db.box, submit_button="Create box")
     form.custom.widget.name['_autofocus'] = True
 
+    if 'public' in request.vars:
+        if request.vars['public'] == 'true':
+            form.element('input[name=private]')['_checked'] = False
+
     if form.process().accepted:
         redirect(URL('view', args=form.vars['id']))
 
