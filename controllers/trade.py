@@ -36,6 +36,19 @@ def new():
     return dict(form=form)
 
 @auth.requires_login()
+def new_with_requested_item():
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    item = load_item(request.args(0)) # this checks item is viewable by requesting user
+    if item.auth_user == auth.user.id:
+        raise HTTP(400)
+
+    propid = db.trade_proposal.insert(target=item.auth_user)
+    db.itm2trade_proposal.insert(itm=item.id, trade_proposal=propid)
+    redirect(URL('choose_items', args=propid))
+
+@auth.requires_login()
 def choose_items():
     prop = load_trade_proposal(request.args(0), editing=True)
     if prop.status != 'pending':
