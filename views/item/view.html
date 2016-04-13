@@ -19,6 +19,14 @@
       </a>
     </div>
     {{pass}}
+    {{if guest and auth.user:}}
+    <form method="post" action="{{=URL('trade', 'new_with_requested_item', args=item.id)}}">
+      <button type="submit" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-retweet"></span>
+        Propose a trade for this item
+      </button>
+    </form>
+    {{pass}}
   </div>
 </div>
 
@@ -55,8 +63,8 @@
             {{if not guest:}}
             You
             {{else:}}
-            {{username=item.auth_user.username}}
-            {{=A(username, _href=URL('default','profile_page',vars=dict(user=username)))}}
+            {{user=item.auth_user}}
+            {{=A(user.username, _href=URL('default','profile_page',vars=dict(user=user.id)))}}
             {{pass}}
           </td>
         </tr>

@@ -25,7 +25,9 @@ def view():
     guest = not auth.user or auth.user.id != box.auth_user
     items = items_in(box)
     full = not guest and len(items) == db(db.itm.auth_user==auth.user).count()
-    return dict(box=box, guest=guest, items=items, full=full)
+    popularity = sum(get_item_popularity(item) for item in items)
+    items.explore_info=[Tag.item_type, Tag.monetary_value]
+    return dict(box=box, guest=guest, items=items, full=full, popularity=popularity)
 
 @auth.requires_login()
 def edit():

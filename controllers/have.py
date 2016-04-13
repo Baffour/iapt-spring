@@ -8,6 +8,7 @@ def view():
     items = iquery.select().sort(lambda i: i.name.lower())
 
     full = not guest and len(items) == db(db.itm.auth_user==auth.user).count()
+    items.explore_info=[Tag.item_type, Tag.monetary_value]
     return dict(user=user, guest=guest, items=items, full=full)
 
 @auth.requires_login()

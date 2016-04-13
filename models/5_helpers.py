@@ -176,6 +176,12 @@ def currency_widget(field, value):
     wrapper = DIV(symbol, inp,_class="currency_group input-group pull-left")
     return wrapper
 
+def profile_page_link(user,*anchor_attributes):
+    """Returns URL for profile page of given user (prevents lengthy repetition)"""
+    if not user:
+        raise HTTP(404)
+    return A(user.username,_href=URL('default','profile_page',vars=dict(user=user)),*anchor_attributes)
+
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
    # source:http://www.web2pyslices.com/slice/show/1373/easy-breadcrumbs

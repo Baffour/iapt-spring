@@ -4,6 +4,7 @@ def view():
     user = user_from_request(request)
     guest = not auth.user or user.id != auth.user.id
     witems = db(db.want_item.auth_user==user.id).select().sort(lambda i: i.name.lower())
+    witems.explore_info=[Tag.item_type]
     return dict(user=user, guest=guest, items=witems)
 
 @auth.requires_login()

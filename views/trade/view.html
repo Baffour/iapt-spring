@@ -69,6 +69,12 @@
               {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
               </a>
             </td>
+            <td>
+              <span class="trade-attr-label label label-default">
+                <span class="glyphicon glyphicon-credit-card"></span>
+                £{{=format_pence_as_pounds(item.monetary_value)}}</span><br />
+              <span class="trade-attr-label label label-default">{{=item.itm_condition.capitalize()}} condition</span>
+            </td>
           </tr>
           {{pass}}
         </table>
@@ -97,6 +103,12 @@
               <a href="{{=URL('item', 'view', args=item.id)}}">
               {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
               </a>
+            </td>
+            <td>
+              <span class="trade-attr-label label label-default">
+                <span class="glyphicon glyphicon-credit-card"></span>
+                £{{=format_pence_as_pounds(item.monetary_value)}}</span><br />
+              <span class="trade-attr-label label label-default">{{=item.itm_condition.capitalize()}} condition</span>
             </td>
           </tr>
           {{pass}}
