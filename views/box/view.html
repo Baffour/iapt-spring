@@ -6,6 +6,9 @@
 {{=box.name}}
 {{if guest:}}
 <small>by {{=profile_page_link(box.auth_user)}}</small>
+
+<small> Total Value: £{{=format_pence_as_pounds(sum(i.monetary_value for i in items_in(box)))}}</small>
+<small> Quantity: {{=len(items)}}</small>
 {{pass}}
 {{end}}
 
@@ -41,16 +44,6 @@
 {{end}}
 
 {{block grid}}
-{{if guest:}}
-<div class="col-xs-12">
-  <ul>
-    <li>Owner: {{=profile_page_link(box.auth_user)}}</li>
-    <li>Total Monetary Value: £{{=format_pence_as_pounds(sum(i.monetary_value for i in items_in(box)))}}</li>
-    <li>Item Likes: {{=popularity}}</li>
-    <li>Quantity: {{=len(items)}}</li>
-  </ul>
-</div>
-{{pass}}
 {{if not len(items):}}
 <div class="col-xs-8 col-xs-offset-2">
   <div class="alert empty-screen alert-warning">

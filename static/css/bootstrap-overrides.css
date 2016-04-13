@@ -126,3 +126,9 @@ body {
 {
   color: #4f4f4f;
 }
+
+h1 small,
+h2 small
+{
+  color:#595959;
+}
