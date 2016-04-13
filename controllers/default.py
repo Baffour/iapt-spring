@@ -44,4 +44,12 @@ def profile_page():
     user = db(db.auth_user.id == id).select().first()
     if user is None:
         return HTTP(404)
-    return dict(user=user)
+    boxes = db((db.box.auth_user == user) & (db.box.private == False)).select()
+    for box in boxes:
+        box.itemcount = len(items_in(box))
+    boxes.explore_info=[Tag.itemcount]
+
+    have_items = db((db.itm.auth_user == user) & (db.itm.in_have_list == True)).select()
+    have_items.explore_info=[Tag.item_type, Tag.monetary_value]
+    want_items = db((db.want_item.auth_user == user)).select()
+    return dict(user=user, public_boxes=boxes, have_items=have_items, want_items=want_items)
