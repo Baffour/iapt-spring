@@ -17,7 +17,7 @@ jQuery(function($) {  // clears form when reset button pressed
     $('#filter-reset').click(function () {
         $('form[name="filter-form"]')
             .find(':radio, :checkbox').removeAttr('checked').end()
-            .find('textarea, :text[name!=query], select').val('').end()
+            .find('textarea, :text, select').val('').end()
             .find('input[type=number]').val('')
             $('form[name="filter-form"]').submit()
         return false;

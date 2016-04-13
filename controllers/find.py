@@ -239,10 +239,10 @@ def __search_filter_form():
     # inputs = [SPAN(i,_class="pull-left") for i in inputs]
     inputs+=labels
 
-    submit_button=BUTTON("Filter Results",_type="submit",_class="btn btn-default pull-left")
+    submit_button=BUTTON("Search Again",_type="submit",_class="btn btn-primary pull-left")
     clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default pull-left")
 
-    inputs+=[SPAN(submit_button,clear_button,_class="input-group-btn")]
+    inputs+=[submit_button,clear_button]
     form = FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
     form['_aria-label']="Filter Search Results"
     return form
