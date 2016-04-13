@@ -5,10 +5,14 @@
   <a href="{{=URL('new')}}"><span class="glyphicon glyphicon-arrow-left"></span> Back to Type Selection</a>
 {{end}}
 
-
 {{block title}}
-Add a new {{=ITEM_TYPES[type]}}
+{{if request.args(0) == "other":}}
+    Add a new miscellaneous item
+{{else:}}
+    Add a new {{=ITEM_TYPES[type]}}
+{{pass}}
 {{end}}
+
 
 {{block title_meta}}
 Step 2 of 2
