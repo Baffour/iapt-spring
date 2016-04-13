@@ -4,11 +4,15 @@
 {{block title}}
 <span class="glyphicon glyphicon-inbox"></span>
 {{=box.name}}
+{{if guest:}}
+<small>by {{=profile_page_link(box.auth_user)}}</small>
+{{pass}}
 {{end}}
 
 {{block subtitle}}
   {{if box.private: }}
   <span class="private-indicator label label-primary"><span class="glyphicon glyphicon-lock"></span> Private</span>
+  {{else:}}
   {{pass}}
 {{end}}
 
@@ -37,23 +41,30 @@
 {{end}}
 
 {{block grid}}
+{{if guest:}}
+<div class="col-xs-12">
+  <ul>
+    <li>Owner: {{=profile_page_link(box.auth_user)}}</li>
+    <li>Total Monetary Value: £{{=format_pence_as_pounds(sum(i.monetary_value for i in items_in(box)))}}</li>
+    <li>Item Likes: {{=popularity}}</li>
+    <li>Quantity: {{=len(items)}}</li>
+  </ul>
+</div>
+{{pass}}
 {{if not len(items):}}
 <div class="col-xs-8 col-xs-offset-2">
   <div class="alert empty-screen alert-warning">
     <p><strong>This box is empty.</strong></p>
-    {{if show_toolbox:}}
+    {{if not guest:}}
       <p>You can add items to this box, or create items here, using the <em>Add or remove items</em> button on the top-left of this page.</p>
     {{pass}}
   </div>
 </div>
 {{else:}}
 <div class="col-xs-12">
-<h3>
-  Total Monetary Value: £{{=format_pence_as_pounds(sum(i.monetary_value for i in items_in(box)))}}
-</h3>
 </div>
 {{include 'item-preview.html'}}
-{{if show_toolbox:}}
+{{if not guest:}}
 <div class="col-xs-3">
   <div class="thumbnail preview create-item">
     <a class="preview-name" href="{{=URL('item','new',vars=dict(box=box.id))}}">

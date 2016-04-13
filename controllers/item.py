@@ -133,7 +133,7 @@ def new_of_type():
         compress_image(form.vars['thumbnail'])
         db.itm2box.insert(itm=item_id, box=form.vars['box'])
 
-        add_another = A("Add another", _href=URL('new'), _class="btn btn-primary add-another")
+        add_another = A("Add another", _href=URL('new',vars=dict(box=form.vars['box'])), _class="btn btn-primary add-another")
         session.flash = SPAN('New item "'+ name + '" created successfully.', add_another)
         session.flash_type = 'success'
 

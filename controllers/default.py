@@ -40,8 +40,8 @@ def user():
     return dict(form=auth())
 
 def profile_page():
-    username = request.vars.user
-    user = db(db.auth_user.username == username).select().first()
+    id = request.vars.user
+    user = db(db.auth_user.id == id).select().first()
     if user is None:
         return HTTP(404)
     return dict(user=user)

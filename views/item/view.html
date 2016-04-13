@@ -55,8 +55,8 @@
             {{if not guest:}}
             You
             {{else:}}
-            {{username=item.auth_user.username}}
-            {{=A(username, _href=URL('default','profile_page',vars=dict(user=username)))}}
+            {{user=item.auth_user}}
+            {{=A(user.username, _href=URL('default','profile_page',vars=dict(user=user.id)))}}
             {{pass}}
           </td>
         </tr>

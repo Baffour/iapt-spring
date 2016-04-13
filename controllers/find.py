@@ -18,7 +18,7 @@ def search():
             items = private_items & items
         results=items
 
-        if request.vars.query is not None:
+        if request.vars.query and request.vars.query != '':
             by_name = __search_by_x(request.vars.query, results, lambda x : x.name)
             by_description = __search_by_x(request.vars.query, results, lambda x : x.description)
             by_author = __search_by_x(request.vars.query, results, lambda x : x.author if x.author is not None else '')
@@ -43,7 +43,7 @@ def search():
 
 
 
-        results.explore_info = [users_name, monetary_value, item_type]
+        results.explore_info = [Tag.users_name, Tag.monetary_value, Tag.item_type]
 
     if results is None:
         response.flash = "Please enter a search query in the form below"
@@ -100,6 +100,7 @@ def __get_have_lists_of_n(N):
     user_lists = list()
     for user in db(db.auth_user).select():
         to_add = first_n_rows(get_have_list(user), N)
+        to_add.explore_info=[Tag.item_type, Tag.monetary_value]
         if len(to_add):
             to_add.label = "User: {0}".format(user.username)
             user_lists.append(to_add)
@@ -110,6 +111,7 @@ def __get_want_lists_of_n(N):
     user_lists = list()
     for user in db(db.auth_user).select():
         to_add = first_n_rows(get_want_list(user), N)
+        to_add.explore_info = [Tag.item_type]
         if len(to_add):
             to_add.label = "User: {0}".format(user.username)
             user_lists.append(to_add)
@@ -139,14 +141,14 @@ def __get_users_with_largest_boxes():
     users = __add_calculated_user_info(db_users)
     box_sizes = lambda user: [len(items_in(box)) for box in load_public_boxes(user)]
     users = sort_rows(users, lambda user: max_or_default(box_sizes(user)), reverse=True)
-    users.explore_info.append(size_of_users_largest_box)
+    users.explore_info.append(Tag.size_of_users_largest_box)
     users.label = "Users with Largest Boxes"
     return users
 
 def __get_newest_boxes():
     db_boxes=db(db.box.private == False).select(orderby=~db.box.created_at)
     boxes=__add_calculated_box_info(db_boxes)
-    boxes.explore_info.append(date_created)
+    boxes.explore_info.append(Tag.date_created)
     boxes.label = "Newest Boxes"
     return boxes
 
@@ -155,7 +157,7 @@ def __get_largest_boxes():
     db_boxes=db(db.box.private == False).select()
     boxes=__add_calculated_box_info(db_boxes)
     boxes=sort_rows(boxes, lambda box: box.itemcount, reverse=True)
-    boxes.explore_info.append(itemcount)
+    boxes.explore_info.append(Tag.itemcount)
     boxes.label="Largest Boxes"
     return boxes
 
@@ -163,7 +165,7 @@ def __get_most_valuable_boxes():
     bxs=db(db.box.private == False).select()
     boxes=__add_calculated_box_info(bxs)
     boxes=sort_rows(boxes, lambda box: box.monetary_value, reverse=True)
-    boxes.explore_info.append(monetary_value)
+    boxes.explore_info.append(Tag.monetary_value)
     boxes.label="Most Valuable Boxes"
     return boxes
 
@@ -171,7 +173,7 @@ def __get_most_popular_boxes():
     bxs=db(db.box.private == False).select()
     boxes=__add_calculated_box_info(bxs)
     boxes=sort_rows(boxes, lambda box: box.popularity, reverse=True)
-    boxes.explore_info.append(popularity)
+    boxes.explore_info.append(Tag.popularity)
     boxes.label="Most Popular Boxes"
     return boxes
 
@@ -181,7 +183,7 @@ def __add_calculated_box_info(boxes):
         box.itemcount = len(items)
         box.monetary_value=sum(item.monetary_value for item in items)
         box.popularity = sum(get_item_popularity(item) for item in items)
-    boxes.explore_info = [users_name]
+    boxes.explore_info = [Tag.users_name]
     return boxes
 
 def __add_calculated_user_info(users):
@@ -191,9 +193,7 @@ def __add_calculated_user_info(users):
         user.itemcount = len(public_items)
         user.boxcount = len(public_boxes)
         user.popularity = get_user_popularity(user)
-    public_itemcount = dict(itemcount)
-    public_itemcount['tooltip']= 'Public Items'
-    users.explore_info = [public_boxcount, public_itemcount, popularity]
+    users.explore_info = [Tag.public_boxcount, Tag.public_itemcount, Tag.popularity]
     return users
 
 def __search_filter_form():
@@ -210,7 +210,7 @@ def __search_filter_form():
                         _name="owner",
                         value=x_or_default(request.vars.owner,''))
 
-    query = INPUT(_name="query", _value=x_or_default(request.vars.query,''), _placeholder="Keyword")
+    query = INPUT(_name="query", _value=x_or_default(request.vars.query,None), _placeholder="Keyword")
     min_value = INPUT(_name="min_value",_type="number",_value=x_or_default(request.vars.min_value,''), _min=0,
                       _step="0.01", _placeholder="Min Value")
     max_value = INPUT(_name="max_value",_type="number",_value=x_or_default(request.vars.max_value,''), _min=0,
@@ -246,60 +246,3 @@ def __search_filter_form():
     form = FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
     form['_aria-label']="Filter Search Results"
     return form
-
-size_of_users_largest_box = {
-            'tooltip':'Largest Box Size',
-            'icon' : 'glyphicon-th',
-            'data_display' : 'Box of {0}',
-            'data' :lambda user: max_or_default([len(items_in(box)) for box in load_public_boxes(user)])
-            }
-
-date_created = {
-    'tooltip':'Date Created',
-    'icon' : 'glyphicon-time',
-    'data_display' : '{0}',
-    'data': lambda box : box.created_at.strftime("%d/%m/%Y")
-}
-
-monetary_value = {
-    'tooltip':'Value',
-    'icon' : 'glyphicon-credit-card',
-    'data_display' : '£{0}',
-    'data' : lambda box : format_pence_as_pounds(box.monetary_value)
-}
-
-itemcount = {
-    'tooltip': 'Items',
-    'icon' : 'glyphicon-unchecked',
-    'data_display' : '{0} Items',
-    'data' : lambda x : x.itemcount
-}
-
-popularity = {
-    'tooltip' : 'Total Item Likes',
-    'icon' : 'glyphicon-heart',
-    'data_display' : '{0}',
-    'data' : lambda x: x.popularity
-}
-
-public_boxcount = {
-    'tooltip' : 'Public Boxes',
-    'icon' : 'glyphicon-th-large',
-    'data_display' : '{0} Boxes',
-    'data' : lambda user: user.boxcount
-}
-
-users_name = {
-    'tooltip' : 'View Profile',
-    'icon' : 'glyphicon-user',
-    'data_display' : '{0}',
-    'data' : lambda box: box.auth_user.username,
-    'href' : lambda box: URL('default','profile_page',vars=dict(user=box.auth_user.username))
-}
-
-item_type = {
-    'tooltip' : 'Type',
-    'icon' : 'glyphicon-list',
-    'data_display' : '{0}',
-    'data' : lambda item: ITEM_TYPES[item.itm_type].capitalize()
-}
