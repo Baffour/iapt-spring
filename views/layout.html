@@ -122,7 +122,8 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a><strong>User: </strong>{{=auth.user.username}}</a> </li>
-                  <li><a role="menuitem" href="{{=URL('default', 'user/profile')}}">Edit profile</a></li>
+                  <li><a role="menuitem" href="{{=URL('default', 'profile_page',vars=dict(user=auth.user.id))}}">View My Public Profile</a></li>
+                  <li><a role="menuitem" href="{{=URL('default', 'user/profile')}}">Change Account Details</a></li>
                   <li><a role="menuitem" href="{{=URL('default', 'user/change_password')}}">Change password</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a role="menuitem" href="{{=URL('default', 'user/logout')}}">Sign out</a></li>
