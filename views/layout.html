@@ -123,7 +123,7 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a><strong>User: </strong>{{=auth.user.username}}</a> </li>
+                  <li><span class="false-link"><strong>Logged in: </strong>{{=auth.user.username}}</span> </li>
                   <li><a role="menuitem" href="{{=URL('default', 'profile_page',vars=dict(user=auth.user.id))}}">View My Public Profile</a></li>
                   <li><a role="menuitem" href="{{=URL('default', 'user/profile')}}">Change Account Details</a></li>
                   <li><a role="menuitem" href="{{=URL('default', 'user/change_password')}}">Change password</a></li>
