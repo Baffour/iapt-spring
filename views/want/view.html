@@ -26,6 +26,20 @@
   </div>
 </div>
 {{else:}}
-{{include 'item-preview.html'}}
+{{for item in items:}}
+  <div class="col-xs-3">
+    <div class="thumbnail explore-thumbnail item-preview preview">
+      <a data-toggle="tooltip" title="{{=item.name}}" href="{{=URL('view_item', args=item.id)}}" class="preview-name">{{=item.name}}</a>
+      <a data-toggle="tooltip" title="{{=item.description}}" class="preview-image" href="{{=URL('view_item', args=item.id)}}">
+        <img alt="" src="{{=URL('item', 'image', args=item.thumbnail)}}"/>
+      </a>
+      {{item_list=items}}
+      {{include 'find/explore-info.html'}}
+      <div class="clearfix"></div>
+      <hr/>
+      <a class="preview-secondary-link" href="{{=URL('view_item', args=item.id)}}">View want item</a>
+    </div>
+  </div>
+{{pass}}
 {{pass}}
 {{end}}

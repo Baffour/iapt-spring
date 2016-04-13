@@ -7,6 +7,11 @@ def view():
     witems.explore_info=[Tag.item_type]
     return dict(user=user, guest=guest, items=witems)
 
+def view_item():
+    item = db.want_item(request.args(0))
+    guest = not auth.user or auth.user.id != item.auth_user
+    return dict(item=item, guest=guest)
+
 @auth.requires_login()
 def new_item():
     # There's no actual logic needed here, the page is just a list of links
@@ -70,6 +75,29 @@ def remove_item():
         redirect(URL('view', args=auth.user.id))
 
     return dict(form=form)
+
+@auth.requires_login()
+def delete_item():
+    item = db.want_item(request.args(0))
+    if not item:
+        raise HTTP(404)
+    if item.auth_user != auth.user.id:
+        raise HTTP(403)
+
+    form = FORM.confirm('Delete', {'Cancel': URL('view', args=item.id)})
+    form['_class'] = 'confirmation-form'
+    form[0]['_class'] = 'btn btn-danger'
+    form[1]['_class'] = 'btn btn-default'
+
+    if form.accepted:
+        item_name = item.name
+        del db.want_item[item.id]
+
+        session.flash = 'Want item "' + item_name + '" successfully deleted.'
+        session.flash_type = 'success'
+        redirect(URL('want', 'view', args=auth.user.id))
+
+    return dict(name=item.name, form=form)
 
 def user_from_request(r):
     user = db.auth_user(r.args(0))

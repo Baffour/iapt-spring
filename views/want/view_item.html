@@ -1,0 +1,67 @@
+{{extend 'layout.html'}}
+
+<div class="row" id="header-row">
+  <div class="col-xs-6">
+    <h1 class="main-title">
+      {{=item.name}}
+    </h1>
+  </div>
+  <div class="col-xs-6" id="toolbox">
+    {{if not guest:}}
+    <div class="btn-group btn-group">
+      <a class="btn btn-default" href="{{=URL('edit_item', args=item.id)}}">
+        <span class="glyphicon glyphicon-pencil"></span>
+        Edit want item
+      </a>
+      <a class="btn btn-default" href="{{=URL('delete_item', args=item.id)}}">
+        <span class="glyphicon glyphicon-trash"></span>
+        Delete want item
+      </a>
+    </div>
+    {{pass}}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-8">
+    <div id="item-info-panel" class="panel panel-default">
+      <div class="panel-heading">
+        <span class="panel-title">Want item details</span>
+      </div>
+      <table id="item-info" class="table table-bordered table-striped">
+        <tr>
+          <td>Type</td>
+          <td>{{=ITEM_TYPES[item.itm_type].capitalize()}}</td>
+        </tr>
+        {{if item.itm_type in EXTRA_FIELDS:}}
+        {{for field in EXTRA_FIELDS[item.itm_type]:}}
+        <tr>
+          <td>{{=field.label}}</td>
+          <td>{{=item[field.name]}}</td>
+        </tr>
+        {{pass}}
+        {{pass}}
+        <tr>
+          <td>Owner</td>
+          <td>
+            {{if not guest:}}
+            You
+            {{else:}}
+            {{user=item.auth_user}}
+            {{=A(user.username, _href=URL('default','profile_page',vars=dict(user=user.id)))}}
+            {{pass}}
+          </td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td id="item-desc">{{if item.description:}}{{=item.description}}{{else:}}<em>No description provided</em>{{pass}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <div id="item-cover" class="thumbnail">
+      <img alt="{{='Image uploaded by User:\'{0}\' depicting their {1} \'{2}\''.format(item.auth_user.username,ITEM_TYPES[item.itm_type].capitalize(),item.name)}}" src="{{=URL('item', 'image', args=item.thumbnail)}}" />
+    </div>
+  </div>
+</div>
