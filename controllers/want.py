@@ -45,7 +45,8 @@ def new_item_of_type():
 
         compress_image(form.vars['thumbnail'])
 
-        session.flash = 'New want item "'+ name + '" created successfully.'
+        add_another = A("Add another", _href=URL('new_item'), _class="btn btn-primary add-another")
+        session.flash = SPAN('New item "'+ name + '" created successfully.', add_another)
         session.flash_type = 'success'
 
         redirect(URL('view', args=auth.user.id))

@@ -24,8 +24,13 @@ def insert_item():
         itm = load_item(form.vars['itm'], editing=True)
         itm.in_have_list = True
         itm.update_record()
+        items_remain = len(db((db.itm.auth_user == auth.user) &(db.itm.in_have_list == False)).select()) > 0
 
-        session.flash = 'Item "' + itm.name + '" added to Have List successfully.'
+        if items_remain:
+            add_another = A("Add another", _href=URL('insert_item'), _class="btn btn-primary add-another")
+            session.flash = SPAN('Item  "'+ itm.name + '" added to Have List successfuly.', add_another)
+        else:
+            session.flash = 'Item "' + itm.name + '" added to Have List successfully.'
         session.flash_type = 'success'
         redirect(URL('view', args=auth.user.id))
 
