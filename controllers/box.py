@@ -12,7 +12,7 @@ def new():
     form.custom.widget.name['_autofocus'] = True
 
     if 'public' in request.vars:
-        if request.vars['public'] == 'true':
+        if request.vars['public'] == 'True':
             form.element('input[name=private]')['_checked'] = False
 
     if form.process().accepted:
