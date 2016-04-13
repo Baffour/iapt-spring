@@ -6,14 +6,20 @@ ITEM_TYPES = {
     'book' : 'book',
     'cd' : 'album',
     'dvd' : 'movie',
-    'game' : 'game'
+    'game' : 'game',
+    'other' : 'other'
 }
 
 ITEM_CONDITIONS = ['unspecified', 'poor', 'reasonable', 'good', 'mint']
 
 EXTRA_FIELDS = {
     'cd' : [Field('artist', type='string', length=256, notnull=True, required=False)],
-    'book': [Field('author', type='string', length=256, notnull=True, required=False)]
+    'book': [Field('author', type='string', length=256, notnull=True, required=False)],
+    'game': [Field('publisher', type='string', length=256, notnull=True, required=False),
+             Field('genre', type='string', length=256, notnull=True, required=False)],
+    'dvd': [Field('author', type='string', length=256, notnull=True, required=False),
+            Field('genre', type='string', length=256, notnull=True, required=False)]
+
 }
 
 def _flatten_and_make_nullable(list):
