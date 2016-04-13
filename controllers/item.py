@@ -103,7 +103,7 @@ def new_of_type():
     fields += [
         db.itm.itm_condition,
         Field('monetary_value', requires=IS_CURRENCY_VALUE(), notnull=True, required=True, widget=currency_widget),
-        Field('box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, comment='You can add this item to additional boxes after creating it'),
+        Field('initial_box', 'reference box', requires=IS_IN_DB(db(db.box.auth_user==auth.user), 'box.id', 'box.name', zero=None, orderby='box.name'), required=True, notnull=True, label="Box", comment='You can add this item to additional boxes after creating it'),
         db.itm.description,
         db.itm.thumbnail,
     ]
@@ -131,7 +131,7 @@ def new_of_type():
         )
 
         compress_image(form.vars['thumbnail'])
-        db.itm2box.insert(itm=item_id, box=form.vars['box'])
+        db.itm2box.insert(itm=item_id, box=form.vars['initial_box'])
 
         add_another = A("Add another", _href=URL('new',vars=dict(box=form.vars['box'])), _class="btn btn-primary add-another")
         session.flash = SPAN('New item "'+ name + '" created successfully.', add_another)
@@ -148,7 +148,7 @@ def new_of_type():
 
     # Move the unfiled box to the top of the list of boxes
     unfiled = load_unfiled_box()
-    box_picker = form.element('#no_table_box')
+    box_picker = form.element('#no_table_initial_box')
     box_picker.element('option[value=' + str(unfiled.id) + ']', replace=None)
     box_picker.insert(0, OPTION(unfiled.name, _value=unfiled.id))
 

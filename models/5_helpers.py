@@ -102,6 +102,14 @@ def load_all_items_of_visibility_x(private,user=None):
     for box in db_boxes:
         items = items_in(box)
         item_ids=item_ids.union(item.id for item in items)
+
+    if not private:
+        if user is None:
+            have_list_items = db(db.itm.in_have_list==True).select()
+        else:
+            have_list_items = db((db.itm.in_have_list==True) & (db.itm.auth_user==user)).select()
+        item_ids=item_ids.union(i.id for i in have_list_items)
+
     return db(db.itm.id.belongs(item_ids)).select(db.itm.ALL)
 
 def get_item_popularity(item):

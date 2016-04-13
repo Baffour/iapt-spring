@@ -3,7 +3,7 @@
 def index():
     if auth.user is None:
         redirect(URL('welcome'))
-    no_items = db(db.itm.auth_user==auth.user.id).count() == 0
+    no_items = len(load_all_public_items(auth.user.id)) == 0
 
     newest_boxes = db(db.box.private==False).select(db.box.ALL, orderby=~db.box.created_at, limitby=(0, 10))
     newest_items = db(db.itm.auth_user==auth.user.id).select(db.itm.ALL, orderby=~db.itm.created_at, limitby=(0, 10))

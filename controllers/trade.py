@@ -2,7 +2,7 @@
 
 @auth.requires_login()
 def list():
-    no_items = db(db.itm.auth_user==auth.user.id).count() == 0
+    no_items = len(load_all_public_items(auth.user.id)) == 0
 
     spquery = db((db.trade_proposal.sender==auth.user.id) & (db.trade_proposal.status!='pending'))
     sent_props = spquery.select().sort(lambda p: (p.status == 'sent', p.created_at), reverse=True)
@@ -58,7 +58,10 @@ def add_offered_item():
     oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
     oi_ids = oi_query.select(db.itm.id)
 
-    constraint = db(~db.itm.id.belongs(oi_ids) & (db.itm.auth_user == auth.user.id))
+    user_items = db(~db.itm.id.belongs(oi_ids) & (db.itm.auth_user==auth.user.id)).select()
+    selectable_ids = [item.id for item in user_items if is_public(item)]
+
+    constraint = db(db.itm.id.belongs(selectable_ids))
     reprfn = lambda i: "{} ({}, {} condition, £{})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
@@ -119,7 +122,7 @@ def add_requested_item():
     return dict(target=target, form=form)
 
 def is_public(item):
-    return item.itm2box((db.itm2box.box==db.box.id) & (db.box.private==False)).count() > 0
+    return item.in_have_list or (item.itm2box((db.itm2box.box==db.box.id) & (db.box.private==False)).count() > 0)
 
 @auth.requires_login()
 def remove_requested_item():
