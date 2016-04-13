@@ -49,6 +49,20 @@ def new_with_requested_item():
     redirect(URL('choose_items', args=propid))
 
 @auth.requires_login()
+def new_with_user():
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    target = db.auth_user(request.args(0))
+    if not target:
+        raise HTTP(404)
+    if target.id == auth.user.id:
+        raise HTTP(400)
+
+    propid = db.trade_proposal.insert(target=target)
+    redirect(URL('choose_items', args=propid))
+
+@auth.requires_login()
 def choose_items():
     prop = load_trade_proposal(request.args(0), editing=True)
     if prop.status != 'pending':

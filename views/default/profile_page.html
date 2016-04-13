@@ -8,6 +8,17 @@
 {{pass}}
 {{end}}
 
+{{block toolbox}}
+{{if guest and auth.user:}}
+<form method="post" action="{{=URL('trade', 'new_with_user', args=user.id)}}">
+  <button type="submit" class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-retweet"></span>
+    Propose a trade with this user
+  </button>
+</form>
+{{pass}}
+{{end}}
+
 {{block grid}}
 <h2 class="col-xs-12">
   Public Boxes
