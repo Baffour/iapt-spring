@@ -36,6 +36,19 @@ def new():
     return dict(form=form)
 
 @auth.requires_login()
+def new_with_requested_item():
+    if request.env.request_method != "POST":
+        raise HTTP(405)
+
+    item = load_item(request.args(0)) # this checks item is viewable by requesting user
+    if item.auth_user == auth.user.id:
+        raise HTTP(400)
+
+    propid = db.trade_proposal.insert(target=item.auth_user)
+    db.itm2trade_proposal.insert(itm=item.id, trade_proposal=propid)
+    redirect(URL('choose_items', args=propid))
+
+@auth.requires_login()
 def choose_items():
     prop = load_trade_proposal(request.args(0), editing=True)
     if prop.status != 'pending':
@@ -62,7 +75,7 @@ def add_offered_item():
     selectable_ids = [item.id for item in user_items if is_public(item)]
 
     constraint = db(db.itm.id.belongs(selectable_ids))
-    reprfn = lambda i: "{} ({}, {} condition, £{})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    reprfn = lambda i: "{} ({}, £{}, {} condition)".format(i.name, i.itm_type, format_pence_as_pounds(i.monetary_value), i.itm_condition)
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
 
@@ -105,7 +118,7 @@ def add_requested_item():
     ri_selectable_ids = [item.id for item in target_user_items if is_public(item)]
 
     constraint = db(db.itm.id.belongs(ri_selectable_ids))
-    reprfn = lambda i: "{} ({}, {} condition, £{})".format(i.name, i.itm_type, i.itm_condition, format_pence_as_pounds(i.monetary_value))
+    reprfn = lambda i: "{} ({}, £{}, {} condition)".format(i.name, i.itm_type, format_pence_as_pounds(i.monetary_value), i.itm_condition)
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
     form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
 
