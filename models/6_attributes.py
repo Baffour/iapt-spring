@@ -27,12 +27,6 @@ class Tag:
         'data' : lambda x : x.itemcount
     }
 
-    popularity = {
-        'tooltip' : 'Total Item Likes',
-        'icon' : 'glyphicon-heart',
-        'data_display' : '{0}',
-        'data' : lambda x: x.popularity
-    }
 
     public_boxcount = {
         'tooltip' : 'Public Boxes',

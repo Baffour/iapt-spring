@@ -102,7 +102,7 @@ def __get_have_lists_of_n(N):
         to_add = first_n_rows(get_have_list(user), N)
         to_add.explore_info=[Tag.item_type, Tag.monetary_value]
         if len(to_add):
-            to_add.label = "User: {0}".format(user.username)
+            to_add.label = profile_page_link(user)
             user_lists.append(to_add)
     return user_lists
 
@@ -113,7 +113,7 @@ def __get_want_lists_of_n(N):
         to_add = first_n_rows(get_want_list(user), N)
         to_add.explore_info = [Tag.item_type]
         if len(to_add):
-            to_add.label = "User: {0}".format(user.username)
+            to_add.label = profile_page_link(user)
             user_lists.append(to_add)
     return user_lists
 
@@ -121,20 +121,21 @@ def __get_box_groups_of_n(N):
     newest = first_n_rows(__get_newest_boxes(), N)
     largest = first_n_rows(__get_largest_boxes(), N)
     valuable = first_n_rows(__get_most_valuable_boxes(), N)
-    popular = first_n_rows(__get_most_popular_boxes(), N)
-    return [valuable, popular, newest, largest]
+    return [valuable, newest, largest]
 
 def __get_user_groups_of_n(N):
-    popular = first_n_rows(__get_most_popular_users(), N)
     largest = first_n_rows(__get_users_with_largest_boxes(), N)
-    return [popular, largest]
+    return [largest,__get_all_users()]
 
-def __get_most_popular_users():
+def __get_all_users():
     db_users = db(db.auth_user).select()
     users = __add_calculated_user_info(db_users)
-    users = sort_rows(users, lambda user: get_user_popularity(user), reverse=True)
-    users.label = "Most Popular Users"
+    # box_sizes = lambda user: [len(items_in(box)) for box in load_public_boxes(user)]
+    # users = sort_rows(users, lambda user: max_or_default(box_sizes(user)), reverse=True)
+    # users.explore_info.append(Tag.size_of_users_largest_box)
+    users.label = "All Users"
     return users
+
 
 def __get_users_with_largest_boxes():
     db_users = db(db.auth_user).select()
@@ -169,20 +170,12 @@ def __get_most_valuable_boxes():
     boxes.label="Most Valuable Boxes"
     return boxes
 
-def __get_most_popular_boxes():
-    bxs=db(db.box.private == False).select()
-    boxes=__add_calculated_box_info(bxs)
-    boxes=sort_rows(boxes, lambda box: box.popularity, reverse=True)
-    boxes.explore_info.append(Tag.popularity)
-    boxes.label="Most Popular Boxes"
-    return boxes
 
 def __add_calculated_box_info(boxes):
     for box in boxes:
         items = items_in(box)
         box.itemcount = len(items)
         box.monetary_value=sum(item.monetary_value for item in items)
-        box.popularity = sum(get_item_popularity(item) for item in items)
     boxes.explore_info = [Tag.users_name]
     return boxes
 
@@ -192,8 +185,7 @@ def __add_calculated_user_info(users):
         public_boxes = db((db.box.auth_user == user.id) & (db.box.private == False)).select()
         user.itemcount = len(public_items)
         user.boxcount = len(public_boxes)
-        user.popularity = get_user_popularity(user)
-    users.explore_info = [Tag.public_boxcount, Tag.public_itemcount, Tag.popularity]
+    users.explore_info = [Tag.public_boxcount, Tag.public_itemcount]
     return users
 
 def __search_filter_form():
