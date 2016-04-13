@@ -7,6 +7,11 @@ def view():
     witems.explore_info=[Tag.item_type]
     return dict(user=user, guest=guest, items=witems)
 
+def view_item():
+    item = db.want_item(request.args(0))
+    guest = not auth.user or auth.user.id != item.auth_user
+    return dict(item=item, guest=guest)
+
 @auth.requires_login()
 def new_item():
     # There's no actual logic needed here, the page is just a list of links
@@ -70,6 +75,87 @@ def remove_item():
         redirect(URL('view', args=auth.user.id))
 
     return dict(form=form)
+
+@auth.requires_login()
+def edit_item():
+    item = db.want_item(request.args(0))
+    if not item:
+        raise HTTP(404)
+    if item.auth_user != auth.user.id:
+        raise HTTP(403)
+
+    fields = [db.itm.name]
+    extra_fields = _extra_fields_for(item.itm_type)
+    fields += extra_fields
+    fields += [
+        db.itm.name,
+        db.itm.description,
+        Field('thumbnail', type='upload', uploadfolder=uploadfolder, label="Thumbnail (uploaded file will replace existing image)")
+    ]
+
+    db.itm.description.label=SPAN(db.itm.description.label, SPAN(_class="optional-field"))
+    form = SQLFORM.factory(*fields, submit_button='Save want item')
+
+    if form.process().accepted:
+        newvals = dict(
+            name=form.vars['name'],
+            description=form.vars['description']
+        )
+
+        extra_field_names = [f.name for f in extra_fields]
+        extra_field_vals = dict((k, v) for k, v in form.vars.items() if k in extra_field_names)
+        newvals.update(extra_field_vals)
+
+        uploaded_image = form.vars['thumbnail']
+        if uploaded_image:
+            newvals['thumbnail'] = uploaded_image
+
+        item.update(**newvals)
+        item.update_record()
+
+        session.flash = 'Want item changes saved successfully'
+        session.flash_type = 'success'
+        redirect(URL('view_item', args=item.id))
+
+
+    elif form.errors:
+        response.flash = 'Invalid details entered. See the annotations below and try again.'
+        response.flash_type = 'danger'
+
+    # Fill form with the item's current attributes
+    form.element('input[name=name]')['_value'] = item.name
+    if len(form.element('textarea[name=description]')) == 0:
+        form.element('textarea[name=description]').append(item.description)
+    else:
+        form.element('textarea[name=description]')[0]=item.description
+
+    for field in extra_fields:
+        form.element('input[name={}]'.format(field.name))['_value'] = item[field.name]
+
+    return dict(item=item, form=form)
+
+@auth.requires_login()
+def delete_item():
+    item = db.want_item(request.args(0))
+    if not item:
+        raise HTTP(404)
+    if item.auth_user != auth.user.id:
+        raise HTTP(403)
+
+    form = FORM.confirm('Delete', {'Cancel': URL('view', args=item.id)})
+    form['_class'] = 'confirmation-form'
+    form[0]['_class'] = 'btn btn-danger'
+    form[1]['_class'] = 'btn btn-default'
+
+    if form.accepted:
+        item_name = item.name
+        del db.want_item[item.id]
+
+        session.flash = 'Want item "' + item_name + '" successfully deleted.'
+        session.flash_type = 'success'
+        redirect(URL('want', 'view', args=auth.user.id))
+
+    return dict(name=item.name, form=form)
 
 def user_from_request(r):
     user = db.auth_user(r.args(0))

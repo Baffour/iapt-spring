@@ -1,0 +1,10 @@
+{{extend 'dialog.html'}}
+
+{{block title}}
+Edit want item &ldquo;{{=item.name}}&rdquo;
+{{end}}
+
+{{block form}}
+{{=form}}
+{{include 'confirm-navigation.html'}}
+{{end}}
