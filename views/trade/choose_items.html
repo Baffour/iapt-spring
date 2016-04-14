@@ -23,7 +23,12 @@ Step 2 of 3
       <table class="wanted-items table list-editor-table">
         {{for item in offered_items:}}
         <tr>
-          <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
+          <td>
+            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              <span class="glyphicon glyphicon-new-window"></span>
+            </a>
+          </td>
           <td>
             <form method="post" action="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">
               <input type="submit" class="btn btn-default btn-sm" value="Remove this item" />
@@ -33,7 +38,9 @@ Step 2 of 3
         {{pass}}
         <tr>
           {{if len(offered_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
-            <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box">
+            <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box
+            {{if all_items_offered:}} disabled" style="pointer-events:auto" data-toggle="tooltip"
+            title="All your public items have already been added to this proposal{{pass}}">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of your public items
             </a>
@@ -50,7 +57,12 @@ Step 2 of 3
       <table class="wanted-items table list-editor-table">
         {{for item in requested_items:}}
         <tr>
-          <td>{{=icon_for_item_type(item.itm_type)}} {{=item.name}}</td>
+          <td>
+            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
+              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              <span class="glyphicon glyphicon-new-window"></span>
+            </a>
+          </td>
           <td>
             <form method="post" action="{{=URL('remove_requested_item', args=[prop.id, item.id])}}">
               <input type="submit" class="btn btn-default btn-sm" value="Remove this item" />
@@ -60,7 +72,9 @@ Step 2 of 3
         {{pass}}
         <tr>
           {{if len(requested_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
-            <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box">
+            <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box
+            {{if all_items_requested:}} disabled" style="pointer-events:auto" data-toggle="tooltip"
+            title="All {{=target.username}}&rsquo;s public items have already been added to this proposal{{pass}}">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of {{=target.username}}&rsquo;s public items
             </a>
