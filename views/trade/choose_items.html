@@ -39,7 +39,7 @@ Step 2 of 3
         <tr>
           {{if len(offered_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
             <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box
-            {{if all_items_offered:}} disabled" style="pointer-events:auto" data-toggle="tooltip"
+            {{if all_items_offered:}} disabled" style="pointer-events:auto" onclick="return false;" data-toggle="tooltip"
             title="All your public items have already been added to this proposal{{pass}}">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of your public items
@@ -73,7 +73,7 @@ Step 2 of 3
         <tr>
           {{if len(requested_items)>0:}}<th colspan="2">{{else:}}<th>{{pass}}
             <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box
-            {{if all_items_requested:}} disabled" style="pointer-events:auto" data-toggle="tooltip"
+            {{if all_items_requested:}} disabled" style="pointer-events:auto" onclick="return false;" data-toggle="tooltip"
             title="All {{=target.username}}&rsquo;s public items have already been added to this proposal{{pass}}">
               <span class="glyphicon glyphicon-save-file"></span>
               Add one of {{=target.username}}&rsquo;s public items
