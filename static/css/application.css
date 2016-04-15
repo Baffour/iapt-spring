@@ -397,14 +397,6 @@ h1.main-title .glyphicon {
   overflow:hidden;
 }
 
-.btn-label {
-  font-size:0;
-  display:block;
-  overflow:hidden;
-  height:0;
-  width:0;
-}
-
 .reader-only
 {
   position:absolute;
