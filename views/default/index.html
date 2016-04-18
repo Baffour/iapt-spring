@@ -35,12 +35,13 @@ My Homepage
       <tr>
         <td>
           <a href="{{=URL('item', 'view', args=item.id)}}">
-            {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+            {{=icon_for_item_type(item.itm_type, label=True)}} <span>{{=item.name}}</span>
           </a>
         </td>
         <td>
           <span class="label label-default">
             <span data-toggle="tooltip" data-original-title="{{=item.created_at}}" class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="hide-label">Date Created {{=item.created_at}}</span>
           </span>
         </td>
       </tr>
@@ -70,6 +71,7 @@ My Homepage
         <td>
           <span class="label label-default">
             <span data-toggle="tooltip" data-original-title="{{=box.created_at}}" class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="hide-label">Date Created {{=item.created_at}}</span>
           </span>
         </td>
       </tr>

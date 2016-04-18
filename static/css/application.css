@@ -609,3 +609,11 @@ background-color: transparent;
 {
 outline: fuchsia auto 5px!important;
 }*/
+
+
+.thumbnail span>img
+{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

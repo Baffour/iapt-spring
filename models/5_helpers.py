@@ -35,9 +35,14 @@ ICONS_FOR_ITEM_TYPES = {
     'game' : 'modal-window'
 }
 
-def icon_for_item_type(item_type):
+def icon_for_item_type(item_type, label=False):
     icon_name = ICONS_FOR_ITEM_TYPES.get(item_type, 'file')
-    return XML('<span class="glyphicon glyphicon-{}" aria-hidden="true"></span>'.format(icon_name))
+    icon = SPAN(_class="glyphicon glyphicon-{}".format(icon_name))
+    if label:
+        icon['_aria-label'] = ITEM_TYPES[item_type]
+    else:
+        icon['_aria-hidden'] = "true"
+    return icon
 
 def load_box(id, editing=False):
     box = db.box(id)

@@ -25,7 +25,7 @@ Step 2 of 3
         <tr>
           <td>
             <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
-              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              {{=icon_for_item_type(item.itm_type, label=True)}} <span>{{=item.name}}</span>
               <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>
@@ -59,7 +59,7 @@ Step 2 of 3
         <tr>
           <td>
             <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
-              {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
+              {{=icon_for_item_type(item.itm_type, label=True)}} <span>{{=item.name}}</span>
               <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>

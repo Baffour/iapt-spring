@@ -8,7 +8,7 @@ def list():
 
 @auth.requires_login()
 def new():
-    form = SQLFORM(db.box, submit_button="Create box")
+    form = SQLFORM(db.box, submit_button="Create box",_role="form")
     form.custom.widget.name['_autofocus'] = True
 
     if 'public' in request.vars:
@@ -41,7 +41,7 @@ def edit():
         db.box.name.readable = False
         db.box.name.writable = False
 
-    form = SQLFORM(db.box, box, submit_button='Save', showid=False)
+    form = SQLFORM(db.box, box, submit_button='Save', showid=False, _role="form")
 
     if form.process().accepted:
         session.flash = 'Box changes saved successfully'
@@ -63,6 +63,7 @@ def delete():
         raise HTTP(403)
 
     form = FORM.confirm('Delete', {'Cancel': URL('view/' + str(box.id))})
+    form['_role'] = 'form'
     form['_class'] = 'confirmation-form'
     form[0]['_class'] = 'btn btn-danger'
     form[1]['_class'] = 'btn btn-default'
@@ -89,7 +90,7 @@ def insert_item():
 
     constraint = db(~db.itm.id.belongs(item_ids_in_box) & (db.itm.auth_user == auth.user.id))
     validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this box')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this box', _role="form")
 
     if form.process().accepted:
         itm = load_item(form.vars['itm'], editing=True)
@@ -106,7 +107,7 @@ def remove_item():
     box = load_box(request.args(0), editing=True)
     constraint = box.itm2box(db.itm2box.itm==db.itm.id)
     validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Remove from this box')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Remove from this box', _role="form")
 
     if form.process().accepted:
         item = load_item(form.vars['itm'], editing=True)
