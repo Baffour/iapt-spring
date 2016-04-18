@@ -11,6 +11,16 @@
 {{end}}
 
 {{block grid}}
+{{if not len(sent_proposals) and not len(received_proposals):}}
+<div class="col-xs-12">
+  <div class="alert alert-warning">
+    <p><strong>This is the My Trades screen.</strong></p>
+    <p>Trade proposals you send and receive will be listed in the two columns below.</p>
+    <p>Once you have created at least one public item, you will be able to propose your first trade by clicking on the
+       <em>Propose a trade</em> button in the top-right corner of this page.</p>
+  </div>
+</div>
+{{pass}}
 <div class="col-xs-6">
   <div class="panel panel-default">
     <div class="panel-heading">
