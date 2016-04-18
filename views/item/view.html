@@ -6,7 +6,7 @@
       {{=item.name}}
     </h1>
   </div>
-  <div class="col-xs-6" id="toolbox">
+  <div class="col-xs-6" id="toolbox" role="toolbar">
     {{if not guest:}}
     <div class="btn-group btn-group">
       <a class="btn btn-default" href="{{=URL('edit', args=item.id)}}">
