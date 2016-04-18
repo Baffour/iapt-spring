@@ -60,7 +60,7 @@ def __search_by_x(query, items, func):
     """Given a query and a set of item rows, returns a list of item rows whose attribute (defined by func) is similar to the query"""
     if query == "":
         return list()
-    match_attr = __full_text_search(query, [func(item) for item in items], min_sim=0.1)
+    match_attr = __full_text_search(query, [func(item) for item in items], min_sim=0.3)
 
     if len(match_attr) < 2:
         # If no strings similar to query exist, break items down into individual words and query this
