@@ -5,7 +5,11 @@
 {{if prop.parent:}}
 Choose items for your counter-offer to {{=target.username}}&rsquo;s proposal
 {{else:}}
-Choose items to trade with {{=target.username}}
+Choose items to trade with
+<a href="{{=URL('default', 'profile_page', vars={'user':target.id})}}" target="_blank">
+  {{=target.username}}
+  <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+</a>
 {{pass}}
 {{end}}
 
