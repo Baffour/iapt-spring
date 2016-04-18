@@ -6,8 +6,9 @@
 Choose items for your counter-offer to {{=target.username}}&rsquo;s proposal
 {{else:}}
 Choose items to trade with
-<a href="{{=URL('default', 'profile_page', vars={'user':target.id})}}" target="_blank">
+<a href="{{=URL('default', 'profile_page', vars={'user':target.id})}}" target="_blank" data-toggle="tooltip" title="Opens in a new window">
   {{=target.username}}
+  <span class="hide-label">Opens in a new window</span>
   <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
 </a>
 {{pass}}
