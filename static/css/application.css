@@ -519,7 +519,7 @@ body
 
 .explore-row:nth-child(even)
 {
-  background: #FBFBFB;
+  background: #EEE;
 }
 
 form .error {
