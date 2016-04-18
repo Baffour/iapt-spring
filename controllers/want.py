@@ -28,6 +28,7 @@ def new_item_of_type():
     fields += extra_fields
     fields += [db.want_item.description, db.want_item.thumbnail]
 
+    db.want_item.description.label=SPAN(db.want_item.description.label, SPAN(_class="optional-field"))
     form = SQLFORM.factory(*fields, submit_button='Add want item')
 
     if form.process().accepted:

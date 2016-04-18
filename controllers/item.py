@@ -21,7 +21,7 @@ def edit():
         Field('thumbnail', type='upload', uploadfolder=uploadfolder, label="Thumbnail (uploaded file will replace existing image)")
     ]
 
-    db.itm.description.label=SPAN(db.itm.description.label, SPAN(_class="optional-field"))
+    db.itm.description.label=SPAN(db.itm.description.label, SPAN(" - optional",_class="optional-field"))
     form = SQLFORM.factory(*fields, submit_button='Save item')
 
     if form.process().accepted:
@@ -108,7 +108,7 @@ def new_of_type():
         db.itm.thumbnail,
     ]
 
-    db.itm.description.label=SPAN(db.itm.description.label, SPAN(_class="optional-field"))
+    db.itm.description.label=SPAN(db.itm.description.label, SPAN(" - optional",_class="optional-field"))
     form = SQLFORM.factory(*fields, submit_button='Add item')
 
     if form.process().accepted:

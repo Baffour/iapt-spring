@@ -585,11 +585,10 @@ margin-left: 10px;
   margin-left: 30px;
 }
 
-.optional-field:before
+.optional-field
 {
   font-style: italic;
-  color: gray;
-  content: " - optional";
+  color: #2B2B2B;
 }
 
 .false-link
