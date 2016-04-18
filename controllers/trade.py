@@ -71,11 +71,20 @@ def choose_items():
 
     oi_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==auth.user.id))
     offered_items = oi_query.select(db.itm.ALL)
+    all_items_offered = len(offered_items) == len(load_all_public_items(auth.user.id))
 
     ri_query = prop.itm2trade_proposal((db.itm2trade_proposal.itm==db.itm.id) & (db.itm.auth_user==target.id))
     requested_items = ri_query.select(db.itm.ALL)
+    all_items_requested = len(requested_items) == len(load_all_public_items(target.id))
 
-    return dict(prop=prop, target=target, offered_items=offered_items, requested_items=requested_items)
+    return dict(
+        prop=prop,
+        target=target,
+        offered_items=offered_items,
+        requested_items=requested_items,
+        all_items_offered=all_items_offered,
+        all_items_requested=all_items_requested
+    )
 
 @auth.requires_login()
 def add_offered_item():
