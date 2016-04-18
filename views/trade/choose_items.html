@@ -29,8 +29,9 @@ Step 2 of 3
         {{for item in offered_items:}}
         <tr>
           <td>
-            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
+            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank" data-toggle="tooltip" title="Opens in a new window">
               {{=icon_for_item_type(item.itm_type, label=True)}} <span>{{=item.name}}</span>
+              <span class="hide-label">Opens in a new window</span>
               <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>
@@ -63,8 +64,9 @@ Step 2 of 3
         {{for item in requested_items:}}
         <tr>
           <td>
-            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
+            <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank" data-toggle="tooltip" title="Opens in a new window">
               {{=icon_for_item_type(item.itm_type, label=True)}} <span>{{=item.name}}</span>
+              <span class="hide-label">Opens in a new window</span>
               <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>
