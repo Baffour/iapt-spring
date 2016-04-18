@@ -178,7 +178,7 @@ def profile_page_link(user,*anchor_attributes):
     """Returns URL for profile page of given user (prevents lengthy repetition)"""
     if not user:
         raise HTTP(404)
-    return A(user.username,_href=URL('default','profile_page',vars=dict(user=user)),*anchor_attributes)
+    return A(user.username,_href=URL('default','profile_page',vars=dict(user=user.id)),*anchor_attributes)
 
 def breadcrumbs(arg_title=None):
    "Create breadcrumb links for current request"
