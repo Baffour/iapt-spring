@@ -11,8 +11,8 @@
     Add or remove items <span class="caret"></span>
   </button>
   <ul id="add-remove-menu" class="dropdown-menu dropdown-menu-right">
-    <li><a href="{{=URL('new_item')}}"><span class="glyphicon glyphicon-plus"></span> Add an new want item to this list</a></li>
-    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item')}}"><span class="glyphicon glyphicon-log-out"></span> Remove a want item from this list</a></li>
+    <li><a href="{{=URL('new_item')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add an new want item to this list</a></li>
+    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item')}}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Remove a want item from this list</a></li>
   </ul>
 </div>
 {{end}}

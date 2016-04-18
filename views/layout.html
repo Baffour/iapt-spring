@@ -70,10 +70,10 @@
               <div class="input-group" role="search">
                 <input id="search-query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
                 <span class="input-group-btn pull-left">
-                  <button id="search-submit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span><span class="hide-label">Search</span></button>
+                  <button id="search-submit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="hide-label">Search</span></button>
                   <a data-toggle="tooltip" data-original-title="Advanced Search"
                      data-placement="bottom" id="advanced-search" class="btn btn-default" href="{{=URL('find','search')}}">
-                     <span class="glyphicon glyphicon-list-alt"></span>
+                     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                      <span class="hide-label">Advanced Search</span>
                    </a>
                 </span>
@@ -118,7 +118,7 @@
               {{pass}}
               <li class="dropdown">
                 <a href="{{=URL('default', 'user/profile')}}" data-toggle="dropdown">
-                  <span class="dropdown-user-icon glyphicon glyphicon-user"></span>
+                  <span class="dropdown-user-icon glyphicon glyphicon-user" aria-hidden="true"></span>
                   <span class="reader-only">User</span>
                   <span class="caret"></span>
                 </a>

@@ -12,7 +12,7 @@
 {{if guest and auth.user:}}
 <form method="post" action="{{=URL('trade', 'new_with_user', args=user.id)}}">
   <button type="submit" class="btn btn-default btn-sm">
-    <span class="glyphicon glyphicon-retweet"></span>
+    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
     Propose a trade with this user
   </button>
 </form>

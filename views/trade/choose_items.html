@@ -26,7 +26,7 @@ Step 2 of 3
           <td>
             <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
               {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
-              <span class="glyphicon glyphicon-new-window"></span>
+              <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>
           <td>
@@ -41,7 +41,7 @@ Step 2 of 3
             <a href="{{=URL('add_offered_item', args=prop.id)}}" class="btn btn-default create-box
             {{if all_items_offered:}} disabled" style="pointer-events:auto" onclick="return false;" data-toggle="tooltip"
             title="All your public items have already been added to this proposal{{pass}}">
-              <span class="glyphicon glyphicon-save-file"></span>
+              <span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
               Add one of your public items
             </a>
           </th>
@@ -60,7 +60,7 @@ Step 2 of 3
           <td>
             <a href="{{=URL('item', 'view', args=item.id)}}" target="_blank">
               {{=icon_for_item_type(item.itm_type)}} <span>{{=item.name}}</span>
-              <span class="glyphicon glyphicon-new-window"></span>
+              <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
             </a>
           </td>
           <td>
@@ -75,7 +75,7 @@ Step 2 of 3
             <a href="{{=URL('add_requested_item', args=prop.id)}}" class="btn btn-default create-box
             {{if all_items_requested:}} disabled" style="pointer-events:auto" onclick="return false;" data-toggle="tooltip"
             title="All {{=target.username}}&rsquo;s public items have already been added to this proposal{{pass}}">
-              <span class="glyphicon glyphicon-save-file"></span>
+              <span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
               Add one of {{=target.username}}&rsquo;s public items
             </a>
           </th>

@@ -37,7 +37,7 @@ ICONS_FOR_ITEM_TYPES = {
 
 def icon_for_item_type(item_type):
     icon_name = ICONS_FOR_ITEM_TYPES.get(item_type, 'file')
-    return XML('<span class="glyphicon glyphicon-{}"></span>'.format(icon_name))
+    return XML('<span class="glyphicon glyphicon-{}" aria-hidden="true"></span>'.format(icon_name))
 
 def load_box(id, editing=False):
     box = db.box(id)

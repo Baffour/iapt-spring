@@ -7,13 +7,13 @@ My Homepage
 {{block toolbox}}
 <div class="btn-group">
   <a class="btn btn-default{{if no_items:}} disabled{{pass}}" href="{{=URL('trade', 'new')}}">
-    <span class="glyphicon glyphicon-retweet"></span>
+    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
     Propose a trade
   </a>
 </div>
 <div class="btn-group">
   <a class="btn btn-default" href="{{=URL('item', 'new')}}">
-    <span class="glyphicon glyphicon-plus"></span>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Add a new item
   </a>
 </div>
@@ -40,7 +40,7 @@ My Homepage
         </td>
         <td>
           <span class="label label-default">
-            <span data-toggle="tooltip" data-original-title="{{=item.created_at}}" class="glyphicon glyphicon-time"></span>
+            <span data-toggle="tooltip" data-original-title="{{=item.created_at}}" class="glyphicon glyphicon-time" aria-hidden="true"></span>
           </span>
         </td>
       </tr>
@@ -64,12 +64,12 @@ My Homepage
       <tr>
         <td>
           <a href="{{=URL('box', 'view', args=box.id)}}">
-            <span class="glyphicon glyphicon-inbox"></span> <span>{{=box.name}}</span>
+            <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span>{{=box.name}}</span>
           </a>
         </td>
         <td>
           <span class="label label-default">
-            <span data-toggle="tooltip" data-original-title="{{=box.created_at}}" class="glyphicon glyphicon-time"></span>
+            <span data-toggle="tooltip" data-original-title="{{=box.created_at}}" class="glyphicon glyphicon-time" aria-hidden="true"></span>
           </span>
         </td>
       </tr>
@@ -94,7 +94,7 @@ My Homepage
       <tr{{if prop.status == 'sent':}} class="highlight"{{pass}}>
         <td>
           <a href="{{=URL('trade', 'view', args=prop.id)}}">
-          <span class="glyphicon glyphicon-user"></span> <span>{{=sender.username}}</span>
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>{{=sender.username}}</span>
         </a>
         </td>
         <td>

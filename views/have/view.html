@@ -11,10 +11,10 @@
     Add or remove items <span class="caret"></span>
   </button>
   <ul id="add-remove-menu" class="dropdown-menu dropdown-menu-right">
-    <li><a{{if full:}} class="disabled"{{pass}} href="{{=URL('insert_item')}}"><span class="glyphicon glyphicon-log-in"></span> Add an existing item to this list</a></li>
-    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item')}}"><span class="glyphicon glyphicon-log-out"></span> Remove an item from this list</a></li>
+    <li><a{{if full:}} class="disabled"{{pass}} href="{{=URL('insert_item')}}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Add an existing item to this list</a></li>
+    <li><a{{if len(items) == 0:}} class="disabled"{{pass}} href="{{=URL('remove_item')}}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Remove an item from this list</a></li>
     <li role="separator" class="divider"></li>
-    <li><a href="{{=URL('item', 'new', vars=dict(list='have'))}}"><span class="glyphicon glyphicon-plus"></span> Add a new item here</a></li>
+    <li><a href="{{=URL('item', 'new', vars=dict(list='have'))}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new item here</a></li>
   </ul>
 </div>
 {{end}}

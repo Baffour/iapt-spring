@@ -2,7 +2,7 @@
 <div class="col-xs-3">
   <div class="thumbnail explore-thumbnail user-preview preview">
     <a data-toggle="tooltip" title="View Profile" class="preview-name" href="{{=URL('default','profile_page',vars=dict(user=user.id))}}">
-      <span class="preview-icon glyphicon glyphicon-user"></span>
+      <span class="preview-icon glyphicon glyphicon-user" aria-hidden="true"></span>
       <span>{{=user.username}}</span>
     </a>
     <hr/>

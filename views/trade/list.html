@@ -4,7 +4,7 @@
 {{block toolbox}}
 <div class="btn-group">
   <a class="btn btn-default{{if no_items:}} disabled{{pass}}" href="{{=URL('trade', 'new')}}">
-    <span class="glyphicon glyphicon-retweet"></span>
+    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
     Propose a trade
   </a>
 </div>
@@ -27,7 +27,7 @@
       <tr>
         <td>
           <a href="{{=URL('view', args=prop.id)}}">
-          <span class="glyphicon glyphicon-user"></span> <span>{{=target.username}}</span>
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>{{=target.username}}</span>
           </a>
         </td>
         <td>
@@ -62,7 +62,7 @@
       <tr{{if prop.status == 'sent':}} class="highlight"{{pass}}>
         <td>
           <a href="{{=URL('view', args=prop.id)}}">
-          <span class="glyphicon glyphicon-user"></span> <span>{{=sender.username}}</span>
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>{{=sender.username}}</span>
         </a>
         </td>
         <td>
