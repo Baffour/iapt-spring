@@ -235,6 +235,6 @@ def __search_filter_form():
     clear_button=BUTTON("Reset",_id="filter-reset",_class="btn btn-default pull-left")
 
     inputs+=[submit_button,clear_button]
-    form = FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET")
+    form = FORM(*inputs,_name="filter-form",_enctype="multipart/form-data",_class="form-inline pull-left",_action=URL('search'),_method="GET", _role="form")
     form['_aria-label']="Filter Search Results"
     return form

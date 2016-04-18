@@ -120,6 +120,7 @@ def load_all_items_of_visibility_x(private,user=None):
 def custom_register_form():
     """Adds placeholders and HTML5 validation, which aids in error prevention as users can correct mistakes before submission"""
     form = auth.register()
+    form['_role']='form'
     form['_class']='signup-form'
     form.custom.widget.email['_placeholder']="Enter your email address"
     form.custom.widget.username['_placeholder']="Choose a username"

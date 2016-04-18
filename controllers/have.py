@@ -18,7 +18,7 @@ def insert_item():
 
     constraint = db(~db.itm.id.belongs(item_ids_in_list) & (db.itm.auth_user == auth.user.id))
     validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to Have List')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to Have List', _role="form")
 
     if form.process().accepted:
         itm = load_item(form.vars['itm'], editing=True)
@@ -40,7 +40,7 @@ def insert_item():
 def remove_item():
     constraint = db((db.itm.auth_user==auth.user.id) & (db.itm.in_have_list==True))
     validator = IS_IN_DB(constraint, 'itm.id', 'itm.name', zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Remove from Have List')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Remove from Have List', _role="form")
 
     if form.process().accepted:
         item = load_item(form.vars['itm'], editing=True)

@@ -30,7 +30,7 @@ Step 2 of 3
             </a>
           </td>
           <td>
-            <form method="post" action="{{=URL('remove_offered_item', args=[prop.id, item.id])}}">
+            <form method="post" action="{{=URL('remove_offered_item', args=[prop.id, item.id])}}" role="form">
               <input type="submit" class="btn btn-default btn-sm" value="Remove this item" />
             </form>
           </td>
@@ -64,7 +64,7 @@ Step 2 of 3
             </a>
           </td>
           <td>
-            <form method="post" action="{{=URL('remove_requested_item', args=[prop.id, item.id])}}">
+            <form method="post" action="{{=URL('remove_requested_item', args=[prop.id, item.id])}}" role="form">
               <input type="submit" class="btn btn-default btn-sm" value="Remove this item" />
             </form>
           </td>
@@ -89,7 +89,7 @@ Step 2 of 3
     <a class="btn btn-primary{{if not len(offered_items):}} disabled{{pass}}" href="{{=URL('confirm', args=prop.id)}}">
       Include these items in this proposal
     </a>
-    <form class="inline-block" method="post" action="{{=URL('cancel', args=prop.id)}}">
+    <form class="inline-block" method="post" action="{{=URL('cancel', args=prop.id)}}" role="form">
       <input type="submit" class="btn btn-default" value="Cancel this trade" />
     </form>
   </div>

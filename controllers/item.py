@@ -22,7 +22,7 @@ def edit():
     ]
 
     db.itm.description.label=SPAN(db.itm.description.label, SPAN(" - optional",_class="optional-field"))
-    form = SQLFORM.factory(*fields, submit_button='Save item')
+    form = SQLFORM.factory(*fields, submit_button='Save item', _role="form")
 
     if form.process().accepted:
         newvals = dict(
@@ -72,6 +72,7 @@ def delete():
     item = load_item(request.args(0), editing=True)
 
     form = FORM.confirm('Delete', {'Cancel': URL('view', args=item.id)})
+    form['_role']='form'
     form['_class'] = 'confirmation-form'
     form[0]['_class'] = 'btn btn-danger'
     form[1]['_class'] = 'btn btn-default'
@@ -109,7 +110,7 @@ def new_of_type():
     ]
 
     db.itm.description.label=SPAN(db.itm.description.label, SPAN(" - optional",_class="optional-field"))
-    form = SQLFORM.factory(*fields, submit_button='Add item')
+    form = SQLFORM.factory(*fields, submit_button='Add item', _role="form")
 
     if form.process().accepted:
         name = form.vars['name']
@@ -198,7 +199,7 @@ def add_to_box():
 
     validator = IS_IN_DB(constraint, 'box.id', 'box.name', zero=None, orderby='box.name')
     form = SQLFORM.factory(Field('box', 'reference box', requires=validator, label="Box"),
-                           submit_button='Add to this box')
+                           submit_button='Add to this box', _role="form")
 
     if form.process().accepted:
         box = load_box(form.vars['box'], editing=True)

@@ -16,7 +16,7 @@ def list():
 def new():
     widget = SQLFORM.widgets.autocomplete(request, db.auth_user.username, db=db(db.auth_user.id!=auth.user.id), limitby=(0,10), min_length=1)
     field = Field('user', widget=widget, required=True, notnull=True, label="User to trade with", comment="Start typing above and matching users will appear")
-    form = SQLFORM.factory(field, submit_button="Propose a trade with this user")
+    form = SQLFORM.factory(field, submit_button="Propose a trade with this user", _role="form")
 
     if form.process().accepted:
         username = form.vars['user']
@@ -100,7 +100,7 @@ def add_offered_item():
     constraint = db(db.itm.id.belongs(selectable_ids))
     reprfn = lambda i: "{} ({}, £{}, {} condition)".format(i.name, i.itm_type, format_pence_as_pounds(i.monetary_value), i.itm_condition)
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade', _role="form")
 
     if form.process().accepted:
         itm = load_item(form.vars['itm'], editing=True)
@@ -143,7 +143,7 @@ def add_requested_item():
     constraint = db(db.itm.id.belongs(ri_selectable_ids))
     reprfn = lambda i: "{} ({}, £{}, {} condition)".format(i.name, i.itm_type, format_pence_as_pounds(i.monetary_value), i.itm_condition)
     validator = IS_IN_DB(constraint, 'itm.id', reprfn, zero=None, orderby='itm.name')
-    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade')
+    form = SQLFORM.factory(Field('itm', 'reference itm', requires=validator, label="Item"), submit_button='Add to this trade', _role="form")
 
     if form.process().accepted:
         itm = load_item(form.vars['itm'])
@@ -194,6 +194,7 @@ def confirm():
     rcount = ri_query.count()
 
     form = FORM.confirm('Send trade proposal', {'Back to item selection': URL('choose_items', args=prop.id)})
+    form['_role'] = 'form'
     form['_class'] = 'confirmation-form'
     form[0]['_class'] = 'btn btn-primary'
     form[1]['_class'] = 'btn btn-default'
