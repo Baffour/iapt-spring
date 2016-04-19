@@ -1,4 +1,5 @@
-{{for item in items:}}
+{{for i, item in enumerate(items):}}
+{{if i % 4 == 0:}}<div class="row">{{pass}}
   <div class="col-xs-3">
     <div class="thumbnail explore-thumbnail item-preview preview">
       <a data-toggle="tooltip" title="{{=item.name}}" href="{{=URL('item', 'view', args=item.id)}}" class="preview-name">{{=item.name}}</a>
@@ -12,4 +13,5 @@
       <a class="preview-secondary-link" href="{{=URL('item', 'view', args=item.id)}}">View item</a>
     </div>
   </div>
+{{if (i % 4 == 3) or (i == len(items) - 1):}}</div>{{pass}}
 {{pass}}
