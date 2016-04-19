@@ -17,7 +17,7 @@ EXTRA_FIELDS = {
     'book': [Field('author', type='string', length=256, notnull=True, required=False)],
     'game': [Field('publisher', type='string', length=256, notnull=True, required=False),
              Field('genre', type='string', length=256, notnull=True, required=False)],
-    'dvd': [Field('author', type='string', length=256, notnull=True, required=False),
+    'dvd': [Field('director', type='string', length=256, notnull=True, required=False),
             Field('genre', type='string', length=256, notnull=True, required=False)]
 
 }
