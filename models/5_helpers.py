@@ -216,3 +216,6 @@ def breadcrumbs(arg_title=None):
 
 def registration_enabled():
     return 'register' not in auth.settings.actions_disabled
+
+def login_event():
+    return request.vars['l'] == '1' and request.controller=='default' and request.function=='index'

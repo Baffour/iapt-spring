@@ -117,3 +117,10 @@ My Homepage
   <a class="home-col-link" href="{{=URL('trade', 'list')}}">View all my trade proposals</a>
 </div>
 {{end}}
+
+
+{{block ga}}
+{{if login_event():}}
+ga('send', 'event', 'eng', 'login');
+{{pass}}
+{{end}}
