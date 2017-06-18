@@ -132,11 +132,9 @@
                 </ul>
               </li>
               {{else:}}
-              {{if registration_enabled():}}
               <li {{if rc == 'default' and rf == 'user' and ra[0] == 'register':}}class="active"{{pass}}>
                 <a href="{{=URL('default', 'user/register')}}">Register</a>
               </li>
-              {{pass}}
               <li {{if rc == 'default' and rf == 'user' and ra[0] == 'login':}}class="active"{{pass}}>
                 <a href="{{=URL('default', 'user/login')}}">Login</a>
               </li>

@@ -213,6 +213,3 @@ def breadcrumbs(arg_title=None):
            menus.append(A(T(arg_title), _href=URL(r=request, f=request.function,args=[request.args])))
 
    return XML(' > '.join(str(m) for m in menus))
-
-def registration_enabled():
-    return 'register' not in auth.settings.actions_disabled
