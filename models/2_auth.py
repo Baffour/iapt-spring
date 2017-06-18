@@ -25,3 +25,5 @@ db.auth_user.first_name.readable = db.auth_user.first_name.writable = False
 db.auth_user.last_name.readable = db.auth_user.last_name.writable = False
 
 request.requires_https()
+
+auth.settings.login_next = URL('default','index',vars=dict(l=1))
