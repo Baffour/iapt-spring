@@ -21,3 +21,5 @@ auth.settings.actions_disabled = [
 # (apparently this is a lot less complicated than removing them altogether)
 db.auth_user.first_name.readable = db.auth_user.first_name.writable = False
 db.auth_user.last_name.readable = db.auth_user.last_name.writable = False
+
+request.requires_https()
