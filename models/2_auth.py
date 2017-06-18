@@ -17,6 +17,8 @@ auth.settings.actions_disabled = [
     'request_reset_password'
 ]
 
+#auth.settings.actions_disabled.append('register')
+
 # Hide the first name and last name fields
 # (apparently this is a lot less complicated than removing them altogether)
 db.auth_user.first_name.readable = db.auth_user.first_name.writable = False
